@@ -1,0 +1,1218 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==================== xAI Dark Theme ==================== */
+:root {
+  /* 深色背景 - xAI风格 */
+  --background: oklch(0.08 0.01 250);
+  --foreground: oklch(0.95 0.01 250);
+  
+  /* 卡片 - 深灰色 */
+  --card: oklch(0.12 0.01 250);
+  --card-foreground: oklch(0.95 0.01 250);
+  
+  /* 弹出层 */
+  --popover: oklch(0.12 0.01 250);
+  --popover-foreground: oklch(0.95 0.01 250);
+  
+  /* 主色调 - 纯白色 */
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0.08 0.01 250);
+  
+  /* 次要色 */
+  --secondary: oklch(0.18 0.01 250);
+  --secondary-foreground: oklch(0.85 0.01 250);
+  
+  /* 静音色 */
+  --muted: oklch(0.22 0.01 250);
+  --muted-foreground: oklch(0.55 0.01 250);
+  
+  /* 强调色 */
+  --accent: oklch(0.18 0.01 250);
+  --accent-foreground: oklch(0.95 0.01 250);
+  
+  /* 危险色 */
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  
+  /* 边框和输入框 */
+  --border: oklch(0.25 0.01 250);
+  --input: oklch(0.18 0.01 250);
+  --ring: oklch(0.5 0.01 250);
+  
+  /* 图表颜色 */
+  --chart-1: oklch(0.7 0.15 220);
+  --chart-2: oklch(0.7 0.15 160);
+  --chart-3: oklch(0.7 0.15 40);
+  --chart-4: oklch(0.7 0.12 280);
+  --chart-5: oklch(0.7 0.15 320);
+  
+  /* 圆角 */
+  --radius: 0.75rem;
+  
+  /* 侧边栏 */
+  --sidebar: oklch(0.1 0.01 250);
+  --sidebar-foreground: oklch(0.95 0.01 250);
+  --sidebar-primary: oklch(1 0 0);
+  --sidebar-primary-foreground: oklch(0.08 0.01 250);
+  --sidebar-accent: oklch(0.18 0.01 250);
+  --sidebar-accent-foreground: oklch(0.95 0.01 250);
+  --sidebar-border: oklch(0.25 0.01 250);
+  --sidebar-ring: oklch(0.5 0.01 250);
+  
+  /* 成功色 */
+  --success: oklch(0.7 0.18 145);
+  --success-foreground: oklch(0.08 0.01 250);
+  
+  /* ==================== 科幻强调色 ==================== */
+  /* 赛博绿 - Cyber Green */
+  --cyber-green: #00FF9D;
+  --cyber-green-glow: rgba(0, 255, 157, 0.5);
+  
+  /* 全息蓝 - Holo Blue */
+  --holo-blue: #2DE1FC;
+  --holo-blue-glow: rgba(45, 225, 252, 0.5);
+}
+
+@theme inline {
+  --font-sans: "Inter", "SF Pro Display", "Noto Sans SC", "Noto Sans TC", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 16px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* ==================== xAI Button Styles ==================== */
+
+/* 主按钮 - 白色实心 */
+.btn-xai-primary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium tracking-wider uppercase;
+  @apply bg-white text-black rounded-full;
+  @apply transition-all duration-300 ease-out;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+.btn-xai-primary svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-xai-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+}
+
+.btn-xai-primary:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.btn-xai-primary:active {
+  transform: translateY(0);
+}
+
+/* 次要按钮 - 深色透明 */
+.btn-xai-secondary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium tracking-wider uppercase;
+  @apply bg-white/5 text-white rounded-full border border-white/20;
+  @apply transition-all duration-300 ease-out;
+}
+
+.btn-xai-secondary svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-xai-secondary:hover {
+  @apply bg-white/10 border-white/40;
+  transform: translateY(-2px);
+}
+
+.btn-xai-secondary:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.btn-xai-secondary:active {
+  transform: translateY(0);
+}
+
+/* ==================== Custom Utilities ==================== */
+
+/* xAI风格的卡片 */
+.card-xai {
+  @apply bg-card/50 backdrop-blur-xl border border-white/10 rounded-2xl;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== 科幻级毛玻璃悬浮卡片 ==================== */
+.scifi-container {
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 
+              0 0 80px rgba(45, 225, 252, 0.1);
+}
+
+/* 玻璃拟态效果 */
+.glass {
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* 平滑过渡 */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 渐变文字 */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==================== 科幻级按钮 - 全胶囊型 ==================== */
+
+/* 主按钮 - 发光胶囊 */
+.btn-scifi-primary {
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-semibold;
+  background: linear-gradient(135deg, var(--holo-blue) 0%, var(--cyber-green) 100%);
+  color: #000;
+  border-radius: 9999px;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 20px var(--holo-blue-glow),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.btn-scifi-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-scifi-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px var(--holo-blue-glow),
+              0 5px 20px rgba(45, 225, 252, 0.3),
+              inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.btn-scifi-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-scifi-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 次要按钮 - 透明发光边框 */
+.btn-scifi-secondary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--holo-blue);
+  border: 2px solid rgba(45, 225, 252, 0.3);
+  border-radius: 9999px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px rgba(45, 225, 252, 0.1);
+}
+
+.btn-scifi-secondary:hover {
+  background: rgba(45, 225, 252, 0.1);
+  border-color: var(--holo-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--holo-blue-glow);
+}
+
+/* ==================== 科幻级选项卡片 ==================== */
+
+/* 未选中状态 */
+.card-option {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.card-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(45, 225, 252, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 选中状态 - 发光效果 */
+.card-option-selected {
+  background: rgba(45, 225, 252, 0.15);
+  border: 2px solid var(--holo-blue);
+  box-shadow: 0 0 20px var(--holo-blue-glow),
+              inset 0 0 20px rgba(45, 225, 252, 0.1);
+  transform: translateY(-2px);
+}
+
+/* 选中标记 - 发光对勾 */
+.check-glow {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: var(--holo-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--holo-blue-glow);
+  animation: check-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes check-pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ==================== 标签云 Chips ==================== */
+
+.chip {
+  @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-medium;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(45, 225, 252, 0.4);
+  transform: scale(1.05);
+}
+
+.chip-selected {
+  background: rgba(0, 255, 157, 0.2);
+  border: 2px solid var(--cyber-green);
+  color: var(--cyber-green);
+  box-shadow: 0 0 15px var(--cyber-green-glow);
+  transform: scale(1.05);
+}
+
+/* ==================== 色块选择器 ==================== */
+
+.color-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.color-dot:hover {
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.color-dot-selected {
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px var(--holo-blue),
+              0 0 20px var(--holo-blue-glow);
+  transform: scale(1.15);
+}
+
+/* ==================== 发光滑块 ==================== */
+
+.slider-glow {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.slider-track {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, var(--holo-blue) 0%, var(--cyber-green) 100%);
+  border-radius: 3px;
+  box-shadow: 0 0 10px var(--holo-blue-glow);
+  transition: width 0.3s;
+}
+
+.slider-thumb {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px var(--holo-blue-glow),
+              0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.slider-thumb:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 0 30px var(--holo-blue-glow);
+}
+
+.slider-thumb:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+/* ==================== xAI Glow Effects ==================== */
+
+/* 光晕背景 */
+.glow-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-bg::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(100, 150, 255, 0.15) 0%,
+    rgba(50, 100, 200, 0.08) 30%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 动态光束 */
+.light-beam {
+  position: absolute;
+  width: 200%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
+  animation: beam-move 3s ease-in-out infinite;
+}
+
+@keyframes beam-move {
+  0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%) rotate(-5deg); opacity: 0; }
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    filter: blur(40px);
+    opacity: 0.6;
+  }
+  50% { 
+    filter: blur(60px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes text-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ==================== 科幻级动画 ==================== */
+
+/* 脉冲波纹 - 用于状态标签 */
+@keyframes pulse-wave {
+  0% {
+    box-shadow: 0 0 0 0 var(--holo-blue-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-pulse-wave {
+  animation: pulse-wave 2s ease-out infinite;
+}
+
+/* 打字机效果文字 */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-cursor {
+  50% { border-color: transparent; }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--holo-blue);
+  white-space: nowrap;
+  animation: typewriter 1.5s steps(40) 1s forwards,
+             blink-cursor 0.75s step-end infinite;
+}
+
+/* 数据流动画 - 用于加载页面 */
+@keyframes data-flow {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.animate-data-flow {
+  animation: data-flow 2s ease-in-out infinite;
+}
+
+/* 扫描线 - 用于全息效果 */
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--holo-blue) 50%, 
+    transparent 100%);
+  opacity: 0.5;
+  animation: scan-line 3s linear infinite;
+}
+
+/* 悬浮卡片上浮 */
+@keyframes card-float {
+  0%, 100% { 
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% { 
+    transform: translateY(-8px) rotateX(2deg);
+  }
+}
+
+.animate-card-float {
+  animation: card-float 4s ease-in-out infinite;
+}
+
+/* 全息闪烁 */
+@keyframes holo-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+  75% { opacity: 0.95; }
+}
+
+.animate-holo-flicker {
+  animation: holo-flicker 0.15s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.6s ease-out forwards;
+}
+
+.animate-text-reveal {
+  animation: text-reveal 1s ease-out forwards;
+}
+
+/* Animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* ==================== Network Animation ==================== */
+
+.network-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.network-node {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(100, 150, 255, 0.6);
+  border-radius: 50%;
+  animation: node-pulse 3s ease-in-out infinite;
+}
+
+@keyframes node-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+.network-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(100, 150, 255, 0.3) 50%, transparent 100%);
+  transform-origin: left center;
+}
+
+/* ==================== Scrollbar ==================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== Background Text ==================== */
+
+.bg-text {
+  position: absolute;
+  font-size: clamp(15vw, 20vw, 25vw);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.bg-text-glow {
+  position: absolute;
+  font-size: clamp(15vw, 20vw, 25vw);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(1px);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ==================== 电影级引导页面 Cinematic Intro ==================== */
+
+/* 页面容器 */
+.cinematic-intro-page {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  /* 深空紫蓝渐变背景 */
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* 星尘粒子背景 */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #eee, transparent),
+    radial-gradient(1px 1px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 50px 160px, #ddd, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+    radial-gradient(2px 2px at 160px 120px, #ddd, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: spaceTravel 100s linear infinite;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes spaceTravel {
+  from { background-position: 0 0; }
+  to { background-position: 0 10000px; }
+}
+
+/* 电影镜头容器 */
+.cinematic-container {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  perspective: 1000px;
+  z-index: 10;
+}
+
+/* 电影感文字通用样式 */
+.movie-text {
+  position: absolute;
+  color: #ffffff;
+  letter-spacing: 8px;
+  line-height: 1.6;
+  opacity: 0;
+  width: 100%;
+  will-change: transform, opacity, filter;
+}
+
+/* ========== 关键动画定义 ========== */
+
+/* 动画类型 A: 呼吸式显现 (用于第一句) */
+@keyframes breatheIn {
+  0% { 
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.95);
+  }
+  40% { 
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+  100% { 
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.05);
+  }
+}
+
+/* 动画类型 B: 穿越式显现 (用于中间句子) */
+@keyframes TravelThrough {
+  0% {
+    opacity: 0;
+    filter: blur(30px);
+    transform: translateZ(-500px) scale(0.8);
+  }
+  30% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateZ(0px) scale(1);
+  }
+  70% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateZ(0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateZ(300px) scale(1.2);
+  }
+}
+
+/* 动画类型 C: 最终炸裂 (用于最后一句) */
+@keyframes finalBurst {
+  0% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.9);
+  }
+  20% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(45, 225, 252, 0.5);
+  }
+  100% { 
+    opacity: 0;
+    filter: blur(30px);
+    transform: scale(2);
+    text-shadow: 
+      0 0 50px rgba(45, 225, 252, 1),
+      0 0 100px rgba(255, 255, 255, 0.8);
+    letter-spacing: 20px;
+  }
+}
+
+/* ========== 镜头时间轴控制 - 情绪递进设计 ========== */
+
+/* 镜头1: 呼吸 (0s - 5s) - 平静 */
+.scene-1 {
+  font-size: 32px;
+  font-weight: 300;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(45, 225, 252, 0.4),
+    0 0 40px rgba(45, 225, 252, 0.2);
+  animation: breatheIn 5s ease-in-out forwards;
+}
+
+@media (min-width: 768px) {
+  .scene-1 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scene-1 {
+    font-size: 48px;
+  }
+}
+
+/* 镜头1 副标题样式 */
+.scene-1 span {
+  display: block;
+  margin-top: 16px;
+  font-size: 20px !important;
+  letter-spacing: 4px !important;
+  opacity: 0.7 !important;
+}
+
+@media (min-width: 768px) {
+  .scene-1 span {
+    font-size: 24px !important;
+    margin-top: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scene-1 span {
+    font-size: 28px !important;
+    margin-top: 24px;
+  }
+}
+
+/* 镜头2: 回忆穿越 (4.5s - 9.5s) - 唤起 */
+.scene-2 {
+  font-size: 28px;
+  font-weight: 400;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 25px rgba(45, 225, 252, 0.5),
+    0 0 50px rgba(45, 225, 252, 0.3);
+  animation: TravelThrough 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 4.5s;
+}
+
+@media (min-width: 768px) {
+  .scene-2 {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scene-2 {
+    font-size: 48px;
+  }
+}
+
+/* 镜头3: 环境追问 (9s - 14s) - 聚焦 */
+.scene-3 {
+  font-size: 28px;
+  font-weight: 400;
+  text-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(45, 225, 252, 0.6),
+    0 0 60px rgba(45, 225, 252, 0.4),
+    0 0 90px rgba(45, 225, 252, 0.2);
+  animation: TravelThrough 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 9s;
+}
+
+@media (min-width: 768px) {
+  .scene-3 {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scene-3 {
+    font-size: 44px;
+  }
+}
+
+/* 镜头4: 最终聚焦与炸裂 (13.5s - 18s) - 释放 */
+.scene-4 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 10px;
+  text-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(45, 225, 252, 0.8),
+    0 0 80px rgba(45, 225, 252, 0.6),
+    0 0 120px rgba(45, 225, 252, 0.4);
+  animation: finalBurst 4.5s ease-out forwards;
+  animation-delay: 13.5s;
+}
+
+@media (min-width: 768px) {
+  .scene-4 {
+    font-size: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scene-4 {
+    font-size: 56px;
+  }
+}
+
+/* 跳过按钮 */
+.skip-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 50;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.skip-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(45, 225, 252, 0.5);
+  color: rgba(45, 225, 252, 1);
+  box-shadow: 0 0 20px rgba(45, 225, 252, 0.2);
+}
+
+/* ==================== 全息图标动画效果 ==================== */
+
+/* 光爆效果 */
+@keyframes holographic-burst {
+  0% {
+    transform: scale(1);
+    filter: brightness(1) blur(0px);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.5) blur(2px);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1) blur(0px);
+  }
+}
+
+/* 悬浮效果 */
+@keyframes holographic-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* 光晕扩散 */
+@keyframes glow-expand {
+  0% {
+    box-shadow: 0 0 10px rgba(45, 225, 252, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(45, 225, 252, 0.6), 0 0 60px rgba(45, 225, 252, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(45, 225, 252, 0.2);
+  }
+}
+
+/* 磨砂玻璃通透效果 */
+@keyframes glass-clarity {
+  0% {
+    backdrop-filter: blur(8px);
+    opacity: 0.9;
+  }
+  50% {
+    backdrop-filter: blur(4px);
+    opacity: 1;
+  }
+  100% {
+    backdrop-filter: blur(8px);
+    opacity: 0.9;
+  }
+}
+
+/* 边缘高光动画 */
+@keyframes edge-shimmer {
+  0% {
+    opacity: 0.4;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+    transform: translateX(100%);
+  }
+}
+
+/* 应用动画到选中状态的图标 */
+.holographic-icon-selected {
+  animation: holographic-burst 0.6s ease-out, holographic-float 3s ease-in-out infinite;
+}
+
+.holographic-card-selected {
+  animation: glow-expand 2s ease-in-out infinite, glass-clarity 3s ease-in-out infinite;
+}
+
+/* ==================== 隐藏滚动条 ==================== */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==================== 能量球特效 ==================== */
+/* 能量球呼吸光效 */
+@keyframes orb-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px #2DE1FC, 0 0 15px rgba(45, 225, 252, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 2px #2DE1FC, 0 0 25px rgba(45, 225, 252, 0.7);
+  }
+}
+
+/* ==================== AI 打字机效果 ==================== */
+@keyframes typewriter {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-typewriter {
+  animation: typewriter 0.6s ease-out forwards;
+}
+
+/* 天色卡片缩放动画 */
+@keyframes scale-in {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ==================== 报告页专用动画 ==================== */
+/* 扫描线动画 */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
+}
+
+/* 漂浮动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "common": {
+    "brand": "CogniSeek",
+    "next": "继续下一步",
+    "back": "返回上一步",
+    "backHome": "返回首页",
+    "skip": "跳过 →",
+    "other": "+ 其他",
+    "otherAction": "其他",
+    "confirm": "确认",
+    "cancel": "取消",
+    "loading": "加载中...",
+    "required": "*",
+    "optional": "（选填）",
+    "step": "步骤",
+    "of": "/",
+    "enterHint": "回车确认",
+    "inputPlaceholder": "请输入...",
+    "selected": "已选择",
+    "missingField": "请完成所有必填项"
+  },
+  "home": {
+    "title": "找不到东西，不是你的记忆出了问题……",
+    "subtitle": "是「非注意盲视」——你大脑的认知盲区",
+    "description": "CogniSeek 运用行为心理学、环境概率论和时空回溯，帮你在 3 分钟内找回丢失的物品。",
+    "cta": "启动侦探程序",
+    "ctaMobile": "立即开始",
+    "tagline": "AI 驱动 · 基于认知科学",
+    "nav": {
+      "science": "科学原理",
+      "cases": "成功案例"
+    },
+    "science": {
+      "title": "三维科学寻物系统",
+      "subtitle": "不是魔法——是纯粹的科学",
+      "card1": {
+        "title": "行为心理学",
+        "desc": "还原无意识放置的瞬间"
+      },
+      "card2": {
+        "title": "环境概率论",
+        "desc": "计算重力与摩擦力决定的落点"
+      },
+      "card3": {
+        "title": "时空回溯",
+        "desc": "用时间线分析填补记忆空白"
+      }
+    },
+    "cases": {
+      "title": "实时案例传输",
+      "subtitle": "真实找回情报"
+    },
+    "footer": {
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "contact": "联系我们"
+    },
+    "trust": {
+      "recovery": "87.3% 找回率",
+      "cases": "15,000+ 成功案例",
+      "guarantee": "无效免费复盘"
+    }
+  },
+  "intro": {
+    "scene1": "请深呼吸",
+    "scene1Sub": "让情绪平静下来",
+    "scene2": "现在，回忆一下...",
+    "scene2Sub": "回到你丢失物品时的场景",
+    "scene3": "是在什么场所丢失的？",
+    "scene3Sub": "当时周围的环境空间是怎么样的？",
+    "scene4": "周围有哪些人和事呢？",
+    "skip": "跳过 →"
+  },
+  "step0": {
+    "title": "锁定第一现场",
+    "subtitle": "Identify Environment Profile",
+    "description": "闭上眼回忆一下，你**最后一次**确信它在身边的位置是？",
+    "selectPrompt": "👆 请选择一个区域开始分析",
+    "sectors": {
+      "Home": "家里",
+      "Work": "办公/学校",
+      "Vehicle": "交通工具",
+      "Public": "公共场所",
+      "Outdoors": "户外",
+      "Unsure": "迷雾模式 / 轨迹回溯"
+    },
+    "sectorDesc": {
+      "Home": "住所、房间",
+      "Work": "写字楼或课桌一角",
+      "Vehicle": "汽车或地铁车厢",
+      "Public": "商场、餐厅、电影院",
+      "Outdoors": "公园、街道、广场",
+      "Unsure": "启动轨迹分析模式"
+    },
+    "unsureMode": {
+      "title": "轨迹回溯模式已激活",
+      "desc": "AI将启动「轨迹回溯模式」，分析你在不同地点之间的移动路径，逐一排查可能的丢失节点。"
+    },
+    "confidence": {
+      "aiHint90": "🎯 AI将在此区域进行深度层次式搜索",
+      "aiHint70": "🔍 AI将优先搜索此区域，同时排查周边过渡地带",
+      "aiHintLow": "🌐 AI将扩大搜索半径，检查上一个地点及途中"
+    },
+    "button": {
+      "lock": "锁定区域",
+      "trajectory": "启动轨迹分析"
+    },
+    "missing": {
+      "noSector": "请先选择一个区域",
+      "noConfidence": "请拖动滑块确认置信度"
+    }
+  },
+  "step1": {
+    "title": "你丢失了什么？",
+    "subtitle": "选择物品类型，帮助我们精准分析",
+    "categoryLabel": "物品类别",
+    "itemLabel": "具体物品",
+    "colorLabel": "物品颜色",
+    "featureLabel": "它有什么特殊记号？",
+    "sizeLabel": "物品大小",
+    "customColorPlaceholder": "请输入颜色名称（如：墨绿色、香槟金、深紫色）",
+    "customSizePlaceholder": "请描述物品大小，如：电脑主机大小、行李箱大小...",
+    "featurePlaceholder": "例如：有保护壳、贴了贴纸、有磨损痕迹...",
+    "customItemPlaceholder": "输入物品名称...",
+    "sizeTiny": "微型",
+    "sizeSmall": "小型",
+    "sizeMedium": "中型",
+    "sizeLarge": "大型",
+    "customSizeHint": "提示：可用具体物品对比（如"笔记本电脑大小"）或直接说明尺寸（如"长30cm × 宽20cm"）",
+    "missing": {
+      "noCategory": "请先选择物品类别",
+      "noItem": "请选择具体物品",
+      "noCustomName": "请输入自定义物品名称",
+      "noColor": "请选择物品颜色",
+      "noCustomColor": "请输入自定义颜色名称",
+      "noSize": "请选择物品大小",
+      "noCustomSize": "请输入自定义物品大小"
+    }
+  },
+  "step2": {
+    "title": "记忆回溯",
+    "subtitle": "你最后一次确定看见它是什么时候？",
+    "timeRangeLabel": "时间范围",
+    "lightPeriodLabel": "当时的光线/时段是？",
+    "locatorLabel": "时空定位器",
+    "fuzzyToggle": {
+      "label": "我对具体时间点不确定",
+      "on": "💭 没关系，我们将分析全天的光线变化与行为模式",
+      "off": "🎯 已锁定时间点，AI将分析该时间后方3小时内的路径"
+    },
+    "mode": {
+      "broad": "广域搜索模式",
+      "broadDesc": "AI 将自动排查前后相邻时段（±3小时）",
+      "precise": "精确锁定模式",
+      "preciseDesc": "AI 仅分析选中的时段"
+    },
+    "aiAnalysis": "时空分析：",
+    "missing": {
+      "noTime": "请选择时间范围",
+      "noLight": "请选择光线时段或开启\"时间不确定\"开关",
+      "noDate": "请选择具体日期或开启\"时间不确定\"开关"
+    }
+  },
+  "step3": {
+    "title": "最后目击",
+    "subtitle": "你最后一次看见它是在哪里？",
+    "sceneLabel": "选择场景",
+    "areaLabel": "你在 {scene} 的具体区域？",
+    "areaHint": "勾选您停留过的区域，协助AI完整重构行动轨迹与视觉盲区",
+    "customAreaPlaceholder": "输入区域...",
+    "otherAreaLabel": "还有其他特殊位置？（选填）",
+    "selectedCount": "已选择 {count} 个区域",
+    "scenes": {
+      "home": "家里",
+      "homeDesc": "住所、房间",
+      "work": "公司/学校",
+      "workDesc": "工作/学习场所",
+      "transit": "车/通勤路上",
+      "transitDesc": "交通工具",
+      "public": "户外/公共场所",
+      "publicDesc": "商场、餐厅等"
+    },
+    "missing": {
+      "noScene": "请选择一个场景",
+      "noArea": "请至少选择一个具体区域"
+    }
+  },
+  "step4": {
+    "title": "潜意识还原",
+    "subtitle": "我们需要分析你当时的"大脑带宽"占用情况",
+    "section1Title": "1. 大脑负载状态 (CPU Load)",
+    "section1Hint": "决定了你当时的"视野带宽"",
+    "section2Title": "2. 肢体行为惯性 (Physical Inertia)",
+    "section2Hint": "还原无意识的肌肉记忆（可多选）",
+    "section3Title": "3. 注意力干扰源",
+    "section3Hint": "是什么打断了你的记忆录入？",
+    "distractedLabel": "我当时分心了",
+    "distractedOn": "已开启干扰分析模式",
+    "distractedOff": "点击开启以记录干扰因素",
+    "distractedPrompt": "具体是什么干扰了你？（可多选）",
+    "distractionRecorded": "⚠️ 干扰因素已记录",
+    "distractionAnalysis": "AI 将重点分析"自动驾驶"行为模式和无意识放置区域",
+    "otherMood": "其他状态",
+    "otherMoodCustom": "自定义输入",
+    "otherActivity": "其他动作",
+    "otherDistraction": "其他干扰",
+    "customStatePlaceholder": "输入你的状态...",
+    "customActivityPlaceholder": "输入动作...",
+    "customDistractionPlaceholder": "输入干扰...",
+    "moods": {
+      "angry": "过载：愤怒/急躁",
+      "angryDesc": "视野收窄 80%",
+      "anxious": "高压：焦虑/赶时间",
+      "anxiousDesc": "记忆写入失败",
+      "drowsy": "低功耗：困倦/疲惫",
+      "drowsyDesc": "感知模块离线",
+      "tipsy": "信号干扰：微醺",
+      "tipsyDesc": "判断逻辑紊乱",
+      "excited": "峰值：兴奋/激动",
+      "excitedDesc": "多巴胺覆盖记忆",
+      "calm": "巡航：平静/习惯",
+      "calmDesc": "自动驾驶模式",
+      "confused": "宕机：困惑/迷茫",
+      "confusedDesc": "认知负荷过载"
+    },
+    "activities": {
+      "walking": "行走中",
+      "sitting": "坐着休息",
+      "carrying": "手持重物/拿快递",
+      "phone_call": "打电话",
+      "cleaning": "整理卫生",
+      "changing": "试穿/换装",
+      "driving": "驾驶/骑行",
+      "eating": "进餐",
+      "photo": "拍照"
+    },
+    "distractions": {
+      "notification": "突发消息/电话",
+      "talking": "与人激烈交谈",
+      "caring": "照看孩子/宠物",
+      "daydream": "沉思/走神"
+    },
+    "missing": {
+      "noMood": "请选择心理状态",
+      "noActivity": "请选择至少一个身体动作"
+    }
+  },
+  "step5": {
+    "title": "已排查信息",
+    "subtitle": "告诉我们你已经找过哪些地方，避免重复建议",
+    "justLost": "刚发现丢了",
+    "alreadySearched": "已经找过",
+    "durationLabel": "找了多久了？",
+    "locationsLabel": "{title}",
+    "locationsHint": "（可多选，代表"已确认找过这里，没有"）",
+    "othersLabel": "其他尝试",
+    "askedOthers": "已询问相关人员（同事/家人）",
+    "aiTip": "💡 AI 提示：",
+    "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的"视觉和记忆盲区"",
+    "toggleHint": "开关开启表示"已尝试过"，AI将不再建议；关闭表示"未尝试"，AI将为您提供相关建议",
+    "startAnalysis": "开始 AI 分析",
+    "duration": {
+      "10min": "10分钟内",
+      "30min": "半小时左右",
+      "1-2h": "1-2小时",
+      "half_day": "超过半天"
+    }
+  },
+  "loading": {
+    "title": "正在分析",
+    "phases": {
+      "1": "加载环境模型...",
+      "2": "扫描行为模式...",
+      "3": "锁定目标坐标..."
+    },
+    "logs": {
+      "init": "INITIALIZING_VECTOR_ENGINE...",
+      "env": "LOADING_ENVIRONMENT_PROFILE...",
+      "behavior": "ANALYZING_BEHAVIORAL_ENTROPY...",
+      "physics": "RUNNING_PHYSICS_SIMULATION...",
+      "memory": "RECONSTRUCTING_MEMORY_TIMELINE...",
+      "blind": "IDENTIFYING_COGNITIVE_BLINDSPOTS...",
+      "prob": "CALCULATING_PROBABILITY_MATRIX...",
+      "coords": "GENERATING_TACTICAL_COORDINATES...",
+      "complete": "TARGET_LOCKED."
+    }
+  },
+  "result": {
+    "title": "逻辑推演成功率：",
+    "titleHighlight": "极高",
+    "subtitle": "基于 15000+ 成功案例的综合推演",
+    "gauge": {
+      "label": "推演置信度"
+    },
+    "psychProfile": {
+      "subtitle": "心理学盲区分析"
+    },
+    "encryptedSection": "精准位置分析",
+    "clues": {
+      "high": "高概率",
+      "medium": "中概率",
+      "low": "辅助"
+    },
+    "clueStatus": "🔒 待解锁",
+    "ctaTitle": "解锁"视觉盲区"坐标与战术搜寻指令",
+    "ctaDesc": "告诉你**3个你绝对没看过的死角**，以及**5步逆向寻找法**。",
+    "price": "$2.99",
+    "originalPrice": "$9.99",
+    "ctaButton": "获取盲区坐标 & 逆向搜寻战术",
+    "urgency": "距记忆黄金找回期仅剩 {time}",
+    "limitedOffer": "限时优惠",
+    "trust": {
+      "rate": "87.3% 找回率",
+      "cases": "15,000+ 成功案例",
+      "guarantee": "无效免费复盘"
+    },
+    "diagnosis": {
+      "tunnelVision": {
+        "title": "认知隧道效应（Tunnel Vision）",
+        "content": "检测到你处于高压状态，大脑自动屏蔽了【非习惯性位置】的视觉信号。你不是没看到，而是大脑把你看到的画面"P"掉了。"
+      },
+      "camouflage": {
+        "title": "伪装警告（视觉伪装）",
+        "content": "目标物品颜色与环境发生【光谱融合】。简单说，它和背景"撞色"了，变成了"保护色"。在当前光线下，人眼识别率降低至 15%。需采用逆向视觉排查。"
+      },
+      "memoryDeception": {
+        "title": "记忆欺骗效应",
+        "content": "在自动驾驶模式下，记忆系统出现了"时序错位"。物品往往不在你"记得"的位置，而在你"动作中断"的那一瞬间。"
+      }
+    },
+    "encryptedClues": {
+      "primary": {
+        "title": "核心嫌疑区：重力沉降点",
+        "hint": "符合物理规律的 90% 概率区域，极易被忽略……"
+      },
+      "secondary": {
+        "title": "次要嫌疑区：视觉盲区",
+        "hint": "位于视线水平面以下的习惯死角……"
+      },
+      "auxiliary": {
+        "title": "辅助嫌疑区：社交转移点",
+        "hint": "他人可能无意识转移物品的位置……"
+      }
+    }
+  },
+  "report": {
+    "title": "寻回指数",
+    "subtitle": "AI 战术分析报告",
+    "probabilityLabel": "寻回概率",
+    "holoMapTitle": "全息场景地图",
+    "basicSearchTitle": "基础排查点",
+    "tacticsTitle": "战术协议",
+    "unlockTitle": "解锁完整战术报告",
+    "unlockDesc": "5 项微观死角战术 + 精准坐标解密",
+    "unlockPrice": "$2.99",
+    "unlockButton": "解锁战术报告",
+    "unlocking": "解锁中...",
+    "downloadReport": "下载完整报告",
+    "backHome": "返回首页",
+    "basicLabel": "基础 · 免费",
+    "tacticsLabel": "战术 · 精准",
+    "cognitiveOverride": "认知覆写",
+    "stopCondition": "停止条件",
+    "encouragement": "鼓励",
+    "diagnosisTitle": "诊断报告",
+    "envScanTitle": "环境扫描",
+    "psychTitle": "行为心理分析",
+    "precisionPin": "精准目标"
+  },
+  "data": {
+    "categories": {
+      "daily": "日常必需品",
+      "digital": "数码产品",
+      "documents": "证件文件",
+      "valuables": "贵重物品",
+      "pets": "宠物",
+      "other": "其他物品"
+    },
+    "items": {
+      "keys": "钥匙（家门/车钥匙）",
+      "wallet": "钱包/卡包",
+      "glasses": "眼镜/墨镜",
+      "watch": "手表",
+      "umbrella": "雨伞",
+      "daily_other": "+ 其他",
+      "phone": "手机",
+      "airpods": "AirPods/蓝牙耳机",
+      "tablet": "平板电脑",
+      "laptop": "笔记本电脑",
+      "powerbank": "充电宝",
+      "cable": "数据线/充电器",
+      "usb": "U盘/硬盘",
+      "remote": "遥控器",
+      "camera": "相机",
+      "digital_other": "+ 其他",
+      "id_card": "身份证",
+      "passport": "护照",
+      "driver_license": "驾驶证",
+      "bank_card": "银行卡",
+      "membership_card": "会员卡/门禁卡",
+      "important_docs": "重要文件/合同",
+      "docs_other": "+ 其他",
+      "ring": "戒指",
+      "necklace": "项链",
+      "earrings": "耳环/耳钉",
+      "bracelet": "手链/手镯",
+      "cash": "现金",
+      "valuables_other": "+ 其他",
+      "cat": "猫",
+      "dog": "狗",
+      "bird": "鸟类",
+      "hamster": "仓鼠/兔子",
+      "pets_other": "+ 其他",
+      "bag": "包包/背包",
+      "clothes": "衣物",
+      "medicine": "药品",
+      "toys": "玩具",
+      "book": "书籍",
+      "completely_other": "+ 其他"
+    },
+    "colors": {
+      "black": "黑色",
+      "white": "白色",
+      "silver": "银色/灰色",
+      "gold": "金色",
+      "red": "红色",
+      "pink": "粉色",
+      "orange": "橙色",
+      "brown": "棕色",
+      "green": "绿色",
+      "blue": "蓝色",
+      "purple": "紫色",
+      "multicolor": "多色",
+      "transparent": "透明",
+      "other": "其他颜色"
+    },
+    "sizes": {
+      "small": "微型",
+      "medium": "小型",
+      "large": "中型",
+      "custom": "大型"
+    },
+    "time": {
+      "justNow": "刚刚",
+      "today": "今天",
+      "yesterday": "昨天",
+      "earlier": "更早"
+    },
+    "lightPeriods": {
+      "morning": "早上",
+      "noon": "中午",
+      "afternoon": "下午",
+      "evening": "傍晚/晚上"
+    },
+    "locations": {
+      "home": "家里",
+      "work": "工作/学习场所",
+      "transport": "交通工具",
+      "public": "公共场所",
+      "outdoor": "户外",
+      "location_other": "其他地点"
+    },
+    "subLocations": {
+      "living_room": "客厅",
+      "bedroom": "卧室",
+      "kitchen": "厨房",
+      "bathroom": "卫生间",
+      "entrance": "玄关/门口",
+      "balcony": "阳台",
+      "study": "书房",
+      "garage": "车库",
+      "dining_room": "餐厅",
+      "home_other": "家里其他区域",
+      "office_desk": "办公室工位",
+      "meeting_room": "会议室",
+      "classroom": "教室",
+      "library": "图书馆",
+      "break_room": "茶水间/休息室",
+      "reception": "前台/大厅",
+      "work_other": "其他工作场所",
+      "private_car": "私家车",
+      "taxi": "出租车/网约车",
+      "bus_subway": "公交/地铁",
+      "train": "高铁/火车",
+      "plane": "飞机",
+      "bike": "自行车/电动车",
+      "transport_other": "其他交通工具",
+      "restaurant": "餐厅/咖啡厅",
+      "mall": "商场/超市",
+      "hospital": "医院/诊所",
+      "gym": "健身房",
+      "hotel": "酒店/民宿",
+      "cinema": "电影院",
+      "ktv": "KTV/酒吧",
+      "bank": "银行",
+      "salon": "理发店/美容院",
+      "public_other": "其他公共场所",
+      "park": "公园",
+      "street": "街道/人行道",
+      "parking": "停车场",
+      "playground": "操场/运动场",
+      "scenic": "景区/旅游地",
+      "outdoor_other": "其他户外场所",
+      "friend_home": "朋友/亲戚家",
+      "completely_other": "其他（自定义）"
+    }
+  }
+}

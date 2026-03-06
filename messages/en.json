@@ -1,0 +1,508 @@
+{
+  "common": {
+    "brand": "CogniSeek",
+    "next": "Continue",
+    "back": "Go Back",
+    "backHome": "Back to Home",
+    "skip": "Skip →",
+    "other": "+ Other",
+    "otherAction": "Other",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "required": "*",
+    "optional": "(Optional)",
+    "step": "Step",
+    "of": "/",
+    "enterHint": "Press Enter to confirm",
+    "inputPlaceholder": "Type here...",
+    "selected": "selected",
+    "missingField": "Please complete all required fields"
+  },
+  "home": {
+    "title": "The \"Lost Item\" Is Not Your Memory Failing...",
+    "subtitle": "It's \"Inattentional Blindness\" — Your Brain's Cognitive Blind Spot",
+    "description": "CogniSeek uses behavioral psychology, environmental probability, and temporal tracing to help you rediscover lost items in 3 minutes.",
+    "cta": "Start Detective Program",
+    "ctaMobile": "Start Now",
+    "tagline": "Powered by AI · Based on Cognitive Science",
+    "nav": {
+      "science": "The Science",
+      "cases": "Success Stories"
+    },
+    "science": {
+      "title": "The 3-Dimensional Recovery System",
+      "subtitle": "Not magic — pure science",
+      "card1": {
+        "title": "Behavioral Psychology",
+        "desc": "Reconstructing the moment of unconscious placement"
+      },
+      "card2": {
+        "title": "Environmental Probability",
+        "desc": "Calculating gravity & friction-based drop zones"
+      },
+      "card3": {
+        "title": "Temporal Tracing",
+        "desc": "Filling memory gaps with timeline analysis"
+      }
+    },
+    "cases": {
+      "title": "Live Case Transmissions",
+      "subtitle": "Real-time recovery intelligence"
+    },
+    "footer": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact"
+    },
+    "trust": {
+      "recovery": "87.3% Recovery Rate",
+      "cases": "15,000+ Success Cases",
+      "guarantee": "Free Re-analysis if Not Found"
+    }
+  },
+  "intro": {
+    "scene1": "Take a deep breath",
+    "scene1Sub": "Let your emotions settle",
+    "scene2": "Now, think back...",
+    "scene2Sub": "Return to the moment you lost it",
+    "scene3": "Where were you?",
+    "scene3Sub": "What was the environment like?",
+    "scene4": "Who and what was around you?",
+    "skip": "Skip →"
+  },
+  "step0": {
+    "title": "Lock the First Scene",
+    "subtitle": "Identify Environment Profile",
+    "description": "Close your eyes and think back — where were you the last time you were certain it was with you?",
+    "selectPrompt": "👆 Please select a zone to begin analysis",
+    "sectors": {
+      "Home": "Home",
+      "Work": "Work / School",
+      "Vehicle": "Vehicle",
+      "Public": "Public Place",
+      "Outdoors": "Outdoors",
+      "Unsure": "Trajectory Mode"
+    },
+    "sectorDesc": {
+      "Home": "House, apartment",
+      "Work": "Office or classroom",
+      "Vehicle": "Car or subway",
+      "Public": "Mall, restaurant, cinema",
+      "Outdoors": "Park, street, plaza",
+      "Unsure": "Activate trajectory analysis"
+    },
+    "unsureMode": {
+      "title": "Trajectory Analysis Mode Activated",
+      "desc": "AI will activate Trajectory Analysis Mode, analyzing your movement path between different locations and identifying potential loss nodes one by one."
+    },
+    "confidence": {
+      "aiHint90": "🎯 AI will perform deep layered search in this zone",
+      "aiHint70": "🔍 AI will prioritize this zone while scanning surrounding transition areas",
+      "aiHintLow": "🌐 AI will expand search radius, checking previous location and transit path"
+    },
+    "button": {
+      "lock": "Lock Zone",
+      "trajectory": "Start Trajectory Analysis"
+    },
+    "missing": {
+      "noSector": "Please select a zone first",
+      "noConfidence": "Please drag the slider to confirm confidence"
+    }
+  },
+  "step1": {
+    "title": "What did you lose?",
+    "subtitle": "Select item type for precise analysis",
+    "categoryLabel": "Item Category",
+    "itemLabel": "Specific Item",
+    "colorLabel": "Item Color",
+    "featureLabel": "Any special marks?",
+    "sizeLabel": "Item Size",
+    "customColorPlaceholder": "Describe color (e.g., olive green, champagne gold)",
+    "customSizePlaceholder": "Describe size (e.g., laptop-sized, 30cm × 20cm)",
+    "featurePlaceholder": "e.g.: has a case, sticker on it, worn and scratched...",
+    "customItemPlaceholder": "Enter item name...",
+    "sizeTiny": "Tiny",
+    "sizeSmall": "Small",
+    "sizeMedium": "Medium",
+    "sizeLarge": "Large",
+    "customSizeHint": "Tip: Use a comparison item (e.g., 'laptop-sized') or dimensions (e.g., '30cm × 20cm')",
+    "missing": {
+      "noCategory": "Please select an item category",
+      "noItem": "Please select a specific item",
+      "noCustomName": "Please enter item name",
+      "noColor": "Please select item color",
+      "noCustomColor": "Please enter color name",
+      "noSize": "Please select item size",
+      "noCustomSize": "Please enter item size"
+    }
+  },
+  "step2": {
+    "title": "Memory Trace",
+    "subtitle": "When was the {accent}last time{/accent} you are certain you saw it?",
+    "timeRangeLabel": "Time Range",
+    "lightPeriodLabel": "What was the lighting like?",
+    "locatorLabel": "Time Locator",
+    "fuzzyToggle": {
+      "label": "I'm not sure of the exact time",
+      "on": "💭 No worries, we'll analyze the full day's lighting and behavior patterns",
+      "off": "🎯 Time locked — AI will analyze the 3-hour window after this point"
+    },
+    "mode": {
+      "broad": "Wide-Scan Mode",
+      "broadDesc": "AI will automatically scan adjacent time windows (±3 hours)",
+      "precise": "Precision Lock Mode",
+      "preciseDesc": "AI analyzes only the selected time window"
+    },
+    "aiAnalysis": "Temporal Analysis:",
+    "missing": {
+      "noTime": "Please select a time range",
+      "noLight": "Please select lighting period or enable \"Time Uncertain\" toggle",
+      "noDate": "Please select a date or enable \"Time Uncertain\" toggle"
+    }
+  },
+  "step3": {
+    "title": "Last Sighting",
+    "subtitle": "Where did you {accent}last see it{/accent}?",
+    "sceneLabel": "Choose Scene",
+    "areaLabel": "Specific area in {scene}?",
+    "areaHint": "Mark the areas you visited to help AI reconstruct your movement path and visual blind spots",
+    "customAreaPlaceholder": "Enter area...",
+    "otherAreaLabel": "Other special locations? (Optional)",
+    "selectedCount": "{count} areas selected",
+    "scenes": {
+      "home": "Home",
+      "homeDesc": "Residence, rooms",
+      "work": "Office / School",
+      "workDesc": "Work / study space",
+      "transit": "Vehicle / Commute",
+      "transitDesc": "Transportation",
+      "public": "Outdoors / Public",
+      "publicDesc": "Mall, restaurant, etc."
+    },
+    "missing": {
+      "noScene": "Please select a scene",
+      "noArea": "Please select at least one area"
+    }
+  },
+  "step4": {
+    "title": "Subconscious Reconstruction",
+    "subtitle": "We need to analyze your {accent}\"brain bandwidth\"{/accent} at the time",
+    "section1Title": "1. Brain Load State (CPU Load)",
+    "section1Hint": "Determines your \"visual bandwidth\"",
+    "section2Title": "2. Physical Behavior Inertia",
+    "section2Hint": "Reconstruct unconscious muscle memory (multi-select)",
+    "section3Title": "3. Attention Interference Source",
+    "section3Hint": "What disrupted your memory recording?",
+    "distractedLabel": "I was distracted",
+    "distractedOn": "Distraction analysis mode enabled",
+    "distractedOff": "Click to enable and record distraction factors",
+    "distractedPrompt": "What specifically distracted you? (Multi-select)",
+    "distractionRecorded": "⚠️ Distraction factors recorded",
+    "distractionAnalysis": "AI will focus on \"autopilot\" behavior patterns and unconscious placement zones",
+    "otherMood": "Other State",
+    "otherMoodCustom": "Custom input",
+    "otherActivity": "Other Action",
+    "otherDistraction": "Other Distraction",
+    "customStatePlaceholder": "Enter your state...",
+    "customActivityPlaceholder": "Enter action...",
+    "customDistractionPlaceholder": "Enter distraction...",
+    "moods": {
+      "angry": "Overloaded: Angry/Irritable",
+      "angryDesc": "Visual field narrowed 80%",
+      "anxious": "High-stress: Anxious/Rushed",
+      "anxiousDesc": "Memory write failed",
+      "drowsy": "Low-power: Drowsy/Tired",
+      "drowsyDesc": "Perception module offline",
+      "tipsy": "Signal disrupted: Tipsy",
+      "tipsyDesc": "Logic processing impaired",
+      "excited": "Peak: Excited/Thrilled",
+      "excitedDesc": "Dopamine overriding memory",
+      "calm": "Cruise: Calm/Habitual",
+      "calmDesc": "Autopilot mode",
+      "confused": "Crash: Confused/Lost",
+      "confusedDesc": "Cognitive overload"
+    },
+    "activities": {
+      "walking": "Walking",
+      "sitting": "Sitting/Resting",
+      "carrying": "Carrying heavy items",
+      "phone_call": "On a phone call",
+      "cleaning": "Cleaning/Tidying",
+      "changing": "Trying on/Changing clothes",
+      "driving": "Driving/Riding",
+      "eating": "Eating",
+      "photo": "Taking photos"
+    },
+    "distractions": {
+      "notification": "Sudden message/call",
+      "talking": "Intense conversation",
+      "caring": "Watching a child/pet",
+      "daydream": "Daydreaming/Zoning out"
+    },
+    "missing": {
+      "noMood": "Please select a mental state",
+      "noActivity": "Please select at least one physical action"
+    }
+  },
+  "step5": {
+    "title": "Already Searched",
+    "subtitle": "Tell us where you've already looked to avoid duplicate suggestions",
+    "justLost": "Just noticed it's gone",
+    "alreadySearched": "Already searched",
+    "durationLabel": "How long have you been searching?",
+    "locationsLabel": "{title}",
+    "locationsHint": "(Multi-select — means \"I've confirmed looking here, it's not there\")",
+    "othersLabel": "Other attempts",
+    "askedOthers": "Asked relevant people (colleagues/family)",
+    "aiTip": "💡 AI Tip:",
+    "aiTipContent": "Knowing where you've already searched helps us avoid repeating suggestions and focus on commonly overlooked \"visual and memory blind spots\"",
+    "toggleHint": "Toggle {on}ON{/on} means \"already tried\" — AI won't suggest it again; {off}OFF{/off} means \"not tried yet\" — AI will provide relevant advice",
+    "startAnalysis": "Start AI Analysis",
+    "duration": {
+      "10min": "Under 10 min",
+      "30min": "About 30 min",
+      "1-2h": "1–2 hours",
+      "half_day": "More than half a day"
+    }
+  },
+  "loading": {
+    "title": "Analysis in progress",
+    "phases": {
+      "1": "Loading environment model...",
+      "2": "Scanning behavioral patterns...",
+      "3": "Locking target coordinates..."
+    },
+    "logs": {
+      "init": "INITIALIZING_VECTOR_ENGINE...",
+      "env": "LOADING_ENVIRONMENT_PROFILE...",
+      "behavior": "ANALYZING_BEHAVIORAL_ENTROPY...",
+      "physics": "RUNNING_PHYSICS_SIMULATION...",
+      "memory": "RECONSTRUCTING_MEMORY_TIMELINE...",
+      "blind": "IDENTIFYING_COGNITIVE_BLINDSPOTS...",
+      "prob": "CALCULATING_PROBABILITY_MATRIX...",
+      "coords": "GENERATING_TACTICAL_COORDINATES...",
+      "complete": "TARGET_LOCKED."
+    }
+  },
+  "result": {
+    "title": "Recovery Probability:",
+    "titleHighlight": "Very High",
+    "subtitle": "Based on 15,000+ success cases",
+    "gauge": {
+      "label": "Confidence Index"
+    },
+    "psychProfile": {
+      "subtitle": "Psychology blind spot analysis"
+    },
+    "encryptedSection": "Precision Location Analysis",
+    "clues": {
+      "high": "High Probability",
+      "medium": "Medium Probability",
+      "low": "Auxiliary"
+    },
+    "clueStatus": "🔒 Locked",
+    "ctaTitle": "Unlock \"Visual Blind Spot\" Coordinates & Tactical Search Commands",
+    "ctaDesc": "Tells you **3 spots you've definitely never checked**, plus a **5-step reverse search method**.",
+    "price": "$2.99",
+    "originalPrice": "$9.99",
+    "ctaButton": "Get Blind Spot Coordinates & Reverse Search Tactics",
+    "urgency": "Distance from memory golden recovery window: only {time} left",
+    "limitedOffer": "Limited Offer",
+    "trust": {
+      "rate": "87.3% Recovery Rate",
+      "cases": "15,000+ Success Cases",
+      "guarantee": "Free Re-analysis if Not Found"
+    },
+    "diagnosis": {
+      "tunnelVision": {
+        "title": "Tunnel Vision Effect",
+        "content": "High-stress state detected. Your brain automatically filtered out visual signals from non-habitual locations. You didn't fail to see it — your brain \"edited it out\" of the image."
+      },
+      "camouflage": {
+        "title": "Camouflage Warning (Visual Mimicry)",
+        "content": "The item's color is causing spectral fusion with the environment. Simply put, it blends in — becoming \"camouflage.\" Under current lighting, human eye detection rate drops to 15%. A reverse visual scan is required."
+      },
+      "memoryDeception": {
+        "title": "Memory Deception Effect",
+        "content": "In autopilot mode, the memory system experienced a \"temporal displacement.\" The item is often not where you \"remember\" placing it, but at the exact moment your action was interrupted."
+      }
+    },
+    "encryptedClues": {
+      "primary": {
+        "title": "Primary Suspect Zone: Gravity Sink Point",
+        "hint": "The 90% probability zone following physics laws — easily overlooked..."
+      },
+      "secondary": {
+        "title": "Secondary Suspect Zone: Visual Blind Spot",
+        "hint": "Located in habitual dead angles below eye level..."
+      },
+      "auxiliary": {
+        "title": "Auxiliary Zone: Social Transfer Point",
+        "hint": "Locations where others may have unconsciously moved it..."
+      }
+    }
+  },
+  "report": {
+    "title": "Recovery Index",
+    "subtitle": "AI Tactical Analysis Report",
+    "probabilityLabel": "Recovery Probability",
+    "holoMapTitle": "Holographic Scene Map",
+    "basicSearchTitle": "Basic Search Points",
+    "tacticsTitle": "Tactical Protocol",
+    "unlockTitle": "Unlock Full Tactical Report",
+    "unlockDesc": "5 micro-tactic precision commands + exact coordinate decryption",
+    "unlockPrice": "$2.99",
+    "unlockButton": "Unlock Tactical Report",
+    "unlocking": "Unlocking...",
+    "downloadReport": "Download Full Report",
+    "backHome": "Return Home",
+    "basicLabel": "Basic · Free",
+    "tacticsLabel": "Tactical · Precision",
+    "cognitiveOverride": "Cognitive Override",
+    "stopCondition": "Stop Condition",
+    "encouragement": "Encouragement",
+    "diagnosisTitle": "Diagnostic Report",
+    "envScanTitle": "Environment Scan",
+    "psychTitle": "Behavioral Psychology Analysis",
+    "precisionPin": "Precision Target"
+  },
+  "data": {
+    "categories": {
+      "daily": "Daily Essentials",
+      "digital": "Electronics",
+      "documents": "Documents & IDs",
+      "valuables": "Valuables",
+      "pets": "Pets",
+      "other": "Other Items"
+    },
+    "items": {
+      "keys": "Keys (house/car)",
+      "wallet": "Wallet / Card holder",
+      "glasses": "Glasses / Sunglasses",
+      "watch": "Watch",
+      "umbrella": "Umbrella",
+      "daily_other": "+ Other",
+      "phone": "Phone",
+      "airpods": "AirPods / Earbuds",
+      "tablet": "Tablet",
+      "laptop": "Laptop",
+      "powerbank": "Power bank",
+      "cable": "Cable / Charger",
+      "usb": "USB drive / Hard drive",
+      "remote": "Remote control",
+      "camera": "Camera",
+      "digital_other": "+ Other",
+      "id_card": "ID Card",
+      "passport": "Passport",
+      "driver_license": "Driver's License",
+      "bank_card": "Bank Card",
+      "membership_card": "Membership / Access Card",
+      "important_docs": "Important Documents",
+      "docs_other": "+ Other",
+      "ring": "Ring",
+      "necklace": "Necklace",
+      "earrings": "Earrings",
+      "bracelet": "Bracelet",
+      "cash": "Cash",
+      "valuables_other": "+ Other",
+      "cat": "Cat",
+      "dog": "Dog",
+      "bird": "Bird",
+      "hamster": "Hamster / Rabbit",
+      "pets_other": "+ Other",
+      "bag": "Bag / Backpack",
+      "clothes": "Clothing",
+      "medicine": "Medicine",
+      "toys": "Toys",
+      "book": "Books",
+      "completely_other": "+ Other"
+    },
+    "colors": {
+      "black": "Black",
+      "white": "White",
+      "silver": "Silver/Gray",
+      "gold": "Gold/Yellow",
+      "red": "Red",
+      "pink": "Pink",
+      "orange": "Orange",
+      "brown": "Brown/Coffee",
+      "green": "Green",
+      "blue": "Blue",
+      "purple": "Purple",
+      "multicolor": "Multi-color",
+      "transparent": "Transparent",
+      "other": "Other"
+    },
+    "sizes": {
+      "small": "Tiny",
+      "medium": "Small",
+      "large": "Medium",
+      "custom": "Large"
+    },
+    "time": {
+      "justNow": "Just now",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "earlier": "Earlier"
+    },
+    "lightPeriods": {
+      "morning": "Morning",
+      "noon": "Noon",
+      "afternoon": "Afternoon",
+      "evening": "Evening / Night"
+    },
+    "locations": {
+      "home": "Home",
+      "work": "Work / School",
+      "transport": "Transportation",
+      "public": "Public Places",
+      "outdoor": "Outdoors",
+      "location_other": "Other Location"
+    },
+    "subLocations": {
+      "living_room": "Living Room",
+      "bedroom": "Bedroom",
+      "kitchen": "Kitchen",
+      "bathroom": "Bathroom",
+      "entrance": "Entryway / Door",
+      "balcony": "Balcony",
+      "study": "Study",
+      "garage": "Garage",
+      "dining_room": "Dining Room",
+      "home_other": "Other area at home",
+      "office_desk": "Office desk",
+      "meeting_room": "Meeting room",
+      "classroom": "Classroom",
+      "library": "Library",
+      "break_room": "Break room",
+      "reception": "Reception / Lobby",
+      "work_other": "Other work area",
+      "private_car": "Private car",
+      "taxi": "Taxi / Rideshare",
+      "bus_subway": "Bus / Subway",
+      "train": "Train / High-speed rail",
+      "plane": "Airplane",
+      "bike": "Bike / Scooter",
+      "transport_other": "Other transport",
+      "restaurant": "Restaurant / Café",
+      "mall": "Mall / Supermarket",
+      "hospital": "Hospital / Clinic",
+      "gym": "Gym",
+      "hotel": "Hotel / Guesthouse",
+      "cinema": "Cinema",
+      "ktv": "KTV / Bar",
+      "bank": "Bank",
+      "salon": "Hair salon / Beauty salon",
+      "public_other": "Other public place",
+      "park": "Park",
+      "street": "Street / Sidewalk",
+      "parking": "Parking lot",
+      "playground": "Playground / Sports field",
+      "scenic": "Scenic area / Tourist spot",
+      "outdoor_other": "Other outdoor area",
+      "friend_home": "Friend's / Relative's home",
+      "completely_other": "Other (custom)"
+    }
+  }
+}

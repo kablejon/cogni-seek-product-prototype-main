@@ -1,0 +1,508 @@
+{
+  "common": {
+    "brand": "CogniSeek",
+    "next": "繼續下一步",
+    "back": "返回上一步",
+    "backHome": "返回首頁",
+    "skip": "跳過 →",
+    "other": "+ 其他",
+    "otherAction": "其他",
+    "confirm": "確認",
+    "cancel": "取消",
+    "loading": "載入中...",
+    "required": "*",
+    "optional": "（選填）",
+    "step": "步驟",
+    "of": "/",
+    "enterHint": "回車確認",
+    "inputPlaceholder": "請輸入...",
+    "selected": "已選擇",
+    "missingField": "請完成所有必填項"
+  },
+  "home": {
+    "title": "找不到東西，不是你的記憶出了問題……",
+    "subtitle": "是「非注意盲視」——你大腦的認知盲區",
+    "description": "CogniSeek 運用行為心理學、環境機率論和時空回溯，幫你在 3 分鐘內找回遺失的物品。",
+    "cta": "啟動偵探程式",
+    "ctaMobile": "立即開始",
+    "tagline": "AI 驅動 · 基於認知科學",
+    "nav": {
+      "science": "科學原理",
+      "cases": "成功案例"
+    },
+    "science": {
+      "title": "三維科學尋物系統",
+      "subtitle": "不是魔法——是純粹的科學",
+      "card1": {
+        "title": "行為心理學",
+        "desc": "還原無意識放置的瞬間"
+      },
+      "card2": {
+        "title": "環境機率論",
+        "desc": "計算重力與摩擦力決定的落點"
+      },
+      "card3": {
+        "title": "時空回溯",
+        "desc": "用時間線分析填補記憶空白"
+      }
+    },
+    "cases": {
+      "title": "即時案例傳輸",
+      "subtitle": "真實找回情報"
+    },
+    "footer": {
+      "privacy": "隱私政策",
+      "terms": "服務條款",
+      "contact": "聯絡我們"
+    },
+    "trust": {
+      "recovery": "87.3% 找回率",
+      "cases": "15,000+ 成功案例",
+      "guarantee": "無效免費覆盤"
+    }
+  },
+  "intro": {
+    "scene1": "請深呼吸",
+    "scene1Sub": "讓情緒平靜下來",
+    "scene2": "現在，回憶一下...",
+    "scene2Sub": "回到你遺失物品時的場景",
+    "scene3": "是在什麼場所遺失的？",
+    "scene3Sub": "當時周圍的環境空間是怎麼樣的？",
+    "scene4": "周圍有哪些人和事呢？",
+    "skip": "跳過 →"
+  },
+  "step0": {
+    "title": "鎖定第一現場",
+    "subtitle": "Identify Environment Profile",
+    "description": "閉上眼回憶一下，你**最後一次**確信它在身邊的位置是？",
+    "selectPrompt": "👆 請選擇一個區域開始分析",
+    "sectors": {
+      "Home": "家裡",
+      "Work": "辦公/學校",
+      "Vehicle": "交通工具",
+      "Public": "公共場所",
+      "Outdoors": "戶外",
+      "Unsure": "霧區模式 / 軌跡回溯"
+    },
+    "sectorDesc": {
+      "Home": "住所、房間",
+      "Work": "辦公室或課桌一角",
+      "Vehicle": "汽車或捷運車廂",
+      "Public": "商場、餐廳、電影院",
+      "Outdoors": "公園、街道、廣場",
+      "Unsure": "啟動軌跡分析模式"
+    },
+    "unsureMode": {
+      "title": "軌跡回溯模式已啟動",
+      "desc": "AI將啟動「軌跡回溯模式」，分析你在不同地點之間的移動路徑，逐一排查可能的遺失節點。"
+    },
+    "confidence": {
+      "aiHint90": "🎯 AI將在此區域進行深度層次式搜尋",
+      "aiHint70": "🔍 AI將優先搜尋此區域，同時排查周邊過渡地帶",
+      "aiHintLow": "🌐 AI將擴大搜尋半徑，檢查上一個地點及途中"
+    },
+    "button": {
+      "lock": "鎖定區域",
+      "trajectory": "啟動軌跡分析"
+    },
+    "missing": {
+      "noSector": "請先選擇一個區域",
+      "noConfidence": "請拖動滑桿確認信賴度"
+    }
+  },
+  "step1": {
+    "title": "你遺失了什麼？",
+    "subtitle": "選擇物品類型，幫助我們精準分析",
+    "categoryLabel": "物品類別",
+    "itemLabel": "具體物品",
+    "colorLabel": "物品顏色",
+    "featureLabel": "它有什麼特殊標記？",
+    "sizeLabel": "物品大小",
+    "customColorPlaceholder": "請輸入顏色名稱（如：墨綠色、香檳金、深紫色）",
+    "customSizePlaceholder": "請描述物品大小，如：電腦主機大小、行李箱大小...",
+    "featurePlaceholder": "例如：有保護殼、貼了貼紙、有磨損痕跡...",
+    "customItemPlaceholder": "輸入物品名稱...",
+    "sizeTiny": "微型",
+    "sizeSmall": "小型",
+    "sizeMedium": "中型",
+    "sizeLarge": "大型",
+    "customSizeHint": "提示：可用具體物品對比（如「筆記型電腦大小」）或直接說明尺寸（如「長30cm × 寬20cm」）",
+    "missing": {
+      "noCategory": "請先選擇物品類別",
+      "noItem": "請選擇具體物品",
+      "noCustomName": "請輸入自訂物品名稱",
+      "noColor": "請選擇物品顏色",
+      "noCustomColor": "請輸入自訂顏色名稱",
+      "noSize": "請選擇物品大小",
+      "noCustomSize": "請輸入自訂物品大小"
+    }
+  },
+  "step2": {
+    "title": "記憶回溯",
+    "subtitle": "你最後一次確定看見它是什麼時候？",
+    "timeRangeLabel": "時間範圍",
+    "lightPeriodLabel": "當時的光線/時段是？",
+    "locatorLabel": "時空定位器",
+    "fuzzyToggle": {
+      "label": "我對具體時間點不確定",
+      "on": "💭 沒關係，我們將分析全天的光線變化與行為模式",
+      "off": "🎯 已鎖定時間點，AI將分析該時間後方3小時內的路徑"
+    },
+    "mode": {
+      "broad": "廣域搜尋模式",
+      "broadDesc": "AI 將自動排查前後相鄰時段（±3小時）",
+      "precise": "精確鎖定模式",
+      "preciseDesc": "AI 僅分析選中的時段"
+    },
+    "aiAnalysis": "時空分析：",
+    "missing": {
+      "noTime": "請選擇時間範圍",
+      "noLight": "請選擇光線時段或開啟「時間不確定」開關",
+      "noDate": "請選擇具體日期或開啟「時間不確定」開關"
+    }
+  },
+  "step3": {
+    "title": "最後目擊",
+    "subtitle": "你最後一次看見它是在哪裡？",
+    "sceneLabel": "選擇場景",
+    "areaLabel": "你在 {scene} 的具體區域？",
+    "areaHint": "勾選您停留過的區域，協助AI完整重構行動軌跡與視覺盲區",
+    "customAreaPlaceholder": "輸入區域...",
+    "otherAreaLabel": "還有其他特殊位置？（選填）",
+    "selectedCount": "已選擇 {count} 個區域",
+    "scenes": {
+      "home": "家裡",
+      "homeDesc": "住所、房間",
+      "work": "公司/學校",
+      "workDesc": "工作/學習場所",
+      "transit": "車/通勤路上",
+      "transitDesc": "交通工具",
+      "public": "戶外/公共場所",
+      "publicDesc": "商場、餐廳等"
+    },
+    "missing": {
+      "noScene": "請選擇一個場景",
+      "noArea": "請至少選擇一個具體區域"
+    }
+  },
+  "step4": {
+    "title": "潛意識還原",
+    "subtitle": "我們需要分析你當時的「大腦頻寬」佔用情況",
+    "section1Title": "1. 大腦負載狀態 (CPU Load)",
+    "section1Hint": "決定了你當時的「視野頻寬」",
+    "section2Title": "2. 肢體行為慣性 (Physical Inertia)",
+    "section2Hint": "還原無意識的肌肉記憶（可多選）",
+    "section3Title": "3. 注意力干擾源",
+    "section3Hint": "是什麼打斷了你的記憶錄入？",
+    "distractedLabel": "我當時分心了",
+    "distractedOn": "已開啟干擾分析模式",
+    "distractedOff": "點擊開啟以記錄干擾因素",
+    "distractedPrompt": "具體是什麼干擾了你？（可多選）",
+    "distractionRecorded": "⚠️ 干擾因素已記錄",
+    "distractionAnalysis": "AI 將重點分析「自動駕駛」行為模式和無意識放置區域",
+    "otherMood": "其他狀態",
+    "otherMoodCustom": "自訂輸入",
+    "otherActivity": "其他動作",
+    "otherDistraction": "其他干擾",
+    "customStatePlaceholder": "輸入你的狀態...",
+    "customActivityPlaceholder": "輸入動作...",
+    "customDistractionPlaceholder": "輸入干擾...",
+    "moods": {
+      "angry": "過載：憤怒/急躁",
+      "angryDesc": "視野收窄 80%",
+      "anxious": "高壓：焦慮/趕時間",
+      "anxiousDesc": "記憶寫入失敗",
+      "drowsy": "低功耗：困倦/疲憊",
+      "drowsyDesc": "感知模組離線",
+      "tipsy": "訊號干擾：微醺",
+      "tipsyDesc": "判斷邏輯紊亂",
+      "excited": "峰值：興奮/激動",
+      "excitedDesc": "多巴胺覆蓋記憶",
+      "calm": "巡航：平靜/習慣",
+      "calmDesc": "自動駕駛模式",
+      "confused": "當機：困惑/迷茫",
+      "confusedDesc": "認知負荷過載"
+    },
+    "activities": {
+      "walking": "行走中",
+      "sitting": "坐著休息",
+      "carrying": "手持重物/拿快遞",
+      "phone_call": "打電話",
+      "cleaning": "整理衛生",
+      "changing": "試穿/換裝",
+      "driving": "駕駛/騎行",
+      "eating": "進餐",
+      "photo": "拍照"
+    },
+    "distractions": {
+      "notification": "突發訊息/電話",
+      "talking": "與人激烈交談",
+      "caring": "照看孩子/寵物",
+      "daydream": "沉思/發呆"
+    },
+    "missing": {
+      "noMood": "請選擇心理狀態",
+      "noActivity": "請選擇至少一個身體動作"
+    }
+  },
+  "step5": {
+    "title": "已排查資訊",
+    "subtitle": "告訴我們你已經找過哪些地方，避免重複建議",
+    "justLost": "剛發現丟了",
+    "alreadySearched": "已經找過",
+    "durationLabel": "找了多久了？",
+    "locationsLabel": "{title}",
+    "locationsHint": "（可多選，代表「已確認找過這裡，沒有」）",
+    "othersLabel": "其他嘗試",
+    "askedOthers": "已詢問相關人員（同事/家人）",
+    "aiTip": "💡 AI 提示：",
+    "aiTipContent": "了解您已經排查過的區域，可以幫助我們避免重複建議，並聚焦於那些容易被忽視的「視覺和記憶盲區」",
+    "toggleHint": "開關開啟表示「已嘗試過」，AI將不再建議；關閉表示「未嘗試」，AI將為您提供相關建議",
+    "startAnalysis": "開始 AI 分析",
+    "duration": {
+      "10min": "10分鐘內",
+      "30min": "半小時左右",
+      "1-2h": "1-2小時",
+      "half_day": "超過半天"
+    }
+  },
+  "loading": {
+    "title": "正在分析",
+    "phases": {
+      "1": "載入環境模型...",
+      "2": "掃描行為模式...",
+      "3": "鎖定目標座標..."
+    },
+    "logs": {
+      "init": "INITIALIZING_VECTOR_ENGINE...",
+      "env": "LOADING_ENVIRONMENT_PROFILE...",
+      "behavior": "ANALYZING_BEHAVIORAL_ENTROPY...",
+      "physics": "RUNNING_PHYSICS_SIMULATION...",
+      "memory": "RECONSTRUCTING_MEMORY_TIMELINE...",
+      "blind": "IDENTIFYING_COGNITIVE_BLINDSPOTS...",
+      "prob": "CALCULATING_PROBABILITY_MATRIX...",
+      "coords": "GENERATING_TACTICAL_COORDINATES...",
+      "complete": "TARGET_LOCKED."
+    }
+  },
+  "result": {
+    "title": "邏輯推演成功率：",
+    "titleHighlight": "極高",
+    "subtitle": "基於 15000+ 成功案例的綜合推演",
+    "gauge": {
+      "label": "推演信賴度"
+    },
+    "psychProfile": {
+      "subtitle": "心理學盲區分析"
+    },
+    "encryptedSection": "精準位置分析",
+    "clues": {
+      "high": "高機率",
+      "medium": "中機率",
+      "low": "輔助"
+    },
+    "clueStatus": "🔒 待解鎖",
+    "ctaTitle": "解鎖「視覺盲區」座標與戰術搜尋指令",
+    "ctaDesc": "告訴你**3個你絕對沒看過的死角**，以及**5步逆向尋找法**。",
+    "price": "$2.99",
+    "originalPrice": "$9.99",
+    "ctaButton": "獲取盲區座標 & 逆向搜尋戰術",
+    "urgency": "距記憶黃金找回期僅剩 {time}",
+    "limitedOffer": "限時優惠",
+    "trust": {
+      "rate": "87.3% 找回率",
+      "cases": "15,000+ 成功案例",
+      "guarantee": "無效免費覆盤"
+    },
+    "diagnosis": {
+      "tunnelVision": {
+        "title": "認知隧道效應（Tunnel Vision）",
+        "content": "偵測到你處於高壓狀態，大腦自動屏蔽了【非習慣性位置】的視覺訊號。你不是沒看到，而是大腦把你看到的畫面「P」掉了。"
+      },
+      "camouflage": {
+        "title": "偽裝警告（視覺偽裝）",
+        "content": "目標物品顏色與環境發生【光譜融合】。簡單說，它和背景「撞色」了，變成了「保護色」。在當前光線下，人眼識別率降低至 15%。需採用逆向視覺排查。"
+      },
+      "memoryDeception": {
+        "title": "記憶欺騙效應",
+        "content": "在自動駕駛模式下，記憶系統出現了「時序錯位」。物品往往不在你「記得」的位置，而在你「動作中斷」的那一瞬間。"
+      }
+    },
+    "encryptedClues": {
+      "primary": {
+        "title": "核心嫌疑區：重力沉降點",
+        "hint": "符合物理規律的 90% 機率區域，極易被忽略……"
+      },
+      "secondary": {
+        "title": "次要嫌疑區：視覺盲區",
+        "hint": "位於視線水平面以下的習慣死角……"
+      },
+      "auxiliary": {
+        "title": "輔助嫌疑區：社交轉移點",
+        "hint": "他人可能無意識轉移物品的位置……"
+      }
+    }
+  },
+  "report": {
+    "title": "找回指數",
+    "subtitle": "AI 戰術分析報告",
+    "probabilityLabel": "找回機率",
+    "holoMapTitle": "全息場景地圖",
+    "basicSearchTitle": "基礎排查點",
+    "tacticsTitle": "戰術協議",
+    "unlockTitle": "解鎖完整戰術報告",
+    "unlockDesc": "5 項微觀死角戰術 + 精準座標解密",
+    "unlockPrice": "$2.99",
+    "unlockButton": "解鎖戰術報告",
+    "unlocking": "解鎖中...",
+    "downloadReport": "下載完整報告",
+    "backHome": "返回首頁",
+    "basicLabel": "基礎 · 免費",
+    "tacticsLabel": "戰術 · 精準",
+    "cognitiveOverride": "認知覆寫",
+    "stopCondition": "停止條件",
+    "encouragement": "鼓勵",
+    "diagnosisTitle": "診斷報告",
+    "envScanTitle": "環境掃描",
+    "psychTitle": "行為心理分析",
+    "precisionPin": "精準目標"
+  },
+  "data": {
+    "categories": {
+      "daily": "日常必需品",
+      "digital": "數位產品",
+      "documents": "證件文件",
+      "valuables": "貴重物品",
+      "pets": "寵物",
+      "other": "其他物品"
+    },
+    "items": {
+      "keys": "鑰匙（家門/車鑰匙）",
+      "wallet": "錢包/卡包",
+      "glasses": "眼鏡/太陽眼鏡",
+      "watch": "手錶",
+      "umbrella": "雨傘",
+      "daily_other": "+ 其他",
+      "phone": "手機",
+      "airpods": "AirPods/藍牙耳機",
+      "tablet": "平板電腦",
+      "laptop": "筆記型電腦",
+      "powerbank": "行動電源",
+      "cable": "傳輸線/充電器",
+      "usb": "隨身碟/硬碟",
+      "remote": "遙控器",
+      "camera": "相機",
+      "digital_other": "+ 其他",
+      "id_card": "身分證",
+      "passport": "護照",
+      "driver_license": "駕照",
+      "bank_card": "金融卡",
+      "membership_card": "會員卡/門禁卡",
+      "important_docs": "重要文件/合約",
+      "docs_other": "+ 其他",
+      "ring": "戒指",
+      "necklace": "項鍊",
+      "earrings": "耳環/耳釘",
+      "bracelet": "手鍊/手鐲",
+      "cash": "現金",
+      "valuables_other": "+ 其他",
+      "cat": "貓",
+      "dog": "狗",
+      "bird": "鳥類",
+      "hamster": "倉鼠/兔子",
+      "pets_other": "+ 其他",
+      "bag": "包包/背包",
+      "clothes": "衣物",
+      "medicine": "藥品",
+      "toys": "玩具",
+      "book": "書籍",
+      "completely_other": "+ 其他"
+    },
+    "colors": {
+      "black": "黑色",
+      "white": "白色",
+      "silver": "銀色/灰色",
+      "gold": "金色",
+      "red": "紅色",
+      "pink": "粉色",
+      "orange": "橙色",
+      "brown": "棕色",
+      "green": "綠色",
+      "blue": "藍色",
+      "purple": "紫色",
+      "multicolor": "多色",
+      "transparent": "透明",
+      "other": "其他顏色"
+    },
+    "sizes": {
+      "small": "微型",
+      "medium": "小型",
+      "large": "中型",
+      "custom": "大型"
+    },
+    "time": {
+      "justNow": "剛剛",
+      "today": "今天",
+      "yesterday": "昨天",
+      "earlier": "更早"
+    },
+    "lightPeriods": {
+      "morning": "早上",
+      "noon": "中午",
+      "afternoon": "下午",
+      "evening": "傍晚/晚上"
+    },
+    "locations": {
+      "home": "家裡",
+      "work": "工作/學習場所",
+      "transport": "交通工具",
+      "public": "公共場所",
+      "outdoor": "戶外",
+      "location_other": "其他地點"
+    },
+    "subLocations": {
+      "living_room": "客廳",
+      "bedroom": "臥室",
+      "kitchen": "廚房",
+      "bathroom": "衛生間",
+      "entrance": "玄關/門口",
+      "balcony": "陽台",
+      "study": "書房",
+      "garage": "車庫",
+      "dining_room": "餐廳",
+      "home_other": "家裡其他區域",
+      "office_desk": "辦公室工位",
+      "meeting_room": "會議室",
+      "classroom": "教室",
+      "library": "圖書館",
+      "break_room": "茶水間/休息室",
+      "reception": "前台/大廳",
+      "work_other": "其他工作場所",
+      "private_car": "私家車",
+      "taxi": "計程車/網約車",
+      "bus_subway": "公車/捷運",
+      "train": "高鐵/火車",
+      "plane": "飛機",
+      "bike": "自行車/電動車",
+      "transport_other": "其他交通工具",
+      "restaurant": "餐廳/咖啡廳",
+      "mall": "商場/超市",
+      "hospital": "醫院/診所",
+      "gym": "健身房",
+      "hotel": "飯店/民宿",
+      "cinema": "電影院",
+      "ktv": "KTV/酒吧",
+      "bank": "銀行",
+      "salon": "理髮店/美容院",
+      "public_other": "其他公共場所",
+      "park": "公園",
+      "street": "街道/人行道",
+      "parking": "停車場",
+      "playground": "操場/運動場",
+      "scenic": "景區/旅遊地",
+      "outdoor_other": "其他戶外場所",
+      "friend_home": "朋友/親戚家",
+      "completely_other": "其他（自訂）"
+    }
+  }
+}
