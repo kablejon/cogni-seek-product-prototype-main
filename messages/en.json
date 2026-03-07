@@ -170,6 +170,16 @@
     "customAreaPlaceholder": "Enter area...",
     "otherAreaLabel": "Other special locations? (Optional)",
     "selectedCount": "{count} areas selected",
+    "groups": {
+      "private": "Private Space",
+      "public": "Public Transit"
+    },
+    "customAreaPlaceholders": {
+      "home": "e.g. sofa gap, nightstand, in the washing machine...",
+      "work": "e.g. reception desk, conference room 3, whiteboard area...",
+      "transit": "e.g. back seat gap, train car connection area...",
+      "public": "e.g. under park bench, near checkout counter, fitting room..."
+    },
     "scenes": {
       "home": "Home",
       "homeDesc": "Residence, rooms",
@@ -346,26 +356,26 @@
   "report": {
     "title": "Recovery Index",
     "subtitle": "AI Tactical Analysis Report",
-    "probabilityLabel": "Recovery Probability",
+    "probabilityLabel": "Recovery Potential Index",
     "holoMapTitle": "Holographic Scene Map",
-    "basicSearchTitle": "Basic Search Points",
+    "basicSearchTitle": "3 Common Search Zones",
     "tacticsTitle": "Tactical Protocol",
-    "unlockTitle": "Unlock Full Tactical Report",
+    "unlockTitle": "5 Micro Tactics + Tactical Commands",
     "unlockDesc": "5 micro-tactic precision commands + exact coordinate decryption",
     "unlockPrice": "$2.99",
-    "unlockButton": "Unlock Tactical Report",
-    "unlocking": "Unlocking...",
+    "unlockButton": "Unlock Solution Now",
+    "unlocking": "Decrypting...",
     "downloadReport": "Download Full Report",
     "backHome": "Return Home",
-    "basicLabel": "Basic · Free",
+    "basicLabel": "Free: Basic Checklist",
     "tacticsLabel": "Tactical · Precision",
-    "cognitiveOverride": "Cognitive Override",
+    "cognitiveOverride": "Diagnosis",
     "stopCondition": "Stop Condition",
-    "encouragement": "Encouragement",
+    "encouragement": "Execute the tactical actions above carefully. If still not found, download the full report to share and seek help.",
     "diagnosisTitle": "Diagnostic Report",
-    "envScanTitle": "Environment Scan",
+    "envScanTitle": "Environmental Physical Scan",
     "psychTitle": "Behavioral Psychology Analysis",
-    "precisionPin": "Precision Target"
+    "precisionPin": "PRECISION TARGET"
   },
   "data": {
     "categories": {
@@ -441,16 +451,34 @@
       "custom": "Large"
     },
     "time": {
-      "justNow": "Just now",
+      "just_now": "Just now",
       "today": "Today",
       "yesterday": "Yesterday",
-      "earlier": "Earlier"
+      "earlier": "Earlier / Custom Date"
+    },
+    "timeDesc": {
+      "just_now": "Within 1 hour",
+      "today": "Within 24 hours",
+      "yesterday": "24–48 hours ago",
+      "earlier": "Custom date"
     },
     "lightPeriods": {
-      "morning": "Morning",
-      "noon": "Noon",
-      "afternoon": "Afternoon",
-      "evening": "Evening / Night"
+      "dawn_morning": "Morning / Late Morning",
+      "noon_afternoon": "Noon / Afternoon",
+      "dusk": "Dusk / Evening",
+      "night": "Night / Late Night"
+    },
+    "lightPeriodTimes": {
+      "dawn_morning": "06:00–11:00",
+      "noon_afternoon": "11:00–17:00",
+      "dusk": "17:00–19:00",
+      "night": "19:00–06:00"
+    },
+    "lightInsights": {
+      "dawn_morning": "☀️ AI Analysis: Morning light is clear and cool. If the item is in an open area, it should be relatively easy to spot.",
+      "noon_afternoon": "☀️ AI Analysis: Strong light can create shadows. Check the shaded sides of objects and areas in shadow.",
+      "dusk": "🌇 AI Analysis: Rapidly changing light reduces eye adaptation. Items easily slip into visual blind spots — focus on transition areas.",
+      "night": "🌑 AI Analysis: Low visibility. If lights were off, check floor-level gaps, under furniture, and low corners."
     },
     "locations": {
       "home": "Home",
@@ -503,6 +531,55 @@
       "outdoor_other": "Other outdoor area",
       "friend_home": "Friend's / Relative's home",
       "completely_other": "Other (custom)"
+    }
+  },
+  "home": {
+    "badge": "Powered by AI Cognitive Engine",
+    "heroTitle1": "Lost Something?",
+    "heroTitle2": "AI Will Find It.",
+    "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and AI cognition to pinpoint your item's most likely location in minutes.",
+    "ctaStart": "Start Finding",
+    "ctaDemo": "See How It Works",
+    "stats": {
+      "rate": { "value": "87%", "label": "Recovery Rate" },
+      "cases": { "value": "12,000+", "label": "Cases Solved" },
+      "time": { "value": "< 3 min", "label": "Avg. Time" }
+    },
+    "featuresTitle": "How CogniSeek Works",
+    "featuresSubtitle": "Six-dimensional analysis combining psychology, physics, and AI to trace what your memory missed.",
+    "features": {
+      "psychology": { "title": "Behavioral Psychology", "desc": "Analyzes your mental state and action habits to reconstruct unconscious behaviors during the loss event." },
+      "spatial": { "title": "Spatial Probability", "desc": "Maps your movement path and calculates probability distributions for each area using spatial algorithms." },
+      "temporal": { "title": "Time-Space Reconstruction", "desc": "Rebuilds the temporal window of the loss using memory entropy and multi-dimensional time cues." },
+      "vision": { "title": "Visual Blind Spot Analysis", "desc": "Detects cognitive visual blind spots that cause people to look right at an object without seeing it." },
+      "entropy": { "title": "Chaos Entropy Engine", "desc": "Quantifies the degree of disorder in your state and environment to prioritize search zones." },
+      "instant": { "title": "Instant AI Report", "desc": "Generates a personalized tactical search plan in seconds, with step-by-step micro-action guidance." }
+    },
+    "howTitle": "How It Works",
+    "howSubtitle": "Complete 6 steps in under 3 minutes for a precision AI analysis.",
+    "steps": {
+      "1": { "title": "Describe the Item", "desc": "Tell us what you lost — type, color, and features." },
+      "2": { "title": "Set the Timeline", "desc": "When did you last have it? Lock the time window." },
+      "3": { "title": "Map the Location", "desc": "Pinpoint where you were and the areas you visited." },
+      "4": { "title": "Recall Your State", "desc": "Describe your mood and activities at the time." },
+      "5": { "title": "Report Prior Searches", "desc": "Tell us where you've already looked — and haven't." },
+      "6": { "title": "Get Your AI Report", "desc": "Receive a precision recovery plan with tactical actions." }
+    },
+    "testimonialsTitle": "Real Stories",
+    "testimonials": {
+      "1": { "text": "I searched everywhere for 40 minutes. CogniSeek pointed me to the seat rail gap I'd never think to check — found my AirPods in 2 minutes.", "name": "Alex R.", "item": "Found: AirPods" },
+      "2": { "text": "The psychological analysis was uncanny. It knew I was rushed and suggested the jacket pocket I threw on a chair. There it was.", "name": "Sarah M.", "item": "Found: Car keys" },
+      "3": { "text": "My cat went missing. The spatial probability map highlighted the exact closet corner. Opened it and she was there.", "name": "Jordan L.", "item": "Found: Pet cat" }
+    },
+    "ctaBannerTitle": "Stop Searching Blindly",
+    "ctaBannerSubtitle": "Let AI reconstruct the moment and tell you exactly where to look.",
+    "trust": {
+      "privacy": "Privacy protected",
+      "free": "Free basic analysis"
+    },
+    "footer": {
+      "tagline": "AI-powered item recovery assistant",
+      "disclaimer": "CogniSeek provides probability-based guidance and does not guarantee recovery. For entertainment and cognitive assistance purposes."
     }
   }
 }

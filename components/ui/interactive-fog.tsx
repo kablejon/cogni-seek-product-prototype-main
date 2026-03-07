@@ -25,7 +25,7 @@ export function InteractiveFog({
   color = "100, 150, 255",
 }: InteractiveFogProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(undefined)
   const particlesRef = useRef<Particle[]>([])
   const mouseRef = useRef({ x: 0, y: 0, isMoving: false })
   const lastMouseRef = useRef({ x: 0, y: 0 })

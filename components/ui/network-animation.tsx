@@ -27,7 +27,7 @@ export function NetworkAnimation({
   lineColor = "rgba(100, 150, 255, 0.2)",
 }: NetworkAnimationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(undefined)
   const nodesRef = useRef<Node[]>([])
 
   // Initialize nodes

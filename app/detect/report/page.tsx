@@ -27,6 +27,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSearchStore } from "@/lib/store"
+import { PRICE_CONFIG } from "@/lib/config/pricing"
 import { getDefaultAnalysisResult } from "@/lib/ai-service"
 
 // --- 1. 场景地图配置 (全息线索地图) ---
@@ -328,8 +329,14 @@ export default function ReportPage() {
     }
   }
 
+  const cjkFontStack = '"Inter", "Noto Sans SC", "Noto Sans TC", system-ui, sans-serif';
+
   return (
-    <div ref={reportRef} className="min-h-screen bg-[#020617] text-slate-200 font-mono selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-hidden flex flex-col">
+    <div
+      ref={reportRef}
+      className="min-h-screen bg-[#020617] text-slate-200 font-mono selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-hidden flex flex-col"
+      style={{ fontFamily: cjkFontStack }}
+    >
       
       {/* 背景：医用脉冲网格 */}
       <div className="absolute inset-0 pointer-events-none opacity-20" 
@@ -576,8 +583,8 @@ export default function ReportPage() {
                  <span className="text-xs font-bold text-slate-300">5项微观死角 + 战术破局指令</span>
                </div>
                <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-bold text-white">$2.99</span>
-                  <span className="text-xs text-slate-500 line-through decoration-slate-500">$9.99</span>
+                  <span className="text-lg font-bold text-white">{PRICE_CONFIG.price}</span>
+                  <span className="text-xs text-slate-500 line-through decoration-slate-500">{PRICE_CONFIG.originalPrice}</span>
               </div>
             </div>
 

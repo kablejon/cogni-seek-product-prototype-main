@@ -170,6 +170,16 @@
     "customAreaPlaceholder": "輸入區域...",
     "otherAreaLabel": "還有其他特殊位置？（選填）",
     "selectedCount": "已選擇 {count} 個區域",
+    "groups": {
+      "private": "私有空間",
+      "public": "公共流動"
+    },
+    "customAreaPlaceholders": {
+      "home": "例如：沙發縫隙、床頭櫃、洗衣機...",
+      "work": "例如：前台桌面、3號會議室...",
+      "transit": "例如：網約車後座縫隙、地鐵車廂連接處...",
+      "public": "例如：公園長椅下、收銀台旁、試衣間..."
+    },
     "scenes": {
       "home": "家裡",
       "homeDesc": "住所、房間",
@@ -346,25 +356,25 @@
   "report": {
     "title": "找回指數",
     "subtitle": "AI 戰術分析報告",
-    "probabilityLabel": "找回機率",
+    "probabilityLabel": "尋回潛力指數",
     "holoMapTitle": "全息場景地圖",
-    "basicSearchTitle": "基礎排查點",
-    "tacticsTitle": "戰術協議",
-    "unlockTitle": "解鎖完整戰術報告",
+    "basicSearchTitle": "3 個常規排查區",
+    "tacticsTitle": "戰術行動清單",
+    "unlockTitle": "5 項微觀死角 + 戰術破局指令",
     "unlockDesc": "5 項微觀死角戰術 + 精準座標解密",
     "unlockPrice": "$2.99",
-    "unlockButton": "解鎖戰術報告",
-    "unlocking": "解鎖中...",
+    "unlockButton": "立即解鎖方案",
+    "unlocking": "解密中...",
     "downloadReport": "下載完整報告",
     "backHome": "返回首頁",
-    "basicLabel": "基礎 · 免費",
+    "basicLabel": "免費：基礎排查清單",
     "tacticsLabel": "戰術 · 精準",
-    "cognitiveOverride": "認知覆寫",
+    "cognitiveOverride": "診斷",
     "stopCondition": "停止條件",
-    "encouragement": "鼓勵",
+    "encouragement": "請嚴格執行上述戰術動作。若仍未找到，建議下載完整報告分享尋求幫助。",
     "diagnosisTitle": "診斷報告",
-    "envScanTitle": "環境掃描",
-    "psychTitle": "行為心理分析",
+    "envScanTitle": "環境物理掃描",
+    "psychTitle": "行為心理學分析",
     "precisionPin": "精準目標"
   },
   "data": {
@@ -441,16 +451,34 @@
       "custom": "大型"
     },
     "time": {
-      "justNow": "剛剛",
+      "just_now": "剛剛",
       "today": "今天",
       "yesterday": "昨天",
-      "earlier": "更早"
+      "earlier": "更早/自訂"
+    },
+    "timeDesc": {
+      "just_now": "1小時內",
+      "today": "24小時內",
+      "yesterday": "24–48小時前",
+      "earlier": "自訂日期"
     },
     "lightPeriods": {
-      "morning": "早上",
-      "noon": "中午",
-      "afternoon": "下午",
-      "evening": "傍晚/晚上"
+      "dawn_morning": "凌晨/上午",
+      "noon_afternoon": "中午/下午",
+      "dusk": "黃昏/傍晚",
+      "night": "晚上/深夜"
+    },
+    "lightPeriodTimes": {
+      "dawn_morning": "06:00–11:00",
+      "noon_afternoon": "11:00–17:00",
+      "dusk": "17:00–19:00",
+      "night": "19:00–06:00"
+    },
+    "lightInsights": {
+      "dawn_morning": "☀️ AI 分析：晨間光線清冷明亮，視野清晰，物品若在開闊區域應較易發現。",
+      "noon_afternoon": "☀️ AI 分析：強光環境下，物品容易被陰影遮擋，建議檢查物體背光面及陰影區域。",
+      "dusk": "🌇 AI 分析：光線快速變化期，人眼適應度下降，物品極易滑入視覺盲區，重點排查過渡區域。",
+      "night": "🌑 AI 分析：可見度低，若當時未開燈，請重點排查腳下及低處縫隙、傢俱下方等區域。"
     },
     "locations": {
       "home": "家裡",
@@ -503,6 +531,55 @@
       "outdoor_other": "其他戶外場所",
       "friend_home": "朋友/親戚家",
       "completely_other": "其他（自訂）"
+    }
+  },
+  "home": {
+    "badge": "由 AI 認知引擎驅動",
+    "heroTitle1": "東西丟了？",
+    "heroTitle2": "AI 幫你找回來。",
+    "heroSubtitle": "CogniSeek 運用行為心理學、時空還原和 AI 認知分析，在幾分鐘內精準定位你物品最可能所在的位置。",
+    "ctaStart": "開始尋找",
+    "ctaDemo": "了解工作原理",
+    "stats": {
+      "rate": { "value": "87%", "label": "尋回率" },
+      "cases": { "value": "12,000+", "label": "已解決案例" },
+      "time": { "value": "< 3 分鐘", "label": "平均用時" }
+    },
+    "featuresTitle": "CogniSeek 的工作原理",
+    "featuresSubtitle": "融合心理學、物理學和 AI 的六維分析，追蹤記憶遺漏的細節。",
+    "features": {
+      "psychology": { "title": "行為心理學", "desc": "分析你的心理狀態和行動習慣，重建遺失事件中的無意識行為。" },
+      "spatial": { "title": "空間概率", "desc": "繪製移動路徑圖，使用空間算法計算各區域的概率分佈。" },
+      "temporal": { "title": "時空還原", "desc": "利用記憶熵和多維時間線索，重建遺失的時間窗口。" },
+      "vision": { "title": "視覺盲區分析", "desc": "檢測認知視覺盲區——正是這些盲區讓你直視物品卻視而不見。" },
+      "entropy": { "title": "混沌熵引擎", "desc": "量化你的狀態和環境的混亂程度，優先排查重點區域。" },
+      "instant": { "title": "即時 AI 報告", "desc": "秒級生成個性化戰術搜索方案，含逐步微觀行動指引。" }
+    },
+    "howTitle": "使用步驟",
+    "howSubtitle": "不到 3 分鐘完成 6 個步驟，獲得精準 AI 分析。",
+    "steps": {
+      "1": { "title": "描述物品", "desc": "告訴我們遺失的是什麼——類型、顏色和特徵。" },
+      "2": { "title": "確定時間線", "desc": "你最後一次看見它是什麼時候？鎖定時間窗口。" },
+      "3": { "title": "定位地點", "desc": "確定你當時在哪裡以及經過的區域。" },
+      "4": { "title": "回憶狀態", "desc": "描述你當時的心情和正在做的事情。" },
+      "5": { "title": "匯報已搜索區域", "desc": "告訴我們你找過哪裡——以及沒找過哪裡。" },
+      "6": { "title": "獲取 AI 報告", "desc": "獲得含戰術行動的精準尋回方案。" }
+    },
+    "testimonialsTitle": "真實案例",
+    "testimonials": {
+      "1": { "text": "我找了 40 分鐘都沒找到。CogniSeek 指向了我從沒想過要查的座椅滑軌縫隙——兩分鐘就找到了我的 AirPods。", "name": "Alex R.", "item": "找到了：AirPods" },
+      "2": { "text": "心理學分析簡直太準了。它知道我當時很著急，提示我檢查隨手搭在椅子上的夾克口袋。就在那裡。", "name": "Sarah M.", "item": "找到了：車鑰匙" },
+      "3": { "text": "我的貓不見了。空間概率地圖指向了壁櫥的某個角落。打開一看，她就在那裡。", "name": "Jordan L.", "item": "找到了：寵物貓" }
+    },
+    "ctaBannerTitle": "停止盲目翻找",
+    "ctaBannerSubtitle": "讓 AI 還原失去的那一刻，精準告訴你該去哪裡找。",
+    "trust": {
+      "privacy": "隱私保護",
+      "free": "基礎分析免費"
+    },
+    "footer": {
+      "tagline": "AI 驅動的物品尋回助手",
+      "disclaimer": "CogniSeek 提供基於概率的尋回指引，不保證 100% 找回。僅供娛樂及認知輔助用途。"
     }
   }
 }

@@ -13,9 +13,12 @@ export function getItemDisplayName(session: SearchSession): string {
 export function getLocationDisplayName(session: SearchSession): string {
   if (session.locationCustom) return session.locationCustom;
   const category = locationCategories.find(c => c.id === session.locationCategory);
-  const location = category?.subLocations.find(l => l.id === session.specificLocation);
-  const categoryLabel = category?.label || '';
-  const locationLabel = location?.label || '';
+  const categoryLabel = category?.label || category?.name || '';
+  const sub = category?.subLocations.find(l => {
+    const lId = typeof l === 'string' ? l : l.id
+    return lId === session.specificLocation
+  })
+  const locationLabel = sub && typeof sub !== 'string' ? sub.label : ''
   return locationLabel ? `${categoryLabel} - ${locationLabel}` : categoryLabel;
 }
 
@@ -23,14 +26,15 @@ export function getLocationDisplayName(session: SearchSession): string {
 export function getActivityDisplayName(session: SearchSession): string {
   if (session.activityCustom) return session.activityCustom;
   const category = activityCategories.find(c => c.id === session.activityCategory);
-  const activity = category?.activities.find(a => a.id === session.specificActivity);
+  const activities = category?.activities || []
+  const activity = activities.find((a: { id: string; label: string }) => a.id === session.specificActivity)
   return activity?.label || '';
 }
 
 // 获取情绪显示信息
 export function getMoodDisplayInfo(session: SearchSession): { label: string; icon: string } {
   if (session.moodCustom) return { label: session.moodCustom, icon: '❓' };
-  const mood = moodOptions.find(m => m.id === session.mood);
+  const mood = moodOptions.find(m => m.id === session.userMood);
   return { label: mood?.label || '', icon: mood?.icon || '' };
 }
 
@@ -39,8 +43,8 @@ export function calculateRecoveryProbability(session: SearchSession): number {
   let baseProb = 75;
 
   // 时间因素
-  if (session.timeConfidence === 'certain') baseProb += 8;
-  else if (session.timeConfidence === 'approximate') baseProb += 4;
+  if (session.confidence > 80) baseProb += 8;
+  else if (session.confidence > 50) baseProb += 4;
 
   // 场景因素 - 家里的找回率更高
   if (session.locationCategory === 'home') baseProb += 10;
@@ -49,9 +53,9 @@ export function calculateRecoveryProbability(session: SearchSession): number {
   else if (session.locationCategory === 'public') baseProb -= 15;
 
   // 情绪因素
-  if (session.mood === 'relaxed') baseProb += 5;
-  else if (session.mood === 'rushed' || session.mood === 'distracted') baseProb -= 5;
-  else if (session.mood === 'tipsy') baseProb -= 10;
+  if (session.userMood === 'relaxed') baseProb += 5;
+  else if (session.userMood === 'rushed' || session.userMood === 'distracted') baseProb -= 5;
+  else if (session.userMood === 'tipsy') baseProb -= 10;
 
   // 物品大小因素
   if (session.itemSize === 'large') baseProb += 5;
@@ -125,13 +129,13 @@ export function generateBehaviorAnalysis(session: SearchSession): string {
 
   let analysis = '';
 
-  if (session.mood === 'rushed' || session.wasDistracted) {
+  if (session.userMood === 'rushed' || session.wasDistracted) {
     analysis = `根据你当时的「${mood.label}」状态，大脑处于高压力模式下，注意力主要集中在主要任务上。在这种状态下，人们倾向于进行自动化行为，将物品放置在最方便、最近的位置，而非常规位置。`;
-  } else if (session.mood === 'relaxed') {
+  } else if (session.userMood === 'relaxed') {
     analysis = `你当时处于「${mood.label}」状态，这种情况下物品通常会被放置在习惯性的位置。建议首先检查你平时最常放置该物品的地方。`;
-  } else if (session.mood === 'distracted') {
+  } else if (session.userMood === 'distracted') {
     analysis = `你当时在「${activity}」的同时处于分心状态，这种多任务情境下，物品很容易被随手放在非预期的位置。建议检查当时活动动线上的各个停留点。`;
-  } else if (session.mood === 'tipsy') {
+  } else if (session.userMood === 'tipsy') {
     analysis = `在「${mood.label}」状态下，判断力和记忆力都会受到影响。物品可能被放置在非常规的位置，建议扩大搜索范围，包括一些平时不会放东西的地方。`;
   } else {
     analysis = `结合你当时「${activity}」的行为和「${mood.label}」的状态，物品最可能在该活动的核心区域或动线终点附近。`;

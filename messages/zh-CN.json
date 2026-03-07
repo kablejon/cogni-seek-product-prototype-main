@@ -126,7 +126,7 @@
     "sizeSmall": "小型",
     "sizeMedium": "中型",
     "sizeLarge": "大型",
-    "customSizeHint": "提示：可用具体物品对比（如"笔记本电脑大小"）或直接说明尺寸（如"长30cm × 宽20cm"）",
+    "customSizeHint": "提示：可用具体物品对比（如：笔记本电脑大小）或直接说明尺寸（如：长30cm x 宽20cm）",
     "missing": {
       "noCategory": "请先选择物品类别",
       "noItem": "请选择具体物品",
@@ -170,6 +170,16 @@
     "customAreaPlaceholder": "输入区域...",
     "otherAreaLabel": "还有其他特殊位置？（选填）",
     "selectedCount": "已选择 {count} 个区域",
+    "groups": {
+      "private": "私有空间",
+      "public": "公共流动"
+    },
+    "customAreaPlaceholders": {
+      "home": "例如：沙发缝隙里、床头柜上、洗衣机里...",
+      "work": "例如：前台桌面上、3号会议室白板前...",
+      "transit": "例如：网约车后座缝隙、地铁车厢连接处...",
+      "public": "例如：公园长椅下、收银台旁边、试衣间..."
+    },
     "scenes": {
       "home": "家里",
       "homeDesc": "住所、房间",
@@ -187,9 +197,9 @@
   },
   "step4": {
     "title": "潜意识还原",
-    "subtitle": "我们需要分析你当时的"大脑带宽"占用情况",
+    "subtitle": "我们需要分析你当时的「大脑带宽」占用情况",
     "section1Title": "1. 大脑负载状态 (CPU Load)",
-    "section1Hint": "决定了你当时的"视野带宽"",
+    "section1Hint": "决定了你当时的「视野带宽」",
     "section2Title": "2. 肢体行为惯性 (Physical Inertia)",
     "section2Hint": "还原无意识的肌肉记忆（可多选）",
     "section3Title": "3. 注意力干扰源",
@@ -199,7 +209,7 @@
     "distractedOff": "点击开启以记录干扰因素",
     "distractedPrompt": "具体是什么干扰了你？（可多选）",
     "distractionRecorded": "⚠️ 干扰因素已记录",
-    "distractionAnalysis": "AI 将重点分析"自动驾驶"行为模式和无意识放置区域",
+    "distractionAnalysis": "AI 将重点分析「自动驾驶」行为模式和无意识放置区域",
     "otherMood": "其他状态",
     "otherMoodCustom": "自定义输入",
     "otherActivity": "其他动作",
@@ -252,12 +262,12 @@
     "alreadySearched": "已经找过",
     "durationLabel": "找了多久了？",
     "locationsLabel": "{title}",
-    "locationsHint": "（可多选，代表"已确认找过这里，没有"）",
+    "locationsHint": "（可多选，代表「已确认找过这里，没有」）",
     "othersLabel": "其他尝试",
     "askedOthers": "已询问相关人员（同事/家人）",
     "aiTip": "💡 AI 提示：",
-    "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的"视觉和记忆盲区"",
-    "toggleHint": "开关开启表示"已尝试过"，AI将不再建议；关闭表示"未尝试"，AI将为您提供相关建议",
+    "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的「视觉和记忆盲区」",
+    "toggleHint": "开关开启表示「已尝试过」，AI将不再建议；关闭表示「未尝试」，AI将为您提供相关建议",
     "startAnalysis": "开始 AI 分析",
     "duration": {
       "10min": "10分钟内",
@@ -302,7 +312,7 @@
       "low": "辅助"
     },
     "clueStatus": "🔒 待解锁",
-    "ctaTitle": "解锁"视觉盲区"坐标与战术搜寻指令",
+    "ctaTitle": "解锁「视觉盲区」坐标与战术搜寻指令",
     "ctaDesc": "告诉你**3个你绝对没看过的死角**，以及**5步逆向寻找法**。",
     "price": "$2.99",
     "originalPrice": "$9.99",
@@ -317,15 +327,15 @@
     "diagnosis": {
       "tunnelVision": {
         "title": "认知隧道效应（Tunnel Vision）",
-        "content": "检测到你处于高压状态，大脑自动屏蔽了【非习惯性位置】的视觉信号。你不是没看到，而是大脑把你看到的画面"P"掉了。"
+        "content": "检测到你处于高压状态，大脑自动屏蔽了【非习惯性位置】的视觉信号。你不是没看到，而是大脑把你看到的画面「P」掉了。"
       },
       "camouflage": {
         "title": "伪装警告（视觉伪装）",
-        "content": "目标物品颜色与环境发生【光谱融合】。简单说，它和背景"撞色"了，变成了"保护色"。在当前光线下，人眼识别率降低至 15%。需采用逆向视觉排查。"
+        "content": "目标物品颜色与环境发生【光谱融合】。简单说，它和背景「撞色」了，变成了「保护色」。在当前光线下，人眼识别率降低至 15%。需采用逆向视觉排查。"
       },
       "memoryDeception": {
         "title": "记忆欺骗效应",
-        "content": "在自动驾驶模式下，记忆系统出现了"时序错位"。物品往往不在你"记得"的位置，而在你"动作中断"的那一瞬间。"
+        "content": "在自动驾驶模式下，记忆系统出现了「时序错位」。物品往往不在你「记得」的位置，而在你「动作中断」的那一瞬间。"
       }
     },
     "encryptedClues": {
@@ -346,25 +356,25 @@
   "report": {
     "title": "寻回指数",
     "subtitle": "AI 战术分析报告",
-    "probabilityLabel": "寻回概率",
+    "probabilityLabel": "寻回潜力指数",
     "holoMapTitle": "全息场景地图",
-    "basicSearchTitle": "基础排查点",
-    "tacticsTitle": "战术协议",
-    "unlockTitle": "解锁完整战术报告",
+    "basicSearchTitle": "3 个常规排查区",
+    "tacticsTitle": "战术行动清单",
+    "unlockTitle": "5 项微观死角 + 战术破局指令",
     "unlockDesc": "5 项微观死角战术 + 精准坐标解密",
     "unlockPrice": "$2.99",
-    "unlockButton": "解锁战术报告",
-    "unlocking": "解锁中...",
+    "unlockButton": "立即解锁方案",
+    "unlocking": "解密中...",
     "downloadReport": "下载完整报告",
     "backHome": "返回首页",
-    "basicLabel": "基础 · 免费",
+    "basicLabel": "免费：基础排查清单",
     "tacticsLabel": "战术 · 精准",
-    "cognitiveOverride": "认知覆写",
+    "cognitiveOverride": "诊断",
     "stopCondition": "停止条件",
-    "encouragement": "鼓励",
+    "encouragement": "请严格执行上述战术动作。若仍未找到，建议下载完整报告分享寻求帮助。",
     "diagnosisTitle": "诊断报告",
-    "envScanTitle": "环境扫描",
-    "psychTitle": "行为心理分析",
+    "envScanTitle": "环境物理扫描",
+    "psychTitle": "行为心理学分析",
     "precisionPin": "精准目标"
   },
   "data": {
@@ -441,16 +451,34 @@
       "custom": "大型"
     },
     "time": {
-      "justNow": "刚刚",
+      "just_now": "刚刚",
       "today": "今天",
       "yesterday": "昨天",
-      "earlier": "更早"
+      "earlier": "更早/自定义"
+    },
+    "timeDesc": {
+      "just_now": "1小时内",
+      "today": "24小时内",
+      "yesterday": "24–48小时前",
+      "earlier": "自定义日期"
     },
     "lightPeriods": {
-      "morning": "早上",
-      "noon": "中午",
-      "afternoon": "下午",
-      "evening": "傍晚/晚上"
+      "dawn_morning": "凌晨/上午",
+      "noon_afternoon": "中午/下午",
+      "dusk": "黄昏/傍晚",
+      "night": "晚上/深夜"
+    },
+    "lightPeriodTimes": {
+      "dawn_morning": "06:00–11:00",
+      "noon_afternoon": "11:00–17:00",
+      "dusk": "17:00–19:00",
+      "night": "19:00–06:00"
+    },
+    "lightInsights": {
+      "dawn_morning": "☀️ AI 分析：晨间光线清冷明亮，视野清晰，物品若在开阔区域应较易发现。",
+      "noon_afternoon": "☀️ AI 分析：强光环境下，物品容易被阴影遮挡，建议检查物体背光面及阴影区域。",
+      "dusk": "🌇 AI 分析：光线快速变化期，人眼适应度下降，物品极易滑入视觉盲区，重点排查过渡区域。",
+      "night": "🌑 AI 分析：可见度低，若当时未开灯，请重点排查脚下及低处缝隙、家具下方等区域。"
     },
     "locations": {
       "home": "家里",
@@ -503,6 +531,55 @@
       "outdoor_other": "其他户外场所",
       "friend_home": "朋友/亲戚家",
       "completely_other": "其他（自定义）"
+    }
+  },
+  "home": {
+    "badge": "由 AI 认知引擎驱动",
+    "heroTitle1": "丢东西了？",
+    "heroTitle2": "AI 帮你找回来。",
+    "heroSubtitle": "CogniSeek 运用行为心理学、时空还原和 AI 认知分析，在几分钟内精准定位你物品最可能所在的位置。",
+    "ctaStart": "开始寻找",
+    "ctaDemo": "了解工作原理",
+    "stats": {
+      "rate": { "value": "87%", "label": "寻回率" },
+      "cases": { "value": "12,000+", "label": "已解决案例" },
+      "time": { "value": "< 3 分钟", "label": "平均用时" }
+    },
+    "featuresTitle": "CogniSeek 的工作原理",
+    "featuresSubtitle": "融合心理学、物理学和 AI 的六维分析，追踪记忆遗漏的细节。",
+    "features": {
+      "psychology": { "title": "行为心理学", "desc": "分析你的心理状态和行动习惯，重建丢失事件中的无意识行为。" },
+      "spatial": { "title": "空间概率", "desc": "绘制移动路径图，使用空间算法计算各区域的概率分布。" },
+      "temporal": { "title": "时空还原", "desc": "利用记忆熵和多维时间线索，重建丢失的时间窗口。" },
+      "vision": { "title": "视觉盲区分析", "desc": "检测认知视觉盲区——正是这些盲区让你直视物品却视而不见。" },
+      "entropy": { "title": "混沌熵引擎", "desc": "量化你的状态和环境的混乱程度，优先排查重点区域。" },
+      "instant": { "title": "即时 AI 报告", "desc": "秒级生成个性化战术搜索方案，含逐步微观行动指引。" }
+    },
+    "howTitle": "使用步骤",
+    "howSubtitle": "不到 3 分钟完成 6 个步骤，获得精准 AI 分析。",
+    "steps": {
+      "1": { "title": "描述物品", "desc": "告诉我们丢失的是什么——类型、颜色和特征。" },
+      "2": { "title": "确定时间线", "desc": "你最后一次看见它是什么时候？锁定时间窗口。" },
+      "3": { "title": "定位地点", "desc": "确定你当时在哪里以及经过的区域。" },
+      "4": { "title": "回忆状态", "desc": "描述你当时的心情和正在做的事情。" },
+      "5": { "title": "汇报已搜索区域", "desc": "告诉我们你找过哪里——以及没找过哪里。" },
+      "6": { "title": "获取 AI 报告", "desc": "获得含战术行动的精准寻回方案。" }
+    },
+    "testimonialsTitle": "真实案例",
+    "testimonials": {
+      "1": { "text": "我找了 40 分钟都没找到。CogniSeek 指向了我从没想过要查的座椅滑轨缝隙——两分钟就找到了我的 AirPods。", "name": "Alex R.", "item": "找到了：AirPods" },
+      "2": { "text": "心理学分析简直太准了。它知道我当时很着急，提示我检查随手搭在椅子上的夹克口袋。就在那里。", "name": "Sarah M.", "item": "找到了：车钥匙" },
+      "3": { "text": "我的猫不见了。空间概率地图指向了壁橱的某个角落。打开一看，她就在那里。", "name": "Jordan L.", "item": "找到了：宠物猫" }
+    },
+    "ctaBannerTitle": "停止盲目翻找",
+    "ctaBannerSubtitle": "让 AI 还原失去的那一刻，精准告诉你该去哪里找。",
+    "trust": {
+      "privacy": "隐私保护",
+      "free": "基础分析免费"
+    },
+    "footer": {
+      "tagline": "AI 驱动的物品寻回助手",
+      "disclaimer": "CogniSeek 提供基于概率的寻回指引，不保证 100% 找回。仅供娱乐及认知辅助用途。"
     }
   }
 }

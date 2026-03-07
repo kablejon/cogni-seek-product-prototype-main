@@ -22,8 +22,16 @@ export function ReportPoster({
   keyClues,
   psychology
 }: ReportPosterProps) {
+  const cjkFontStack = '"Inter", "Noto Sans SC", "Noto Sans TC", system-ui, sans-serif';
+
   return (
-    <div className="w-[600px] h-[800px] text-white relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #020617 0%, #0a1628 50%, #020617 100%)' }}>
+    <div
+      className="w-[600px] h-[800px] text-white relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, #020617 0%, #0a1628 50%, #020617 100%)',
+        fontFamily: cjkFontStack,
+      }}
+    >
       
       {/* 背景装饰网格 */}
       <div 

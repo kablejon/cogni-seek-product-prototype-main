@@ -163,7 +163,9 @@ export default function Step5Page() {
     
     // 否则使用原有的子位置列表
     const categoryData = locationCategories.find(c => c.id === category)
-    const zones = categoryData?.subLocations.filter(l => !l.id.includes('other')) || []
+    const zones = (categoryData?.subLocations || [])
+      .map(l => typeof l === 'string' ? { id: l, label: l } : l)
+      .filter(l => !l.id.includes('other'))
     
     return {
       title: '已经找过哪些地方？',

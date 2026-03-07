@@ -59,7 +59,7 @@ function getLocationDisplayName(session: SearchSession): string {
   if (session.lossLocation) return session.lossLocation;
   
   const category = locationCategories.find(c => c.id === session.lossLocationCategory);
-  return category?.label || session.lossLocationCategory || '未知位置';
+  return category?.name || session.lossLocationCategory || 'Unknown location';
 }
 
 function getActivityDisplayName(session: SearchSession): string {
@@ -73,7 +73,7 @@ function getMoodDisplayInfo(session: SearchSession): { label: string; icon: stri
   
   // 备用：从 moodOptions 查找
   const mood = moodOptions.find(m => m.id === session.userMood);
-  return { label: mood?.label || '', icon: mood?.icon || '' };
+  return { label: mood?.label || '', icon: '' };
 }
 
 // ==================== 专业提示词构建 ====================
@@ -86,7 +86,7 @@ export function buildAnalysisPrompt(session: SearchSession): string {
 
   // 计算熵值（混乱程度）
   const calculateEntropyScore = (): 'High' | 'Low' => {
-    if (session.wasDistracted || session.mood === 'stressed' || session.mood === 'anxious') {
+    if (session.wasDistracted || session.userMood === 'stressed' || session.userMood === 'anxious') {
       return 'High';
     }
     if (session.visitedMultipleLocations) return 'High';
@@ -107,7 +107,7 @@ export function buildAnalysisPrompt(session: SearchSession): string {
       return 'Stick（粘附型：会滑入垂直缝隙、书页/布料夹层）';
     }
     // 重物 -> Sink
-    if (size === 'large' || ['keys', 'wallet'].includes(session.itemType || '')) {
+    if (size === 'large' || ['keys', 'wallet'].includes(session.itemType || session.itemName || '')) {
       return 'Sink（下沉型：会陷入软表面如沙发缝隙、被埋没）';
     }
     return 'Slide（滑动型：会在平面上滑动到边缘）';
@@ -116,8 +116,8 @@ export function buildAnalysisPrompt(session: SearchSession): string {
   // 行为状态映射
   const getActivityState = (): string => {
     if (session.wasDistracted) return 'High-Entropy（高熵：匆忙/分心/多任务）';
-    if (session.mood === 'relaxed' || session.mood === 'tired') return 'Low-Entropy（低熵：放松/休息）';
-    if (session.mood === 'stressed' || session.mood === 'anxious') return 'High-Entropy（高熵：紧张/焦虑）';
+    if (session.userMood === 'relaxed' || session.userMood === 'tired') return 'Low-Entropy（低熵：放松/休息）';
+    if (session.userMood === 'stressed' || session.userMood === 'anxious') return 'High-Entropy（高熵：紧张/焦虑）';
     return 'Medium-Entropy（中熵：一般状态）';
   };
 
@@ -144,10 +144,10 @@ You act as a forensic expert who collapses infinite search possibilities into **
 - **Item_Name**: ${itemName}
 - **Item_Color**: ${session.itemColor || 'Not specified'}
 - **Item_Size**: ${session.itemSize === 'small' ? 'Small (高滑落风险)' : session.itemSize === 'medium' ? 'Medium (易被遮挡)' : session.itemSize === 'large' ? 'Large (可能被误认)' : 'Unknown'}
-- **Has_Sound**: ${session.hasSound === true ? 'Yes (可响铃定位)' : 'No'}
-- **Has_Case**: ${session.hasCase === true ? 'Yes (视觉标识增强)' : 'No (易滑落)'}
-- **Time_Lost**: ${session.lastSeenDate || session.timeQuickSelect || 'Unknown'}
-- **Time_Confidence**: ${session.timeConfidence === 'certain' ? 'High' : session.timeConfidence === 'approximate' ? 'Medium' : 'Low'}
+- **Has_Sound**: No
+- **Has_Case**: No
+- **Time_Lost**: ${session.lossTime || session.lossTimeRange || 'Unknown'}
+- **Time_Confidence**: ${session.confidence > 70 ? 'High' : session.confidence > 40 ? 'Medium' : 'Low'}
 - **Activity_State**: ${getActivityState()}
 - **Current_Activity**: ${activityName || 'Not specified'}
 - **Mood**: ${mood.label || 'Not specified'}
@@ -155,7 +155,7 @@ You act as a forensic expert who collapses infinite search possibilities into **
 - **Others_Present**: ${session.otherPeoplePresent ? 'Yes (物品可能被移动)' : 'No'}
 - **Last_Location**: ${locationName || 'Not specified'}
 - **Multiple_Locations**: ${session.visitedMultipleLocations ? 'Yes' : 'No'}
-- **Other_Locations**: ${session.otherVisitedLocations?.length > 0 ? session.otherVisitedLocations.join(', ') : 'None'}
+- **Other_Locations**: ${(session.otherVisitedLocations?.length ?? 0) > 0 ? session.otherVisitedLocations.join(', ') : 'None'}
 
 ### Search_History
 - **Already_Searched**: ${session.hasSearched ? 'Yes' : 'No (刚发现丢失)'}
@@ -233,7 +233,7 @@ Return ONLY the following JSON format, no other text:
   },
   "behaviorAnalysis": "Psychological analysis of the user's ${getActivityState()} state. Explain how Inattentional Blindness caused the item to be placed unconsciously.",
   "environmentAnalysis": "Environmental blind spots in ${locationName}: vertical surfaces, same-color backgrounds, cluttered zones.",
-  "timelineAnalysis": "Timeline reconstruction: Based on ${session.lastSeenDate || 'unknown time'}, the item was likely deposited during [specific moment/action].",
+  "timelineAnalysis": "Timeline reconstruction: Based on ${session.lossTime || 'unknown time'}, the item was likely deposited during [specific moment/action].",
   "checklist": [
     "⚡ PRIORITY: [The 2-minute action - specific physical movement with tool if needed]",
     "🔦 Use flashlight at ground level to catch reflections/shadows in ${locationName}",

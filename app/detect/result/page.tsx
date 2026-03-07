@@ -6,6 +6,7 @@ import { Lock, Sparkles, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useSearchStore } from "@/lib/store"
+import { PRICE_CONFIG } from "@/lib/config/pricing"
 import { getDefaultAnalysisResult } from "@/lib/ai-service"
 import { InteractiveFog } from "@/components/ui/interactive-fog"
 
@@ -304,8 +305,8 @@ export default function ResultPage() {
               </p>
 
               <div className="flex items-baseline justify-center gap-2">
-                <span className="text-5xl font-bold text-[#2DE1FC]">$2.99</span>
-                <span className="text-muted-foreground line-through">$9.99</span>
+                <span className="text-5xl font-bold text-[#2DE1FC]">{PRICE_CONFIG.price}</span>
+                <span className="text-muted-foreground line-through">{PRICE_CONFIG.originalPrice}</span>
               </div>
 
               <Button 
