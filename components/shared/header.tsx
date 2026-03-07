@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useSearchStore } from "@/lib/store"
+import { LanguageSwitcher } from "./language-switcher"
 
 interface HeaderProps {
   currentStep?: number
@@ -44,6 +45,8 @@ export function Header({ currentStep, totalSteps = 6, showProgress = false }: He
               </span>
             </div>
           )}
+
+          <LanguageSwitcher />
         </div>
       </header>
       

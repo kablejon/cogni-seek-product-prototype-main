@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "@/lib/navigation"
 import domtoimage from "dom-to-image-more"
 import {
@@ -32,6 +32,7 @@ const SCENE_CONFIG = {
 export default function ReportPage() {
   const router = useRouter()
   const t = useTranslations('report')
+  const locale = useLocale()
   const { session, resetSession, analysisResult } = useSearchStore()
   const [isPaid, setIsPaid] = useState(false)
   const [loadingPay, setLoadingPay] = useState(false)
@@ -41,7 +42,7 @@ export default function ReportPage() {
 
   useEffect(() => { setCaseId(Math.floor(Math.random() * 10000)) }, [])
 
-  const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session), [analysisResult, session])
+  const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session, locale), [analysisResult, session, locale])
 
   const content = useMemo(() => ({
     psychology: {

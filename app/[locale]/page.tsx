@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { InteractiveFog } from "@/components/ui/interactive-fog"
+import { LanguageSwitcher } from "@/components/shared/language-switcher"
 import {
   Brain, MapPin, Clock, Zap, Shield, ChevronRight, Star, Search,
   TrendingUp, Eye, Waves
@@ -50,6 +51,7 @@ export default function HomePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
               AI Online
             </Badge>
+            <LanguageSwitcher />
           </div>
         </div>
       </header>

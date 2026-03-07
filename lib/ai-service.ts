@@ -269,7 +269,7 @@ Return ONLY valid JSON. No markdown formatting, no explanations.`;
 
 // ==================== API 调用 ====================
 
-export async function analyzeWithAI(session: SearchSession, locale: string = 'zh-CN'): Promise<AIAnalysisResult> {
+export async function analyzeWithAI(session: SearchSession, locale: string = 'en'): Promise<AIAnalysisResult> {
   console.log('=== 🚀 开始 AI 分析 ===');
   
   const itemName = getItemDisplayName(session);
@@ -331,66 +331,127 @@ export async function analyzeWithAI(session: SearchSession, locale: string = 'zh
 
 // ==================== 默认/备用结果 ====================
 
-export function getDefaultAnalysisResult(session: SearchSession): AIAnalysisResult {
+export function getDefaultAnalysisResult(session: SearchSession, locale: string = 'en'): AIAnalysisResult {
+  const isZH = locale === 'zh-CN';
   const itemName = getItemDisplayName(session);
   const locationName = getLocationDisplayName(session);
-  const itemColor = session.itemColor || '物品';
-  
+  const itemColor = session.itemColor || (isZH ? '物品' : 'item');
+
+  if (isZH) {
+    return {
+      probability: 78,
+      probabilityLevel: 'High',
+      summary: `这是一个典型的「静态隐蔽」案例。你的 ${itemName} 可能没有被移动，而是与 ${locationName} 的背景融为一体了。`,
+      priorityAction: {
+        target: `${locationName}的家具底部和边缘区域`,
+        action: `趴在地上，用手机闪光灯照射${locationName}所有家具底部，同时用手臂横扫整个区域。这个动作能在2分钟内覆盖60%的高概率藏匿点。`,
+        why: `根据物理学原理，小型物品在重力作用下会滚落或滑落到低点。视觉搜索往往忽略地面以下的空间，但触觉搜索不会。`,
+      },
+      predictions: [
+        {
+          location: `${locationName}的家具缝隙或底部`,
+          confidence: 45,
+          reason: '根据物理动力学，物品在无意识放置后最可能滑落或滚落到低点',
+          technique: '趴下用手机闪光灯扫描所有家具底部，寻找反光或阴影',
+        },
+        {
+          location: `${locationName}中被其他物品覆盖的位置`,
+          confidence: 30,
+          reason: '无意识盲视效应：大脑会自动过滤「不应该在那里」的物品',
+          technique: '将桌面/台面上的所有物品逐一移开，而不是仅用眼睛扫视',
+        },
+        {
+          location: '被同住者无意中移动的位置',
+          confidence: 20,
+          reason: '共享空间中，物品经常因整理行为被重新放置',
+          technique: `直接询问：「你有没有看到/移动过一个${itemColor}的${itemName}？」`,
+        },
+      ],
+      direction: {
+        primary: 'NW',
+        primaryLabel: '西北方向',
+        confidence: 70,
+        description: `基于物理模拟：从你最后确认位置出发，物品最可能向重力低点或你的惯用手方向移动。优先搜索该方向的收纳空间和缝隙。`,
+      },
+      behaviorAnalysis: `在你当时的活动状态下，大脑处于「认知卸载」模式。${itemName}很可能被无意识地放置在你移动路径上的某个停留点。这不是遗忘，而是大脑为了节省认知资源而进行的自动化行为。`,
+      environmentAnalysis: `${locationName}存在多个典型的视觉盲区：1) 与背景颜色相近的区域（色彩融合）；2) 视线水平以上或以下的空间（垂直盲区）；3) 物品堆叠区域的底层（遮挡盲区）。`,
+      timelineAnalysis: `根据时间线推测，${itemName}最可能在你进行其他活动的过渡时刻被放下。当注意力从物品转移到新任务时，手部会自动完成放置动作，但大脑不会记录具体位置。`,
+      basicSearchPoints: [
+        `${locationName}的表面和可见区域`,
+        '桌面、台面等最后使用物品的区域',
+        '地面开阔区域（掉落的第一反应位置）',
+      ],
+      checklist: [
+        `⚡ 趴在地上用手机闪光灯扫描${locationName}所有家具底部`,
+        `🔦 在${locationName}用闪光灯低角度照射，寻找${itemName}的反光或投射阴影`,
+        `👐 触觉搜索：用手扫过所有台面和缝隙，而不是仅用眼睛看`,
+        '📐 检查视线以上：架子顶部、柜子上方、高处置物台',
+        '🗂️ 移开遮挡物：逐一移开桌上的纸张、衣物、书本',
+        '🪑 检查缝隙：沙发垫下、家具与墙壁的夹缝、抽屉内部',
+        '👥 社交确认：询问同住者或到访者是否移动过该物品',
+        `🔄 路径重走：从你最后使用${itemName}的地点，重新走一遍当时的路线`,
+      ],
+      cognitiveOverride: `停止寻找「${itemName}」本身。改为寻找：${itemColor}的反光/光泽、${itemName}的轮廓形状、或它投射的阴影。让眼睛捕捉异常，而不是匹配预期。`,
+      stopCondition: `如果完成以上所有检查仍未找到：概率模型提示外部丢失可能性增加。升级方案：1) 检查所有垃圾桶 → 2) 回溯户外路线 → 3) 发布社区寻物信息`,
+      encouragement: `90%的「丢失」物品都在你认为的2米范围内。你的${itemName}没有离开——它正在等待被重新发现。相信物理学，用手而不是眼睛去找，你一定能找到它！`,
+    };
+  }
+
   return {
     probability: 78,
     probabilityLevel: 'High',
     summary: `This is a classic 'Static Concealment' case. Your ${itemName} is likely stationary but has blended into the background in ${locationName}.`,
     priorityAction: {
-      target: `${locationName}的家具底部和边缘区域`,
-      action: `趴在地上，用手机闪光灯照射${locationName}所有家具底部，同时用手臂横扫整个区域。这个动作能在2分钟内覆盖60%的高概率藏匿点。`,
-      why: `根据物理学原理，小型物品在重力作用下会滚落或滑落到低点。视觉搜索往往忽略地面以下的空间，但触觉搜索不会。`,
+      target: `Bottom and edges of furniture in ${locationName}`,
+      action: `Get down on the floor. Use your phone's flashlight parallel to the ground to sweep all furniture bases in ${locationName}, while using your arm to physically sweep the area. This covers 60% of high-probability hiding spots in under 2 minutes.`,
+      why: `By physics, small objects roll or slide to the lowest point under gravity. Visual searches typically miss sub-floor space; tactile sweeps do not.`,
     },
     predictions: [
       {
-        location: `${locationName}的家具缝隙或底部`,
+        location: `Under or between furniture in ${locationName}`,
         confidence: 45,
-        reason: '根据物理动力学，物品在无意识放置后最可能滑落或滚落到低点',
-        technique: '趴下用手机闪光灯扫描所有家具底部，寻找反光或阴影',
+        reason: 'Physics dynamics: unconsciously placed items most likely slide or roll to the lowest point',
+        technique: 'Get on the floor and use a flashlight to scan all furniture bases for reflections or shadows',
       },
       {
-        location: `${locationName}中被其他物品覆盖的位置`,
+        location: `Buried under other items in ${locationName}`,
         confidence: 30,
-        reason: '无意识盲视效应：大脑会自动过滤"不应该在那里"的物品',
-        technique: '将桌面/台面上的所有物品逐一移开，而不是仅用眼睛扫视',
+        reason: 'Inattentional blindness: the brain auto-filters objects that "shouldn\'t be there"',
+        technique: 'Remove items from surfaces one by one instead of scanning visually',
       },
       {
-        location: '被同住者无意中移动的位置',
+        location: 'Moved by another household member',
         confidence: 20,
-        reason: '共享空间中，物品经常因整理行为被重新放置',
-        technique: `直接询问："你有没有看到/移动过一个${itemColor}的${itemName}？"`,
+        reason: 'In shared spaces, items are frequently relocated during tidying',
+        technique: `Ask directly: "Have you seen or moved a ${itemColor} ${itemName}?"`,
       },
     ],
     direction: {
       primary: 'NW',
-      primaryLabel: '西北方向',
+      primaryLabel: 'Northwest',
       confidence: 70,
-      description: `基于物理模拟：从你最后确认位置出发，物品最可能向重力低点或你的惯用手方向移动。优先搜索该方向的收纳空间和缝隙。`,
+      description: `Physics simulation: from your last confirmed position, the item most likely moved toward the gravity low point or your dominant hand direction. Prioritize storage spaces and gaps in that direction.`,
     },
-    behaviorAnalysis: `在你当时的活动状态下，大脑处于"认知卸载"模式。${itemName}很可能被无意识地放置在你移动路径上的某个停留点。这不是遗忘，而是大脑为了节省认知资源而进行的自动化行为。`,
-    environmentAnalysis: `${locationName}存在多个典型的视觉盲区：1) 与背景颜色相近的区域（色彩融合）；2) 视线水平以上或以下的空间（垂直盲区）；3) 物品堆叠区域的底层（遮挡盲区）。`,
-    timelineAnalysis: `根据时间线推测，${itemName}最可能在你进行其他活动的过渡时刻被放下。当注意力从物品转移到新任务时，手部会自动完成放置动作，但大脑不会记录具体位置。`,
+    behaviorAnalysis: `During your activity at the time, your brain was in "cognitive offload" mode. The ${itemName} was likely placed unconsciously at a pause point along your movement path. This isn't forgetting — it's your brain automating placement to conserve cognitive resources.`,
+    environmentAnalysis: `${locationName} contains several typical visual blind spots: 1) areas that match the item's color (color camouflage); 2) spaces above or below eye level (vertical blind zones); 3) the bottom layer of stacked items (occlusion blind zones).`,
+    timelineAnalysis: `Based on the timeline, the ${itemName} was most likely set down during a transition between activities. When attention shifts from the item to a new task, the hand completes the placement automatically — but the brain doesn't log the exact location.`,
     basicSearchPoints: [
-      `${locationName}的表面和可见区域`,
-      '桌面、台面等最后使用物品的区域',
-      '地面开阔区域（掉落的第一反应位置）',
+      `Visible surfaces in ${locationName}`,
+      'Tables and countertops (last-used areas)',
+      'Open floor areas (first instinct drop zones)',
     ],
     checklist: [
-      `⚡ PRIORITY: 趴在地上用手机闪光灯扫描${locationName}所有家具底部`,
-      `🔦 在${locationName}用闪光灯低角度照射，寻找${itemName}的反光或投射阴影`,
-      `👐 触觉搜索：用手扫过所有台面和缝隙，而不是仅用眼睛看`,
-      '📐 检查视线以上：架子顶部、柜子上方、高处置物台',
-      '🗂️ 移开遮挡物：逐一移开桌上的纸张、衣物、书本',
-      '🪑 检查缝隙：沙发垫下、家具与墙壁的夹缝、抽屉内部',
-      '👥 社交确认：询问同住者或到访者是否移动过该物品',
-      `🔄 路径重走：从你最后使用${itemName}的地点，重新走一遍当时的路线`,
+      `⚡ PRIORITY: Get on the floor and sweep all furniture bases in ${locationName} with a flashlight`,
+      `🔦 Use your phone flashlight at a low angle in ${locationName} to catch reflections from the ${itemName}`,
+      `👐 Tactile sweep: run your hand across all surfaces and gaps instead of just looking`,
+      '📐 Check above eye level: tops of shelves, cabinet surfaces, high ledges',
+      '🗂️ Remove obstacles: move papers, clothing, books off surfaces one by one',
+      '🪑 Check gaps: under sofa cushions, between furniture and walls, inside drawers',
+      '👥 Social check: ask housemates or recent visitors if they moved it',
+      `🔄 Retrace your steps: walk back from the last place you used the ${itemName}`,
     ],
-    cognitiveOverride: `停止寻找"${itemName}"本身。改为寻找：${itemColor}的反光/光泽、${itemName}的轮廓形状、或它投射的阴影。让眼睛捕捉异常，而不是匹配预期。`,
-    stopCondition: `如果完成以上所有检查仍未找到：概率模型提示外部丢失可能性增加。升级方案：1) 检查所有垃圾桶 → 2) 回溯户外路线 → 3) 发布社区寻物信息`,
-    encouragement: `90%的"丢失"物品都在你认为的2米范围内。你的${itemName}没有离开——它正在等待被重新发现。相信物理学，用手而不是眼睛去找，你一定能找到它！`,
+    cognitiveOverride: `Stop looking for the ${itemName} itself. Instead look for: the ${itemColor} glint/sheen, the outline of the ${itemName}'s shape, or the shadow it casts. Train your eyes to catch anomalies, not match expectations.`,
+    stopCondition: `If all checks above fail: the probability model suggests external displacement is increasingly likely. Escalation: 1) Check all bins → 2) Retrace outdoor route → 3) Post a community lost item notice`,
+    encouragement: `90% of "lost" items are within 2 meters of where you think they are. Your ${itemName} hasn't gone far — it's waiting to be rediscovered. Trust the physics, use your hands instead of your eyes, and you'll find it!`,
   };
 }

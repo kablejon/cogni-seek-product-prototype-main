@@ -189,21 +189,27 @@ export async function POST(request: NextRequest) {
       // 🔄 数据格式转换：V7.0 → 前端兼容格式
       // ============================================================
       
-      // 转换概率为数字
+      // Locale-aware fallback strings
+      const isZH = (locale || 'en') === 'zh-CN';
+      const fallbacks = {
+        summary: isZH ? '基于科学寻物系统分析的综合评估' : 'Comprehensive assessment based on CogniSeek system.',
+        direction: isZH ? '基于物理模拟的方向预测' : 'Direction prediction based on physics simulation.',
+        encouragement: isZH ? '90%的"丢失"物品都在你认为它们所在的2米范围内。' : '90% of lost items are within 2 meters of where you think they are.',
+        primaryLabel: isZH ? '北方' : 'North',
+        basicSearchPoints: isZH
+          ? [`${lastSeenLocation || '该区域'}的表面和可见区域`, '桌面、台面等最后使用物品的区域', '地面开阔区域（掉落的第一反应位置）']
+          : [`Visible surfaces in ${lastSeenLocation || 'the area'}`, 'Tables and countertops (last-used areas)', 'Open floor areas (first instinct drop zones)'],
+      };
+
+      // 转换概率为数字 — only English enum values are expected (ENUM LOCK enforced in prompt)
       const probabilityMap: { [key: string]: number } = {
-        'High': 85,
-        'Medium': 60,
-        'Low': 35,
-        '很高': 85,
-        '较高': 75,
-        '中等': 60,
-        '较低': 35
+        'High': 85, 'Medium': 60, 'Low': 35
       };
 
       const transformedResult = {
-        probability: probabilityMap[result.probability] || 70, // 默认70%
-        probabilityLevel: result.probability, // "High" / "Medium" / "Low"
-        summary: result.diagnosis || '基于三维科学寻物系统分析的综合评估',
+        probability: probabilityMap[result.probability] || 70,
+        probabilityLevel: result.probability,
+        summary: result.diagnosis || fallbacks.summary,
         safetyAlert: result.safetyAlert || null,
         priorityAction: {
           target: result.priorityAction?.target || '',
@@ -213,33 +219,29 @@ export async function POST(request: NextRequest) {
         },
         predictions: (result.predictions || []).map((pred: any) => ({
           location: pred.location || '',
-          confidence: parseInt(pred.probability) || 50, // "45%" → 45
+          confidence: parseInt(pred.probability) || 50,
           reason: pred.reasoning || '',
           technique: pred.technique || ''
         })),
         direction: result.compass ? {
           primary: result.compass.direction?.match(/[A-Z]+/)?.[0] || 'N',
-          primaryLabel: result.compass.direction || '北方',
+          primaryLabel: result.compass.direction || fallbacks.primaryLabel,
           confidence: parseInt(result.compass.confidence) || 70,
-          description: result.compass.reasoning || ''
+          description: result.compass.reasoning || fallbacks.direction
         } : {
           primary: 'N',
-          primaryLabel: '北方',
+          primaryLabel: fallbacks.primaryLabel,
           confidence: 70,
-          description: '基于物理模拟的方向预测'
+          description: fallbacks.direction
         },
         behaviorAnalysis: result.behaviorAnalysis || '',
         environmentAnalysis: result.environmentAnalysis || '',
         timelineAnalysis: result.timelineAnalysis || '',
-        basicSearchPoints: result.basicSearchPoints || [
-          `${lastSeenLocation || '该区域'}的表面和可见区域`,
-          '桌面、台面等最后使用物品的区域',
-          '地面开阔区域（掉落的第一反应位置）'
-        ],
+        basicSearchPoints: result.basicSearchPoints || fallbacks.basicSearchPoints,
         checklist: result.checklist || [],
         cognitiveOverride: result.cognitiveOverride || '',
         stopCondition: result.stopCondition || '',
-        encouragement: result.encouragement || '90%的"丢失"物品都在你认为它们所在的2米范围内。'
+        encouragement: result.encouragement || fallbacks.encouragement
       };
 
       console.log('=== ✅ CogniSeek V9.0 Production 分析完成 ===');

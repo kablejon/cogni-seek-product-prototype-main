@@ -208,7 +208,13 @@ const LOCALE_LANGUAGE_MAP: Record<string, string> = {
  */
 export function getSystemPromptV9(locale: string = 'en'): string {
   const language = LOCALE_LANGUAGE_MAP[locale] || 'English';
-  return SYSTEM_PROMPT_BASE + `\n\n## 🌐 OUTPUT LANGUAGE DIRECTIVE\nYou MUST return ALL JSON text values in: **${language}** (locale: \`${locale}\`). This overrides any default. Technical terms may appear in English in parentheses.`;
+  const languageConstraint = `\n\n## 🌐 OUTPUT LANGUAGE & STRICT CONSTRAINTS (CRITICAL)
+1. Target Output Language: You MUST generate all human-readable text (summary, diagnosis, reason, technique, description, behaviorAnalysis, environmentAnalysis, timelineAnalysis, encouragement, stopCondition, cognitiveOverride, priorityAction fields, predictions fields, basicSearchPoints, checklist, etc.) in the following language: **${language}**.
+2. ENUM LOCK: The field "probability" (the top-level probability level) MUST BE EXACTLY one of: "High", "Medium", "Low". DO NOT translate this specific field into the target language. Never output "高", "中", "低" or any other language for this field.
+3. ENUM LOCK: The field "direction" under "compass" MUST BE EXACTLY one of: "N", "S", "E", "W", "NE", "NW", "SE", "SW". DO NOT translate compass directions.
+4. All other fields containing human-readable content MUST be in **${language}**.`;
+
+  return SYSTEM_PROMPT_BASE + languageConstraint;
 }
 
 // Legacy export for backward compatibility

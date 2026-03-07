@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Lock, Sparkles, TrendingUp } from "lucide-react"
 import { Link } from "@/lib/navigation"
@@ -14,6 +14,7 @@ import { InteractiveFog } from "@/components/ui/interactive-fog"
 export default function ResultPage() {
   const router = useRouter()
   const t = useTranslations('result')
+  const locale = useLocale()
   const { session, analysisResult } = useSearchStore()
   const [mounted, setMounted] = useState(false)
   const [meterValue, setMeterValue] = useState(0)
@@ -25,7 +26,7 @@ export default function ResultPage() {
 
   if (!mounted) return null
 
-  const result = analysisResult || getDefaultAnalysisResult(session)
+  const result = analysisResult || getDefaultAnalysisResult(session, locale)
 
   const getPsychologicalDiagnosis = () => {
     const mood = session.userMood || ''
