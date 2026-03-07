@@ -7,6 +7,6 @@ export const config = {
   matcher: [
     '/',
     '/(en|zh-CN|zh-TW)/:path*',
-    '/((?!_next|_vercel|.*\\..*).*)',
+    '/((?!_next|_vercel|api|.*\\..*).*)',
   ],
 };

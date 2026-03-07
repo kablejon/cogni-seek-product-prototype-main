@@ -201,15 +201,25 @@ export async function POST(request: NextRequest) {
           : [`Visible surfaces in ${lastSeenLocation || 'the area'}`, 'Tables and countertops (last-used areas)', 'Open floor areas (first instinct drop zones)'],
       };
 
-      // 转换概率为数字 — only English enum values are expected (ENUM LOCK enforced in prompt)
+      // New schema: probability is an integer (55-92), probabilityLevel is separate enum
+      // Legacy schema fallback: probability was "High|Medium|Low" string
       const probabilityMap: { [key: string]: number } = {
         'High': 85, 'Medium': 60, 'Low': 35
       };
+      const rawProbability = result.probability;
+      const numericProbability = typeof rawProbability === 'number'
+        ? rawProbability
+        : (probabilityMap[rawProbability] || 70);
+
+      const rawProbabilityLevel = result.probabilityLevel || result.probability;
+      const probabilityLevel = ['High', 'Medium', 'Low'].includes(rawProbabilityLevel)
+        ? rawProbabilityLevel
+        : (numericProbability >= 75 ? 'High' : numericProbability >= 55 ? 'Medium' : 'Low');
 
       const transformedResult = {
-        probability: probabilityMap[result.probability] || 70,
-        probabilityLevel: result.probability,
-        summary: result.diagnosis || fallbacks.summary,
+        probability: numericProbability,
+        probabilityLevel,
+        summary: result.summary || result.diagnosis || fallbacks.summary,
         safetyAlert: result.safetyAlert || null,
         priorityAction: {
           target: result.priorityAction?.target || '',
@@ -219,8 +229,11 @@ export async function POST(request: NextRequest) {
         },
         predictions: (result.predictions || []).map((pred: any) => ({
           location: pred.location || '',
-          confidence: parseInt(pred.probability) || 50,
-          reason: pred.reasoning || '',
+          // New schema uses "confidence" (number), old used "probability" (string with %)
+          confidence: typeof pred.confidence === 'number'
+            ? pred.confidence
+            : (parseInt(pred.probability) || parseInt(pred.confidence) || 50),
+          reason: pred.reason || pred.reasoning || '',
           technique: pred.technique || ''
         })),
         direction: result.compass ? {
@@ -241,7 +254,8 @@ export async function POST(request: NextRequest) {
         checklist: result.checklist || [],
         cognitiveOverride: result.cognitiveOverride || '',
         stopCondition: result.stopCondition || '',
-        encouragement: result.encouragement || fallbacks.encouragement
+        encouragement: result.encouragement || fallbacks.encouragement,
+        _thought_process: result._thought_process || ''
       };
 
       console.log('=== ✅ CogniSeek V9.0 Production 分析完成 ===');
