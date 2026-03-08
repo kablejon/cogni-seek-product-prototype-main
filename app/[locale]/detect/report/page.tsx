@@ -14,18 +14,18 @@ import { useSearchStore } from "@/lib/store"
 import { PRICE_CONFIG } from "@/lib/config/pricing"
 import { getDefaultAnalysisResult } from "@/lib/ai-service"
 
-const SCENE_CONFIG = {
+const SCENE_CONFIG_BASE = {
   vehicle: {
-    icon: CarFront, label: "VEHICLE BIO-SCAN",
-    macroZones: [{ t: '35%', l: '30%', label: 'Zone A: Driver surface' }, { t: '65%', l: '70%', label: 'Zone B: Rear floor' }, { t: '50%', l: '50%', label: 'Zone C: Armrest box' }]
+    icon: CarFront,
+    macroZonesBase: [{ t: '35%', l: '30%' }, { t: '65%', l: '70%' }, { t: '50%', l: '50%' }]
   },
   home: {
-    icon: Armchair, label: "RESIDENTIAL SCAN",
-    macroZones: [{ t: '60%', l: '20%', label: 'Zone A: Desk surface' }, { t: '60%', l: '80%', label: 'Zone B: Sofa surface' }, { t: '40%', l: '50%', label: 'Zone C: Visible floor area' }]
+    icon: Armchair,
+    macroZonesBase: [{ t: '60%', l: '20%' }, { t: '60%', l: '80%' }, { t: '40%', l: '50%' }]
   },
   default: {
-    icon: Briefcase, label: "TARGET AREA SCAN",
-    macroZones: [{ t: '30%', l: '30%', label: 'Zone A' }, { t: '70%', l: '70%', label: 'Zone B' }, { t: '50%', l: '50%', label: 'Zone C' }]
+    icon: Briefcase,
+    macroZonesBase: [{ t: '30%', l: '30%' }, { t: '70%', l: '70%' }, { t: '50%', l: '50%' }]
   }
 }
 
@@ -44,38 +44,58 @@ export default function ReportPage() {
 
   const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session, locale), [analysisResult, session, locale])
 
+  const levelLabel = useMemo(() => {
+    if (aiResult.probabilityLevel === 'High') return t('levelHigh')
+    if (aiResult.probabilityLevel === 'Low') return t('levelLow')
+    return t('levelMedium')
+  }, [aiResult.probabilityLevel, t])
+
   const content = useMemo(() => ({
     psychology: {
       title: t('psychTitle'),
-      content: aiResult.behaviorAnalysis || 'Analysis based on cognitive psychology...',
-      tag: aiResult.probabilityLevel
+      content: aiResult.behaviorAnalysis || '',
+      tag: levelLabel
     },
     envSummary: {
-      complexity: aiResult.probabilityLevel === 'High' ? "HIGH" : "MEDIUM",
-      camouflage: aiResult.probabilityLevel === 'High' ? "HIGH" : "MEDIUM",
-      desc: aiResult.environmentAnalysis || 'Scanning environment...'
+      complexity: aiResult.probabilityLevel === 'High' ? t('levelHigh') : t('levelMedium'),
+      camouflage: aiResult.probabilityLevel === 'High' ? t('levelHigh') : t('levelMedium'),
+      desc: aiResult.environmentAnalysis || ''
     },
-    macroReview: aiResult.summary || 'Routine area scan complete...',
+    macroReview: aiResult.summary || '',
     actions: (aiResult.checklist || []).slice(0, 5).map((item, index) => ({
-      title: `Action ${index + 1}`,
+      title: `${t('actionPrefix')} ${index + 1}`,
       desc: item
     }))
-  }), [aiResult, t])
+  }), [aiResult, t, levelLabel])
 
-  const currentScene = useMemo(() => {
+  const currentSceneBase = useMemo(() => {
     const cat = (session.locationCategory || 'default').toLowerCase()
-    if (cat === 'vehicle') return SCENE_CONFIG.vehicle
-    if (cat === 'home') return SCENE_CONFIG.home
-    return SCENE_CONFIG.default
+    if (cat === 'vehicle') return SCENE_CONFIG_BASE.vehicle
+    if (cat === 'home') return SCENE_CONFIG_BASE.home
+    return SCENE_CONFIG_BASE.default
   }, [session])
 
-  const SceneIcon = currentScene.icon
+  const currentSceneLabel = useMemo(() => {
+    const cat = (session.locationCategory || 'default').toLowerCase()
+    if (cat === 'vehicle') return t('sceneLabelVehicle')
+    if (cat === 'home') return t('sceneLabelHome')
+    return t('sceneLabelDefault')
+  }, [session, t])
+
+  const SceneIcon = currentSceneBase.icon
+
+  const fallbackZoneLabels = useMemo(() => {
+    const cat = (session.locationCategory || 'default').toLowerCase()
+    if (cat === 'vehicle') return [t('vehicleZoneA'), t('vehicleZoneB'), t('vehicleZoneC')]
+    if (cat === 'home') return [t('homeZoneA'), t('homeZoneB'), t('homeZoneC')]
+    return [t('defaultZoneA'), t('defaultZoneB'), t('defaultZoneC')]
+  }, [session, t])
 
   const dynamicMacroZones = useMemo(() => {
-    const baseZones = currentScene.macroZones
+    const baseZones = currentSceneBase.macroZonesBase
     const basicPoints = aiResult.basicSearchPoints || []
-    return baseZones.map((zone, index) => ({ t: zone.t, l: zone.l, label: basicPoints[index] || zone.label }))
-  }, [currentScene, aiResult.basicSearchPoints])
+    return baseZones.map((zone, index) => ({ t: zone.t, l: zone.l, label: basicPoints[index] || fallbackZoneLabels[index] }))
+  }, [currentSceneBase, aiResult.basicSearchPoints, fallbackZoneLabels])
 
   const [recoveryIndex, setRecoveryIndex] = useState("85.0")
   useEffect(() => { setRecoveryIndex((aiResult.probability || 85).toFixed(1)) }, [aiResult])
@@ -112,7 +132,7 @@ export default function ReportPage() {
       document.body.appendChild(link); link.click(); document.body.removeChild(link)
     } catch (error) {
       console.error('Failed to generate report:', error)
-      const usePrint = confirm('Image generation failed.\n\nUse "Print" to save as PDF?')
+      const usePrint = confirm(t('imageGenFailed'))
       if (usePrint) window.print()
     } finally { setIsGenerating(false) }
   }
@@ -155,12 +175,12 @@ export default function ReportPage() {
         <section className="text-center space-y-2 relative">
           <h1 className="text-7xl font-bold tracking-tighter text-white drop-shadow-[0_0_25px_rgba(34,211,238,0.3)]">{recoveryIndex}</h1>
           <div className="flex items-center justify-center gap-3 text-[10px] font-bold tracking-[0.2em] text-cyan-500 uppercase mt-2">
-            <span className="px-2 py-0.5 border border-cyan-500/30 rounded bg-cyan-950/30">Analysis Complete</span>
+            <span className="px-2 py-0.5 border border-cyan-500/30 rounded bg-cyan-950/30">{t('analysisComplete')}</span>
             <span className="text-slate-600">|</span>
             <span>{t('probabilityLabel')}</span>
           </div>
           <div className="max-w-xs mx-auto mt-4 p-2 bg-blue-950/20 rounded border border-blue-900/30">
-            <p className="text-[10px] text-slate-500 leading-relaxed scale-90">* AI provides probability-based clues only and does not guarantee 100% recovery.</p>
+            <p className="text-[10px] text-slate-500 leading-relaxed scale-90">{t('aiDisclaimer')}</p>
           </div>
         </section>
 
@@ -208,7 +228,7 @@ export default function ReportPage() {
               </div>
             ) : (
               <div className="flex items-center gap-2 text-[10px] text-red-400 font-bold tracking-wide">
-                <ShieldCheck className="w-3 h-3" /> DEEP-SCAN DECRYPTED
+                <ShieldCheck className="w-3 h-3" /> {t('deepScanDecrypted')}
               </div>
             )}
           </div>
@@ -226,11 +246,11 @@ export default function ReportPage() {
             <div className="flex-1 space-y-2">
               <div className="flex justify-between items-center border-b border-indigo-500/10 pb-2">
                 <h3 className="font-bold text-sm text-indigo-100">{t('envScanTitle')}</h3>
-                <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-500/20">COMPLETED</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-500/20">{t('completed')}</span>
               </div>
               <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-400">
-                <div>Complexity: <span className="text-indigo-300">{content.envSummary.complexity}</span></div>
-                <div>Camouflage: <span className="text-red-300">{content.envSummary.camouflage}</span></div>
+                <div>{t('complexity')}: <span className="text-indigo-300">{content.envSummary.complexity}</span></div>
+                <div>{t('camouflage')}: <span className="text-red-300">{content.envSummary.camouflage}</span></div>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">{content.envSummary.desc}</p>
             </div>
@@ -256,7 +276,7 @@ export default function ReportPage() {
             <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
               <Stethoscope className="w-3 h-3" /> {t('tacticsTitle')}
             </h2>
-            {!isPaid && <span className="text-[10px] font-bold text-cyan-600 flex items-center gap-1 opacity-80"><Lock className="w-3 h-3" /> DEEP SCAN ENCRYPTED</span>}
+            {!isPaid && <span className="text-[10px] font-bold text-cyan-600 flex items-center gap-1 opacity-80"><Lock className="w-3 h-3" /> {t('deepScanEncrypted')}</span>}
           </div>
 
           <div className="space-y-3">
@@ -266,7 +286,7 @@ export default function ReportPage() {
                   <CheckCircle2 className="w-4 h-4" />
                   <h4 className="text-xs font-bold">{t('basicLabel')}</h4>
                 </div>
-                <p className="text-[10px] text-slate-400 mb-3">Based on common sense, you've likely already checked:</p>
+                <p className="text-[10px] text-slate-400 mb-3">{t('basicSearchDesc')}</p>
                 <ul className="space-y-2 mb-3">
                   {dynamicMacroZones.map((z, i) => (
                     <li key={i} className="flex items-start gap-2 text-[10px] text-slate-400">
@@ -290,7 +310,7 @@ export default function ReportPage() {
                     {i === 1 && (
                       <div className="flex items-center gap-2 px-3 py-1 bg-cyan-950/80 border border-cyan-500/30 rounded text-cyan-400 shadow-lg">
                         <Lock className="w-3 h-3" />
-                        <span className="text-[10px] font-bold tracking-widest">MICRO TACTICS LOCKED</span>
+                        <span className="text-[10px] font-bold tracking-widest">{t('microTacticsLocked')}</span>
                       </div>
                     )}
                   </div>

@@ -201,26 +201,51 @@ export async function POST(request: NextRequest) {
           : [`Visible surfaces in ${lastSeenLocation || 'the area'}`, 'Tables and countertops (last-used areas)', 'Open floor areas (first instinct drop zones)'],
       };
 
-      // New schema: probability is an integer (55-92), probabilityLevel is separate enum
-      // Legacy schema fallback: probability was "High|Medium|Low" string
+      // --- Task 2: API fully owns probabilityLevel, never trust AI's enum ---
       const probabilityMap: { [key: string]: number } = {
         'High': 85, 'Medium': 60, 'Low': 35
       };
       const rawProbability = result.probability;
       const numericProbability = typeof rawProbability === 'number'
-        ? rawProbability
+        ? Math.min(99, Math.max(1, rawProbability))
         : (probabilityMap[rawProbability] || 70);
 
-      const rawProbabilityLevel = result.probabilityLevel || result.probability;
-      const probabilityLevel = ['High', 'Medium', 'Low'].includes(rawProbabilityLevel)
-        ? rawProbabilityLevel
-        : (numericProbability >= 75 ? 'High' : numericProbability >= 55 ? 'Medium' : 'Low');
+      // Hard-coded thresholds: AI probabilityLevel is ignored
+      const probabilityLevel = numericProbability >= 75 ? 'High'
+        : numericProbability >= 55 ? 'Medium'
+        : 'Low';
+
+      // --- Task 3: API owns safetyAlert for living targets ---
+      const safetyAlert = (() => {
+        const isLivingPet = params.targetClass === 'Living_Pet';
+        const isLivingHuman = params.targetClass === 'Living_Human';
+        const needsSafety = isLivingPet || isLivingHuman || params.safetyWarning;
+        if (!needsSafety) return result.safetyAlert || null;
+
+        // If AI already returned a valid safetyAlert, keep it
+        if (result.safetyAlert && result.safetyAlert.length > 10) return result.safetyAlert;
+
+        // Otherwise inject a code-level default
+        if (isLivingHuman) {
+          return isZH
+            ? '🚨 您正在寻找的是人。若失联已超过24小时，请立即联系警方报案，并保持手机畅通以便被联系。'
+            : '🚨 You are searching for a person. If missing for more than 24 hours, contact police immediately and keep your phone reachable.';
+        }
+        if (isLivingPet) {
+          return isZH
+            ? '⚠️ 您正在寻找的是宠物。请立即扩大搜索范围至周边街区，联系附近邻居，并在显眼位置张贴寻宠启事。时间至关重要！'
+            : '⚠️ You are searching for a pet. Expand your search to nearby blocks, contact neighbors, and post missing pet notices in visible locations immediately. Time is critical!';
+        }
+        return isZH
+          ? '⚠️ 请注意安全，若情况紧急请立即联系相关部门。'
+          : '⚠️ Please ensure your safety. Contact relevant authorities immediately if the situation is urgent.';
+      })();
 
       const transformedResult = {
         probability: numericProbability,
         probabilityLevel,
         summary: result.summary || result.diagnosis || fallbacks.summary,
-        safetyAlert: result.safetyAlert || null,
+        safetyAlert,
         priorityAction: {
           target: result.priorityAction?.target || '',
           action: result.priorityAction?.action || '',
@@ -229,24 +254,36 @@ export async function POST(request: NextRequest) {
         },
         predictions: (result.predictions || []).map((pred: any) => ({
           location: pred.location || '',
-          // New schema uses "confidence" (number), old used "probability" (string with %)
+          // confidence may be "XX%", "XX", or a raw number
           confidence: typeof pred.confidence === 'number'
             ? pred.confidence
-            : (parseInt(pred.probability) || parseInt(pred.confidence) || 50),
+            : (parseInt(String(pred.confidence || pred.probability || '50')) || 50),
           reason: pred.reason || pred.reasoning || '',
           technique: pred.technique || ''
         })),
-        direction: result.compass ? {
-          primary: result.compass.direction?.match(/[A-Z]+/)?.[0] || 'N',
-          primaryLabel: result.compass.direction || fallbacks.primaryLabel,
-          confidence: parseInt(result.compass.confidence) || 70,
-          description: result.compass.reasoning || fallbacks.direction
-        } : {
-          primary: 'N',
-          primaryLabel: fallbacks.primaryLabel,
-          confidence: 70,
-          description: fallbacks.direction
-        },
+        direction: (() => {
+          const validDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+          // Extract direction — match only capital-letter compass tokens
+          const rawDir = result.compass?.direction?.match(/^(NE|NW|SE|SW|N|S|E|W)$/)?.[1]
+            || result.compass?.direction?.match(/(NE|NW|SE|SW|N|S|E|W)/)?.[1]
+            || '';
+          const isValid = validDirections.includes(rawDir);
+          // API-level fallback: if AI returned empty or invalid, infer from physicsTag
+          const finalDirection = isValid ? rawDir
+            : (params.physicsTag === 'Roll' ? 'SE' : 'N');
+          const finalConfidence = isValid
+            ? (parseInt(String(result.compass?.confidence || '65')) || 65)
+            : 40; // lower confidence when system-inferred
+          return {
+            primary: finalDirection,
+            primaryLabel: isValid ? (result.compass?.direction || finalDirection) : fallbacks.primaryLabel,
+            confidence: finalConfidence,
+            description: result.compass?.reasoning || fallbacks.direction
+          };
+        })(),
+        _compassFallback: !['N','NE','E','SE','S','SW','W','NW'].includes(
+          result.compass?.direction?.match(/^(NE|NW|SE|SW|N|S|E|W)$/)?.[1] || ''
+        ),
         behaviorAnalysis: result.behaviorAnalysis || '',
         environmentAnalysis: result.environmentAnalysis || '',
         timelineAnalysis: result.timelineAnalysis || '',
