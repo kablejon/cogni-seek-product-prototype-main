@@ -3,7 +3,7 @@ import { classifySearchTarget, determineEntropy } from '@/lib/services/classifie
 import { getSystemPromptV9 } from '@/lib/services/prompt-engine';
 
 // ============================================================
-// 🧠 V9.0 Production：万物分类系统 (已重构为服务层)
+// 🧠 V17 Production：万物分类系统 + 钢铁防御 API 层
 // ============================================================
 
 interface SearchParams {
@@ -14,16 +14,10 @@ interface SearchParams {
   globalContext?: 'Individualist' | 'Collectivist' | 'Outdoor';
 }
 
-// ============================================================
-// 📜 SYSTEM_PROMPT_V9: Production 系统提示词 (已移至 prompt-engine.ts)
-// ============================================================
-
-// 原 SYSTEM_PROMPT_V9 已移至 lib/services/prompt-engine.ts
-
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 export async function POST(request: NextRequest) {
-  console.log('=== 🚀 CogniSeek V9.0 Production 分析开始 ===');
+  console.log('=== 🚀 CogniSeek V17 Production 分析开始 ===');
   
   try {
     const body = await request.json();
@@ -44,21 +38,19 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // ============================================================
-    // 🧠 万物分类器：使用重构后的服务层
+    // 🧠 万物分类器
     // ============================================================
     
     const inputText = `${itemType} ${itemName} ${itemDescription}`;
     console.log('📋 分析物品:', inputText);
     
-    // 1. 调用业务服务进行分类
     const classification = classifySearchTarget(inputText);
-    // Use userMood (ID-based) for entropy; fall back to mood label for compatibility
     const entropy = determineEntropy(userMood || mood);
     
     const params: SearchParams = {
       ...classification,
       entropy,
-      globalContext: 'Individualist' // 可以后续根据 headers 或 user profile 动态获取
+      globalContext: 'Individualist'
     };
     
     console.log('📊 最终分类参数:', params);
@@ -71,18 +63,13 @@ export async function POST(request: NextRequest) {
 
     if (!apiKey) {
       console.error('❌ OPENROUTER_API_KEY 未配置');
-      return NextResponse.json(
-        { error: 'API 配置错误' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'API 配置错误' }, { status: 500 });
     }
 
-    console.log('✓ API Key 已配置');
     console.log('📡 正在调用 OpenRouter (Model: google/gemini-2.0-flash-001)...');
 
-    // 创建超时控制
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 45000); // 45秒超时
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
 
     try {
       const response = await fetch(OPENROUTER_API_URL, {
@@ -91,7 +78,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
           'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-          'X-Title': 'CogniSeek V7.0',
+          'X-Title': 'CogniSeek V17',
         },
         body: JSON.stringify({
           model: 'google/gemini-2.0-flash-001',
@@ -114,7 +101,7 @@ export async function POST(request: NextRequest) {
                   searchedPlaces,
                   ...otherData
                 },
-                System_Injected_Params: params // 🔐 硬参数注入
+                System_Injected_Params: params
               })
             }
           ],
@@ -144,10 +131,7 @@ export async function POST(request: NextRequest) {
 
       if (!aiContent) {
         console.error('❌ AI 返回内容为空');
-        return NextResponse.json(
-          { error: 'AI 返回内容异常' },
-          { status: 500 }
-        );
+        return NextResponse.json({ error: 'AI 返回内容异常' }, { status: 500 });
       }
 
       console.log('📝 AI 回复长度:', aiContent.length);
@@ -162,13 +146,11 @@ export async function POST(request: NextRequest) {
         console.log('✓ JSON 解析成功');
       } catch (parseError) {
         console.error('⚠️ JSON 解析失败，尝试直接解析');
-        
         try {
           result = JSON.parse(aiContent.trim());
           console.log('✓ 直接解析成功');
         } catch {
-          console.error('❌ 所有解析尝试都失败');
-          console.error('原始内容:', aiContent);
+          console.error('❌ 所有解析尝试都失败，原始内容:', aiContent);
           return NextResponse.json(
             { error: 'AI 返回格式异常', raw: aiContent.substring(0, 500) },
             { status: 500 }
@@ -186,134 +168,111 @@ export async function POST(request: NextRequest) {
       }
 
       // ============================================================
-      // 🔄 数据格式转换：V7.0 → 前端兼容格式
+      // 🛡️ V17 API 层数据强制接管与兜底策略
       // ============================================================
-      
-      // Locale-aware fallback strings
-      const isZH = (locale || 'en') === 'zh-CN';
-      const fallbacks = {
-        summary: isZH ? '基于科学寻物系统分析的综合评估' : 'Comprehensive assessment based on CogniSeek system.',
-        direction: isZH ? '基于物理模拟的方向预测' : 'Direction prediction based on physics simulation.',
-        encouragement: isZH ? '90%的"丢失"物品都在你认为它们所在的2米范围内。' : '90% of lost items are within 2 meters of where you think they are.',
-        primaryLabel: isZH ? '北方' : 'North',
-        basicSearchPoints: isZH
-          ? [`${lastSeenLocation || '该区域'}的表面和可见区域`, '桌面、台面等最后使用物品的区域', '地面开阔区域（掉落的第一反应位置）']
-          : [`Visible surfaces in ${lastSeenLocation || 'the area'}`, 'Tables and countertops (last-used areas)', 'Open floor areas (first instinct drop zones)'],
-      };
 
-<<<<<<< HEAD
-      // --- Task 2: API fully owns probabilityLevel, never trust AI's enum ---
-=======
-      // New schema: probability is an integer (55-92), probabilityLevel is separate enum
-      // Legacy schema fallback: probability was "High|Medium|Low" string
->>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
-      const probabilityMap: { [key: string]: number } = {
-        'High': 85, 'Medium': 60, 'Low': 35
-      };
+      const isZH = locale === 'zh-CN';
+
+      // --- 1. API 完全接管 probabilityLevel，永远不信任 AI 的枚举 ---
       const rawProbability = result.probability;
       const numericProbability = typeof rawProbability === 'number'
-<<<<<<< HEAD
         ? Math.min(99, Math.max(1, rawProbability))
-        : (probabilityMap[rawProbability] || 70);
+        : 70;
 
-      // Hard-coded thresholds: AI probabilityLevel is ignored
       const probabilityLevel = numericProbability >= 75 ? 'High'
         : numericProbability >= 55 ? 'Medium'
         : 'Low';
 
-      // --- Task 3: API owns safetyAlert for living targets ---
+      // --- 2. 生命安全强行熔断（含医疗物品检测）---
+      const isMedical = itemType === 'medical'
+        || String(itemName || '').includes('药')
+        || String(itemName || '').toLowerCase().includes('insulin')
+        || String(itemName || '').toLowerCase().includes('medication')
+        || String(itemDescription || '').includes('药');
+
       const safetyAlert = (() => {
         const isLivingPet = params.targetClass === 'Living_Pet';
         const isLivingHuman = params.targetClass === 'Living_Human';
-        const needsSafety = isLivingPet || isLivingHuman || params.safetyWarning;
+        const needsSafety = isLivingPet || isLivingHuman || isMedical || params.safetyWarning;
+
         if (!needsSafety) return result.safetyAlert || null;
 
-        // If AI already returned a valid safetyAlert, keep it
-        if (result.safetyAlert && result.safetyAlert.length > 10) return result.safetyAlert;
+        // AI 已返回有效 safetyAlert，优先保留
+        if (result.safetyAlert && result.safetyAlert.length > 5) return result.safetyAlert;
 
-        // Otherwise inject a code-level default
+        // API 注入兜底文案
         if (isLivingHuman) {
           return isZH
-            ? '🚨 您正在寻找的是人。若失联已超过24小时，请立即联系警方报案，并保持手机畅通以便被联系。'
+            ? '🚨 您正在寻找的是人。若失联已超过24小时，请立即联系警方报案，并保持手机畅通。'
             : '🚨 You are searching for a person. If missing for more than 24 hours, contact police immediately and keep your phone reachable.';
         }
         if (isLivingPet) {
           return isZH
-            ? '⚠️ 您正在寻找的是宠物。请立即扩大搜索范围至周边街区，联系附近邻居，并在显眼位置张贴寻宠启事。时间至关重要！'
-            : '⚠️ You are searching for a pet. Expand your search to nearby blocks, contact neighbors, and post missing pet notices in visible locations immediately. Time is critical!';
+            ? '⚠️ 寻找宠物请立即扩大周边物理搜索，切勿大声惊吓，时间至关重要！'
+            : '⚠️ Expand physical search for pet immediately. Do not shout to avoid scaring them. Time is critical!';
+        }
+        if (isMedical) {
+          return isZH
+            ? '⚕️ 医疗用品遗失具有极高风险！排查的同时请立即准备备用药品方案。'
+            : '⚕️ Medical item missing — high risk! Prepare backup medication options immediately while searching.';
         }
         return isZH
-          ? '⚠️ 请注意安全，若情况紧急请立即联系相关部门。'
-          : '⚠️ Please ensure your safety. Contact relevant authorities immediately if the situation is urgent.';
+          ? '⚠️ 请注意排查过程中的人身安全。'
+          : '⚠️ Ensure personal safety while searching.';
       })();
-=======
-        ? rawProbability
-        : (probabilityMap[rawProbability] || 70);
 
-      const rawProbabilityLevel = result.probabilityLevel || result.probability;
-      const probabilityLevel = ['High', 'Medium', 'Low'].includes(rawProbabilityLevel)
-        ? rawProbabilityLevel
-        : (numericProbability >= 75 ? 'High' : numericProbability >= 55 ? 'Medium' : 'Low');
->>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
+      // --- 3. Compass 兜底：防止 AI 输出 None 或空字符串导致前端崩溃 ---
+      const validDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const rawDir = result.compass?.direction?.trim().toUpperCase() || '';
+      const isValidDir = validDirections.includes(rawDir);
 
+      const finalDirection = isValidDir ? rawDir : (params.physicsTag === 'Roll' ? 'SE' : 'N');
+      const finalConfidence = isValidDir
+        ? (parseInt(String(result.compass?.confidence || '60')) || 60)
+        : 40;
+
+      // --- 多语言兜底文案 ---
+      const fallbacks = {
+        summary: isZH ? '基于当前环境变量的系统综合分析' : 'Analysis based on current environmental variables.',
+        encouragement: isZH ? '保持冷静，遵循上述战术动作排查，成功率很大。' : 'Stay calm and follow the tactical steps above. Success rate is high.',
+        directionDesc: isZH ? '基于物理轨迹或环境地形的方向推算' : 'Inferred from physical trajectory or terrain layout.',
+        primaryLabel: isZH ? '北方' : 'North',
+        basicSearchPoints: isZH
+          ? ['【附近显眼处】: 视觉疲劳导致的注意力盲区', '【动线沿途】: 移动中无意识的掉落点', '【异常高低处】: 随手搁置的异常落点']
+          : ['【Immediate Area】: Inattentional blindness zone', '【Transit Path】: Unconscious drop during movement', '【Abnormal Heights】: Hasty placement spot'],
+      };
+
+      // --- 构建最终安全数据结构 ---
       const transformedResult = {
         probability: numericProbability,
         probabilityLevel,
         summary: result.summary || result.diagnosis || fallbacks.summary,
-<<<<<<< HEAD
         safetyAlert,
-=======
-        safetyAlert: result.safetyAlert || null,
->>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
-        priorityAction: {
-          target: result.priorityAction?.target || '',
-          action: result.priorityAction?.action || '',
-          why: result.priorityAction?.why || '',
-          successRate: result.priorityAction?.successRate || '60%'
+        priorityAction: result.priorityAction || {
+          target: isZH ? '最后确认接触点' : 'Last confirmed contact point',
+          action: isZH ? '物理隔离排查法' : 'Physical isolation check',
+          why: isZH ? '缩小核心嫌疑区域' : 'Narrow down the core suspect radius'
         },
         predictions: (result.predictions || []).map((pred: any) => ({
           location: pred.location || '',
-<<<<<<< HEAD
-          // confidence may be "XX%", "XX", or a raw number
           confidence: typeof pred.confidence === 'number'
             ? pred.confidence
             : (parseInt(String(pred.confidence || pred.probability || '50')) || 50),
-=======
-          // New schema uses "confidence" (number), old used "probability" (string with %)
-          confidence: typeof pred.confidence === 'number'
-            ? pred.confidence
-            : (parseInt(pred.probability) || parseInt(pred.confidence) || 50),
->>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
           reason: pred.reason || pred.reasoning || '',
           technique: pred.technique || ''
         })),
-        direction: (() => {
-          const validDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-          // Extract direction — match only capital-letter compass tokens
-          const rawDir = result.compass?.direction?.match(/^(NE|NW|SE|SW|N|S|E|W)$/)?.[1]
-            || result.compass?.direction?.match(/(NE|NW|SE|SW|N|S|E|W)/)?.[1]
-            || '';
-          const isValid = validDirections.includes(rawDir);
-          // API-level fallback: if AI returned empty or invalid, infer from physicsTag
-          const finalDirection = isValid ? rawDir
-            : (params.physicsTag === 'Roll' ? 'SE' : 'N');
-          const finalConfidence = isValid
-            ? (parseInt(String(result.compass?.confidence || '65')) || 65)
-            : 40; // lower confidence when system-inferred
-          return {
-            primary: finalDirection,
-            primaryLabel: isValid ? (result.compass?.direction || finalDirection) : fallbacks.primaryLabel,
-            confidence: finalConfidence,
-            description: result.compass?.reasoning || fallbacks.direction
-          };
-        })(),
-        _compassFallback: !['N','NE','E','SE','S','SW','W','NW'].includes(
-          result.compass?.direction?.match(/^(NE|NW|SE|SW|N|S|E|W)$/)?.[1] || ''
-        ),
+        direction: {
+          primary: finalDirection,
+          primaryLabel: isValidDir ? (result.compass?.direction || finalDirection) : fallbacks.primaryLabel,
+          confidence: finalConfidence,
+          description: result.compass?.reasoning || fallbacks.directionDesc
+        },
         behaviorAnalysis: result.behaviorAnalysis || '',
         environmentAnalysis: result.environmentAnalysis || '',
         timelineAnalysis: result.timelineAnalysis || '',
-        basicSearchPoints: result.basicSearchPoints || fallbacks.basicSearchPoints,
+        basicSearchPoints: (result.basicSearchPoints && result.basicSearchPoints.length > 0)
+          ? result.basicSearchPoints
+          : fallbacks.basicSearchPoints,
         checklist: result.checklist || [],
         cognitiveOverride: result.cognitiveOverride || '',
         stopCondition: result.stopCondition || '',
@@ -321,13 +280,13 @@ export async function POST(request: NextRequest) {
         _thought_process: result._thought_process || ''
       };
 
-      console.log('=== ✅ CogniSeek V9.0 Production 分析完成 ===');
-      console.log('📊 转换后的结果:', JSON.stringify(transformedResult).substring(0, 300));
+      console.log('=== ✅ CogniSeek V17 分析完成 ===');
+      console.log('📊 概率:', numericProbability, '| 级别:', probabilityLevel, '| 安全警告:', !!safetyAlert);
       
       return NextResponse.json({
         success: true,
         result: transformedResult,
-        classification: params, // 返回分类信息供前端参考
+        classification: params,
         usage: data.usage,
       });
 
@@ -336,10 +295,7 @@ export async function POST(request: NextRequest) {
       
       if (fetchError instanceof Error && fetchError.name === 'AbortError') {
         console.error('⏱️ 请求超时');
-        return NextResponse.json(
-          { error: 'AI 服务响应超时，请重试' },
-          { status: 504 }
-        );
+        return NextResponse.json({ error: 'AI 服务响应超时，请重试' }, { status: 504 });
       }
       
       throw fetchError;
