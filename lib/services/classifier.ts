@@ -18,12 +18,18 @@ export function classifySearchTarget(inputText: string): ClassificationResult {
   };
 
   // --- A. 活物判断 (优先级最高) ---
-  if (/(child|kid|baby|toddler|son|daughter|grandpa|grandma|elderly|mom|dad|幼童|小孩|婴儿|儿子|女儿|爷爷|奶奶|老人|妈妈|爸爸)/i.test(lowerItem)) {
+  // itemType='people' 直接映射，无需关键词匹配
+  if (lowerItem.startsWith('people ') || lowerItem.includes(' people ')) {
+    result.targetClass = 'Living_Human';
+    result.physicsTag = 'Wander';
+    result.safetyWarning = true;
+  }
+  else if (/(child|kid|baby|toddler|son|daughter|grandpa|grandma|grandfather|grandmother|elderly|elder|senior|mom|dad|person|human|male|female|man|woman|patient|幼童|小孩|婴儿|儿子|女儿|爷爷|奶奶|外公|外婆|姥爷|姥姥|老人|老年|长辈|妈妈|爸爸|父亲|母亲|男性|女性|患者|病人|家人|亲属|丈夫|妻子|孩子|小孩|儿童|老头|老太)/i.test(lowerItem)) {
     result.targetClass = 'Living_Human';
     result.physicsTag = 'Wander';
     result.safetyWarning = true;
   } 
-  else if (/(dog|cat|pet|bird|hamster|puppy|kitten|animal|狗|猫|宠物|鸟|仓鼠|小狗|小猫|动物)/i.test(lowerItem)) {
+  else if (/(dog|cat|pet|bird|hamster|puppy|kitten|rabbit|turtle|animal|狗|猫|宠物|鸟|仓鼠|小狗|小猫|兔子|乌龟|动物|金毛|泰迪|柯基|哈士奇|布偶|英短|波斯猫)/i.test(lowerItem)) {
     result.targetClass = 'Living_Pet';
     
     // 细分宠物行为模式

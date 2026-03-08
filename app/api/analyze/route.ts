@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
               })
             }
           ],
-          temperature: 0.6,
+          temperature: 0.4,
           max_tokens: 4000,
         }),
         signal: controller.signal,
@@ -184,11 +184,12 @@ export async function POST(request: NextRequest) {
         : 'Low';
 
       // --- 2. 生命安全强行熔断（含医疗物品检测）---
+      const medicalKeywords = ['药', '胰岛素', '注射笔', '血糖仪', '救心丸', '硝酸甘油', '吸入器', '哮喘', '透析'];
+      const medicalKeywordsEN = ['insulin', 'medication', 'medicine', 'inhaler', 'syringe', 'epipen', 'prescription'];
+      const combinedText = `${itemType || ''} ${itemName || ''} ${itemDescription || ''}`.toLowerCase();
       const isMedical = itemType === 'medical'
-        || String(itemName || '').includes('药')
-        || String(itemName || '').toLowerCase().includes('insulin')
-        || String(itemName || '').toLowerCase().includes('medication')
-        || String(itemDescription || '').includes('药');
+        || medicalKeywords.some(k => combinedText.includes(k))
+        || medicalKeywordsEN.some(k => combinedText.includes(k));
 
       const safetyAlert = (() => {
         const isLivingPet = params.targetClass === 'Living_Pet';
@@ -242,6 +243,60 @@ export async function POST(request: NextRequest) {
           : ['【Immediate Area】: Inattentional blindness zone', '【Transit Path】: Unconscious drop during movement', '【Abnormal Heights】: Hasty placement spot'],
       };
 
+      // --- API 层：领域专家动作注入 ---
+      // 对于特定物品类型，强制把最高洞察力的动作放到 checklist[0]
+      const rawChecklist: string[] = result.checklist || [];
+
+      const domainFirstAction = (() => {
+        const nameLC = String(itemName || '').toLowerCase();
+        const descLC = String(itemDescription || '').toLowerCase();
+        const typeLC = String(itemType || '').toLowerCase();
+
+        // 电子设备：充电宝/移动电源 — 最高概率在充电口
+        if (['移动电源','充电宝','power bank','powerbank'].some(k => nameLC.includes(k) || descLC.includes(k))) {
+          return isZH
+            ? '🔌 立即检查工位及周边5米内所有插座和充电口：充电宝极易被插上后忘记取走，这比任何物理搜索的找回率都高。'
+            : '🔌 Check every power outlet and charging dock within 5 meters immediately — power banks are most often found still plugged in, forgotten after charging. Do this BEFORE any physical search.';
+        }
+        // 手机 — 拨打听声音
+        if (['手机','phone','iphone','android','smartphone'].some(k => nameLC.includes(k) || typeLC === 'phone')) {
+          return isZH
+            ? '📞 立刻用另一部手机拨打丢失号码，保持安静聆听铃声方向——这是找手机ROI最高的第一动作。'
+            : '📞 Call the lost phone from another device right now and listen for the ringtone direction — highest ROI first action for any phone search.';
+        }
+        // 钥匙 — 检查所有锁孔
+        if (['钥匙','key','keys'].some(k => nameLC.includes(k))) {
+          return isZH
+            ? '🗝️ 检查你今天经过的所有门锁和抽屉锁的锁孔：钥匙极易留在锁里，这是最常见的"遗失"原因。'
+            : '🗝️ Check every door lock and drawer lock you used today — keys are most commonly found still inserted in the lock.';
+        }
+        // 戒指/首饰 — 检查排水口
+        if (['戒指','耳环','首饰','项链','ring','earring','jewelry','bracelet','necklace'].some(k => nameLC.includes(k))) {
+          return isZH
+            ? '🚿 立即检查3米内所有排水口（洗手盆下水、地漏、浴室排水）：小型圆形首饰在3秒内就能滚入排水口，时间至关重要。'
+            : '🚿 Check every drain within 3 meters immediately (sink drain, floor drain, shower drain) — small round jewelry rolls into drains within seconds, time is critical.';
+        }
+        // 护照/重要证件 — 先打电话给机构
+        if (['护照','passport','身份证','id card','证件'].some(k => nameLC.includes(k) || descLC.includes(k))) {
+          return isZH
+            ? '📞 立即致电所在机构（机场失物招领：400热线/航司；酒店：前台；地铁：运营商失物处）——工作人员可能已经找到，先电话确认比自行搜索效率高10倍。'
+            : '📞 Call the institution immediately (airport: airline lost & found hotline; hotel: front desk; transit: operator lost property) — staff may already have it. Phone call beats manual search by 10x.';
+        }
+        return null; // 其他物品不注入，由 AI 自由生成
+      })();
+
+      // 注入规则：如果有领域特定动作，且 AI 的 Action 1 包含"手电筒/flashlight"等通用词，替换掉
+      const genericFirstActionPatterns = /手电筒|flashlight|用光|照射|flash\s*light/i;
+      const finalChecklist = (() => {
+        if (!domainFirstAction || rawChecklist.length === 0) return rawChecklist;
+        // 如果 Action 1 是通用手电筒类，替换；否则在最前面插入
+        if (genericFirstActionPatterns.test(rawChecklist[0])) {
+          return [domainFirstAction, ...rawChecklist.slice(1)];
+        }
+        // Action 1 已经是好内容，把领域动作插入 Action 1 位置，原内容后移
+        return [domainFirstAction, ...rawChecklist.slice(0, 4)];
+      })();
+
       // --- 构建最终安全数据结构 ---
       const transformedResult = {
         probability: numericProbability,
@@ -273,7 +328,7 @@ export async function POST(request: NextRequest) {
         basicSearchPoints: (result.basicSearchPoints && result.basicSearchPoints.length > 0)
           ? result.basicSearchPoints
           : fallbacks.basicSearchPoints,
-        checklist: result.checklist || [],
+        checklist: finalChecklist,
         cognitiveOverride: result.cognitiveOverride || '',
         stopCondition: result.stopCondition || '',
         encouragement: result.encouragement || fallbacks.encouragement,
