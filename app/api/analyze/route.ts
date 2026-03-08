@@ -201,12 +201,18 @@ export async function POST(request: NextRequest) {
           : [`Visible surfaces in ${lastSeenLocation || 'the area'}`, 'Tables and countertops (last-used areas)', 'Open floor areas (first instinct drop zones)'],
       };
 
+<<<<<<< HEAD
       // --- Task 2: API fully owns probabilityLevel, never trust AI's enum ---
+=======
+      // New schema: probability is an integer (55-92), probabilityLevel is separate enum
+      // Legacy schema fallback: probability was "High|Medium|Low" string
+>>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
       const probabilityMap: { [key: string]: number } = {
         'High': 85, 'Medium': 60, 'Low': 35
       };
       const rawProbability = result.probability;
       const numericProbability = typeof rawProbability === 'number'
+<<<<<<< HEAD
         ? Math.min(99, Math.max(1, rawProbability))
         : (probabilityMap[rawProbability] || 70);
 
@@ -240,12 +246,25 @@ export async function POST(request: NextRequest) {
           ? '⚠️ 请注意安全，若情况紧急请立即联系相关部门。'
           : '⚠️ Please ensure your safety. Contact relevant authorities immediately if the situation is urgent.';
       })();
+=======
+        ? rawProbability
+        : (probabilityMap[rawProbability] || 70);
+
+      const rawProbabilityLevel = result.probabilityLevel || result.probability;
+      const probabilityLevel = ['High', 'Medium', 'Low'].includes(rawProbabilityLevel)
+        ? rawProbabilityLevel
+        : (numericProbability >= 75 ? 'High' : numericProbability >= 55 ? 'Medium' : 'Low');
+>>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
 
       const transformedResult = {
         probability: numericProbability,
         probabilityLevel,
         summary: result.summary || result.diagnosis || fallbacks.summary,
+<<<<<<< HEAD
         safetyAlert,
+=======
+        safetyAlert: result.safetyAlert || null,
+>>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
         priorityAction: {
           target: result.priorityAction?.target || '',
           action: result.priorityAction?.action || '',
@@ -254,10 +273,17 @@ export async function POST(request: NextRequest) {
         },
         predictions: (result.predictions || []).map((pred: any) => ({
           location: pred.location || '',
+<<<<<<< HEAD
           // confidence may be "XX%", "XX", or a raw number
           confidence: typeof pred.confidence === 'number'
             ? pred.confidence
             : (parseInt(String(pred.confidence || pred.probability || '50')) || 50),
+=======
+          // New schema uses "confidence" (number), old used "probability" (string with %)
+          confidence: typeof pred.confidence === 'number'
+            ? pred.confidence
+            : (parseInt(pred.probability) || parseInt(pred.confidence) || 50),
+>>>>>>> 238cee1925761a43b8c471e1f5f7e99b7811ec53
           reason: pred.reason || pred.reasoning || '',
           technique: pred.technique || ''
         })),
