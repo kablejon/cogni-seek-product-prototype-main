@@ -41,14 +41,11 @@ export interface AIAnalysisResult {
 
 // ==================== 辅助函数 ====================
 
-function getItemDisplayName(session: SearchSession): string {
-  // ✅ 直接使用 session.itemName（step-1 保存的值）
+function getItemDisplayName(session: SearchSession, locale?: string): string {
   if (session.itemName) return session.itemName;
-  
-  // 备用：从 category 中查找
   const category = itemCategories.find(c => c.id === session.itemCategory);
-  const item = category?.items.find(i => i.id === session.itemName);
-  return item?.label || '物品';
+  const item = category?.items.find(i => i.id === session.itemCategory);
+  return item?.label || (locale === 'en' ? 'item' : '物品');
 }
 
 function getLocationDisplayName(session: SearchSession): string {
@@ -59,12 +56,11 @@ function getLocationDisplayName(session: SearchSession): string {
   if (session.lossLocation) return session.lossLocation;
   
   const category = locationCategories.find(c => c.id === session.lossLocationCategory);
-  return category?.name || session.lossLocationCategory || 'Unknown location';
+  return category?.label || category?.name || session.lossLocationCategory || 'Unknown location';
 }
 
-function getActivityDisplayName(session: SearchSession): string {
-  // ✅ 修复：使用 userActivity
-  return session.userActivity || '日常活动';
+function getActivityDisplayName(session: SearchSession, locale?: string): string {
+  return session.userActivity || (locale === 'en' ? 'daily activity' : '日常活动');
 }
 
 function getMoodDisplayInfo(session: SearchSession): { label: string; icon: string } {
@@ -272,13 +268,37 @@ Return ONLY valid JSON. No markdown formatting, no explanations.`;
 export async function analyzeWithAI(session: SearchSession, locale: string = 'en'): Promise<AIAnalysisResult> {
   console.log('=== 🚀 开始 AI 分析 ===');
   
-  const itemName = getItemDisplayName(session);
+  const itemName = getItemDisplayName(session, locale);
   const locationName = getLocationDisplayName(session);
-  const activityName = getActivityDisplayName(session);
+  const activityName = getActivityDisplayName(session, locale);
   const mood = getMoodDisplayInfo(session);
 
   try {
     // ✅ 使用新的 API Route 期望的格式
+    // Translate location category — step-0 stores capitalized English IDs (e.g. 'Home', 'Outdoors')
+    // data.ts uses lowercase IDs (e.g. 'home', 'outdoor'). Use a direct map to avoid mismatch.
+    const isZHLoc = locale === 'zh-CN';
+    const sectorLabelMap: Record<string, string> = isZHLoc
+      ? { Home: '家里', Work: '工作/学校', Vehicle: '交通工具', Public: '公共场所', Outdoors: '户外', Unsure: '不确定' }
+      : { Home: 'Home', Work: 'Work / School', Vehicle: 'Vehicle', Public: 'Public Place', Outdoors: 'Outdoors', Unsure: 'Unsure' };
+
+    const rawLocCat = session.lossLocationCategory || '';
+    // Try direct sector map first, then fall back to locationCategories lookup (case-insensitive)
+    const locCatLabel = sectorLabelMap[rawLocCat]
+      || locationCategories.find(c => c.id.toLowerCase() === rawLocCat.toLowerCase())?.label
+      || rawLocCat;
+
+    // Translate sub-location IDs to display labels
+    const locCatData = locationCategories.find(c =>
+      c.id.toLowerCase() === rawLocCat.toLowerCase() ||
+      c.id === rawLocCat
+    );
+    const locSubLabels = (session.lossLocationSubCategory || []).map(subId => {
+      if (!locCatData) return subId;
+      const sub = locCatData.subLocations.find(s => (typeof s === 'string' ? s === subId : s.id === subId));
+      return typeof sub === 'string' ? sub : (sub?.label || subId);
+    }).join(isZHLoc ? '、' : ', ');
+
     const requestBody = {
       itemType: session.itemCategory || '',
       itemName: itemName,
@@ -287,8 +307,8 @@ export async function analyzeWithAI(session: SearchSession, locale: string = 'en
       itemSize: session.itemSize || '',
       lastSeenLocation: locationName,
       lastSeenTime: session.lossTime || '',
-      lossLocationCategory: session.lossLocationCategory || '',
-      lossLocationSubCategory: (session.lossLocationSubCategory || []).join(' '),
+      lossLocationCategory: locCatLabel,
+      lossLocationSubCategory: locSubLabels,
       activity: activityName,
       mood: mood.label,
       userMood: session.userMood || '',

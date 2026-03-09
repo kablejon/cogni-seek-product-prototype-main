@@ -155,6 +155,16 @@
       "preciseDesc": "AI analyzes only the selected time window"
     },
     "aiAnalysis": "Temporal Analysis:",
+    "lightContext": {
+      "fullDay": "full-day analysis",
+      "locked": "locked time point",
+      "fullPeriod": "full-period analysis",
+      "fresh": "memory freshness: very high"
+    },
+    "timeDesc": {
+      "uncertain": "earlier (time uncertain)",
+      "macroUncertain": "{label} (uncertain)"
+    },
     "missing": {
       "noTime": "Please select a time range",
       "noLight": "Please select lighting period or enable \"Time Uncertain\" toggle",
@@ -269,6 +279,13 @@
     "aiTipContent": "Knowing where you've already searched helps us avoid repeating suggestions and focus on commonly overlooked \"visual and memory blind spots\"",
     "toggleHint": "Toggle {on}ON{/on} means \"already tried\" — AI won't suggest it again; {off}OFF{/off} means \"not tried yet\" — AI will provide relevant advice",
     "startAnalysis": "Start AI Analysis",
+    "smartFeature": {
+      "tried_find_phone": "Tried \"Find My\" or calling the phone",
+      "tried_find_tablet": "Tried locating via cloud service",
+      "tried_find_laptop": "Tried \"Find My\" function",
+      "tried_call_pet": "Tried calling by name or tapping food bowl",
+      "tried_find_smart": "Tried using companion app or location feature"
+    },
     "duration": {
       "10min": "Under 10 min",
       "30min": "About 30 min",
@@ -293,7 +310,8 @@
       "prob": "CALCULATING_PROBABILITY_MATRIX...",
       "coords": "GENERATING_TACTICAL_COORDINATES...",
       "complete": "TARGET_LOCKED."
-    }
+    },
+    "matchingTarget": "MATCHING TARGET:"
   },
   "result": {
     "title": "Recovery Probability:",

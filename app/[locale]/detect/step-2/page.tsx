@@ -56,21 +56,21 @@ export default function Step2Page() {
 
     if (needsCustomTime && customDate) {
       timeDescription = customTime ? `${customDate} ${customTime}` : customDate
-      lightContext = customTime ? (fuzzyTimeMode ? 'full-day analysis' : 'locked time point') : 'full-day analysis'
+      lightContext = customTime ? (fuzzyTimeMode ? t('lightContext.fullDay') : t('lightContext.locked')) : t('lightContext.fullDay')
     } else if (fuzzyTimeMode && needsCustomTime) {
-      timeDescription = 'earlier (time uncertain)'
-      lightContext = 'full-period analysis'
+      timeDescription = t('timeDesc.uncertain')
+      lightContext = t('lightContext.fullPeriod')
     } else if (fuzzyTimeMode) {
-      const macroLabel = selectedMacroConfig?.id || ''
-      timeDescription = `${macroLabel} (uncertain)`
-      lightContext = 'full-day light analysis'
+      const macroLabel = selectedMacroConfig?.label || selectedMacroConfig?.id || ''
+      timeDescription = t('timeDesc.macroUncertain', { label: macroLabel })
+      lightContext = t('lightContext.fullDay')
     } else if (selectedLightPeriod) {
       const lightConfig = LIGHT_PERIODS.find(p => p.id === selectedLightPeriod)
-      timeDescription = `${selectedMacroConfig?.id || ''} ${lightConfig?.id || ''}`
+      timeDescription = `${selectedMacroConfig?.label || selectedMacroConfig?.id || ''} ${lightConfig?.label || lightConfig?.id || ''}`
       lightContext = lightConfig?.aiInsight || ''
     } else {
-      timeDescription = selectedMacroConfig?.id || ''
-      lightContext = 'memory freshness: very high'
+      timeDescription = selectedMacroConfig?.label || selectedMacroConfig?.id || ''
+      lightContext = t('lightContext.fresh')
     }
 
     updateSession({

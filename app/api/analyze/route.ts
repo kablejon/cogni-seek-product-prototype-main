@@ -1,365 +1,365 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { classifySearchTarget, determineEntropy } from '@/lib/services/classifier';
 import { getSystemPromptV9 } from '@/lib/services/prompt-engine';
-
-// ============================================================
-// 🧠 V17 Production：万物分类系统 + 钢铁防御 API 层
-// ============================================================
-
-interface SearchParams {
-  entropy: 'High' | 'Low';
-  targetClass: 'Living_Human' | 'Living_Pet' | 'Inanimate_Object';
-  physicsTag: 'Roll' | 'Slide' | 'Sink' | 'Static' | 'Flight' | 'Wander' | 'Denning';
-  safetyWarning: boolean;
-  globalContext?: 'Individualist' | 'Collectivist' | 'Outdoor';
-}
+import { classifySearchTarget, determineEntropy } from '@/lib/services/classifier';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 export async function POST(request: NextRequest) {
-  console.log('=== 🚀 CogniSeek V17 Production 分析开始 ===');
-  
   try {
-    const body = await request.json();
-    console.log('接收到的数据:', JSON.stringify(body, null, 2));
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json({ success: false, error: 'API Key 未配置' }, { status: 500 });
+    }
 
-    const { 
-      itemType, 
+    const body = await request.json();
+    const {
+      itemType,
       itemName,
-      itemDescription, 
+      itemDescription,
+      itemColor,
+      itemSize,
       lastSeenLocation,
       lastSeenTime,
+      lossLocationCategory,
+      lossLocationSubCategory,
       activity,
       mood,
       userMood,
-      locale,
+      userActivity,
       searchedPlaces,
-      ...otherData 
+      locale = 'zh-CN',
     } = body;
 
-    // ============================================================
-    // 🧠 万物分类器
-    // ============================================================
-    
-    const inputText = `${itemType} ${itemName} ${itemDescription}`;
-    console.log('📋 分析物品:', inputText);
-    
-    const classification = classifySearchTarget(inputText);
+    const isZH = locale === 'zh-CN';
+
+    // --- 分类器：确定目标类别 ---
+    const classifyInput = [itemType, itemName, itemDescription].filter(Boolean).join(' ');
+    const params = classifySearchTarget(classifyInput);
     const entropy = determineEntropy(userMood || mood);
-    
-    const params: SearchParams = {
-      ...classification,
-      entropy,
-      globalContext: 'Individualist'
-    };
-    
-    console.log('📊 最终分类参数:', params);
 
-    // ============================================================
-    // 🚀 调用 OpenRouter API
-    // ============================================================
+    // --- 构建系统提示词 ---
+    const systemPrompt = getSystemPromptV9(locale);
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
+    // --- 构建用户消息 ---
+    const userContent = JSON.stringify({
+      User_Input: {
+        itemType,
+        itemName,
+        itemDescription,
+        itemColor,
+        itemSize,
+        lastSeenLocation,
+        lastSeenTime,
+        lossLocationCategory,
+        lossLocationSubCategory,
+        activity,
+        mood,
+        userActivity,
+        searchedPlaces,
+      },
+      System_Injected_Params: {
+        targetClass: params.targetClass,
+        physicsTag: params.physicsTag,
+        safetyWarning: params.safetyWarning,
+        entropy,
+        locale,
+      },
+    }, null, 2);
 
-    if (!apiKey) {
-      console.error('❌ OPENROUTER_API_KEY 未配置');
-      return NextResponse.json({ error: 'API 配置错误' }, { status: 500 });
+    console.log('📤 发送给 AI 的数据:', userContent.slice(0, 500));
+
+    // --- 调用 OpenRouter API ---
+    const response = await fetch(OPENROUTER_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'X-Title': 'CogniSeek AI Analysis',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.0-flash-001',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContent },
+        ],
+        temperature: 0.4,
+        max_tokens: 6000,
+        response_format: { type: 'json_object' },
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ OpenRouter API 错误:', response.status, errorText);
+      return NextResponse.json(
+        { success: false, error: `AI API 调用失败: ${response.status}`, details: errorText },
+        { status: 500 }
+      );
     }
 
-    console.log('📡 正在调用 OpenRouter (Model: google/gemini-2.0-flash-001)...');
+    const data = await response.json();
+    const rawContent = data.choices?.[0]?.message?.content;
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 45000);
+    if (!rawContent) {
+      return NextResponse.json({ success: false, error: 'AI 返回内容为空' }, { status: 500 });
+    }
 
+    // --- 解析 JSON ---
+    let result: Record<string, unknown>;
     try {
-      const response = await fetch(OPENROUTER_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-          'X-Title': 'CogniSeek V17',
-        },
-        body: JSON.stringify({
-          model: 'google/gemini-2.0-flash-001',
-          messages: [
-            {
-              role: 'system',
-              content: getSystemPromptV9(locale || 'zh-CN')
-            },
-            {
-              role: 'user',
-              content: JSON.stringify({
-                User_Input: {
-                  itemType,
-                  itemName,
-                  itemDescription,
-                  lastSeenLocation,
-                  lastSeenTime,
-                  activity,
-                  mood,
-                  searchedPlaces,
-                  ...otherData
-                },
-                System_Injected_Params: params
-              })
-            }
-          ],
-          temperature: 0.4,
-          max_tokens: 4000,
-        }),
-        signal: controller.signal,
-      });
+      const cleaned = rawContent.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+      result = JSON.parse(cleaned);
+    } catch {
+      console.error('❌ JSON 解析失败，原始内容:', rawContent.slice(0, 300));
+      return NextResponse.json({ success: false, error: 'AI 返回格式错误', raw: rawContent }, { status: 500 });
+    }
 
-      clearTimeout(timeoutId);
+    // ============================================================
+    // API 层强制处理：不相信 AI 的以下字段，由代码兜底
+    // ============================================================
 
-      console.log('📡 OpenRouter 响应状态:', response.status);
+    // 1. probabilityLevel 覆盖：基于 probability 数字值计算
+    const numericProbability = Number(result.probability) || 70;
+    let probabilityLevel: 'High' | 'Medium' | 'Low' = 'Low';
+    if (numericProbability >= 75) probabilityLevel = 'High';
+    else if (numericProbability >= 55) probabilityLevel = 'Medium';
+    result.probabilityLevel = probabilityLevel;
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        console.error('❌ OpenRouter API 错误:', errorData);
-        return NextResponse.json(
-          { error: 'AI 服务暂时不可用', details: errorData },
-          { status: 500 }
-        );
+    // 2. safetyAlert：活人/活物/医疗物品强制触发
+    const isMedical =
+      itemType === 'medical' ||
+      /药|胰岛素|insulin|medication|medicine|epipen|注射器|inhaler|血压|血糖/i.test(String(itemName || '')) ||
+      /药|胰岛素|insulin|medication|medicine/i.test(String(itemDescription || ''));
+
+    if (params.targetClass === 'Living_Human' || params.safetyWarning || isMedical) {
+      if (!result.safetyAlert) {
+        result.safetyAlert = isZH
+          ? '⚠️ 紧急提醒：请立即拨打110/120，并同步联系周边安保人员协助搜寻。'
+          : '⚠️ URGENT: Call emergency services (110/120) immediately and alert nearby security staff.';
       }
-
-      const data = await response.json();
-      console.log('✓ OpenRouter 响应成功');
-      
-      const aiContent = data.choices?.[0]?.message?.content;
-
-      if (!aiContent) {
-        console.error('❌ AI 返回内容为空');
-        return NextResponse.json({ error: 'AI 返回内容异常' }, { status: 500 });
+    } else if (params.targetClass === 'Living_Pet') {
+      if (!result.safetyAlert) {
+        result.safetyAlert = isZH
+          ? '🐾 宠物走失提醒：立即在附近张贴寻宠启事，并联系周边动物救助站。'
+          : '🐾 Pet Alert: Post lost pet notices nearby and contact local animal shelters immediately.';
       }
+    }
 
-      console.log('📝 AI 回复长度:', aiContent.length);
-      console.log('📝 AI 回复预览:', aiContent.substring(0, 300));
-
-      // 解析 JSON 结果
-      let result;
-      try {
-        const jsonMatch = aiContent.match(/```json\s*([\s\S]*?)\s*```/);
-        const jsonString = jsonMatch ? jsonMatch[1] : aiContent;
-        result = JSON.parse(jsonString.trim());
-        console.log('✓ JSON 解析成功');
-      } catch (parseError) {
-        console.error('⚠️ JSON 解析失败，尝试直接解析');
-        try {
-          result = JSON.parse(aiContent.trim());
-          console.log('✓ 直接解析成功');
-        } catch {
-          console.error('❌ 所有解析尝试都失败，原始内容:', aiContent);
-          return NextResponse.json(
-            { error: 'AI 返回格式异常', raw: aiContent.substring(0, 500) },
-            { status: 500 }
-          );
-        }
+    // 3. compass 方向兜底：确保 ENUM 合法
+    const VALID_DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const compassRaw = result.compass as Record<string, unknown> | undefined;
+    if (compassRaw && typeof compassRaw.direction === 'string') {
+      const dir = compassRaw.direction.trim().toUpperCase();
+      if (!VALID_DIRECTIONS.includes(dir)) {
+        compassRaw.direction = 'N';
       }
-      
-      // 验证必需字段
-      if (!result.probability || !result.predictions || !result.checklist || !result.priorityAction) {
-        console.error('❌ AI 返回数据不完整:', result);
-        return NextResponse.json(
-          { error: 'AI 返回数据不完整', raw: JSON.stringify(result) },
-          { status: 500 }
-        );
-      }
+    } else if (!result.compass) {
+      result.compass = { direction: 'N', confidence: '50%', reasoning: isZH ? '方向不确定' : 'Direction uncertain' };
+    }
 
-      // ============================================================
-      // 🛡️ V17 API 层数据强制接管与兜底策略
-      // ============================================================
+    // ============================================================
+    // 4. API 层领域专家动作注入：checklist[0] 强制换成最高洞察力动作
+    // ============================================================
+    const rawChecklist: string[] = Array.isArray(result.checklist) ? (result.checklist as string[]) : [];
 
-      const isZH = locale === 'zh-CN';
+    // 判断是否为交通工具场景（出租车/网约车/公交/地铁/火车/飞机）
+    const isTransitScene = /transport|交通|出租|网约|滴滴|uber|taxi|cab|公交|地铁|subway|metro|火车|train|飞机|plane|airplane|flight|巴士|bus|船|ferry/i.test(
+      String(lossLocationCategory || '') + ' ' + String(lossLocationSubCategory || '') + ' ' + String(lastSeenLocation || '')
+    );
 
-      // --- 1. API 完全接管 probabilityLevel，永远不信任 AI 的枚举 ---
-      const rawProbability = result.probability;
-      const numericProbability = typeof rawProbability === 'number'
-        ? Math.min(99, Math.max(1, rawProbability))
-        : 70;
+    const domainFirstAction = (() => {
+      const nameLC = String(itemName || '').toLowerCase();
+      const descLC = String(itemDescription || '').toLowerCase();
+      const typeLC = String(itemType || '').toLowerCase();
 
-      const probabilityLevel = numericProbability >= 75 ? 'High'
-        : numericProbability >= 55 ? 'Medium'
-        : 'Low';
-
-      // --- 2. 生命安全强行熔断（含医疗物品检测）---
-      const medicalKeywords = ['药', '胰岛素', '注射笔', '血糖仪', '救心丸', '硝酸甘油', '吸入器', '哮喘', '透析'];
-      const medicalKeywordsEN = ['insulin', 'medication', 'medicine', 'inhaler', 'syringe', 'epipen', 'prescription'];
-      const combinedText = `${itemType || ''} ${itemName || ''} ${itemDescription || ''}`.toLowerCase();
-      const isMedical = itemType === 'medical'
-        || medicalKeywords.some(k => combinedText.includes(k))
-        || medicalKeywordsEN.some(k => combinedText.includes(k));
-
-      const safetyAlert = (() => {
-        const isLivingPet = params.targetClass === 'Living_Pet';
-        const isLivingHuman = params.targetClass === 'Living_Human';
-        const needsSafety = isLivingPet || isLivingHuman || isMedical || params.safetyWarning;
-
-        if (!needsSafety) return result.safetyAlert || null;
-
-        // AI 已返回有效 safetyAlert，优先保留
-        if (result.safetyAlert && result.safetyAlert.length > 5) return result.safetyAlert;
-
-        // API 注入兜底文案
-        if (isLivingHuman) {
-          return isZH
-            ? '🚨 您正在寻找的是人。若失联已超过24小时，请立即联系警方报案，并保持手机畅通。'
-            : '🚨 You are searching for a person. If missing for more than 24 hours, contact police immediately and keep your phone reachable.';
-        }
-        if (isLivingPet) {
-          return isZH
-            ? '⚠️ 寻找宠物请立即扩大周边物理搜索，切勿大声惊吓，时间至关重要！'
-            : '⚠️ Expand physical search for pet immediately. Do not shout to avoid scaring them. Time is critical!';
-        }
-        if (isMedical) {
-          return isZH
-            ? '⚕️ 医疗用品遗失具有极高风险！排查的同时请立即准备备用药品方案。'
-            : '⚕️ Medical item missing — high risk! Prepare backup medication options immediately while searching.';
-        }
+      // 交通工具场景：任何物品都优先拦截下游，时间窗口极窄
+      if (isTransitScene) {
         return isZH
-          ? '⚠️ 请注意排查过程中的人身安全。'
-          : '⚠️ Ensure personal safety while searching.';
-      })();
+          ? '📞 立即致电交通运营方（网约车：平台客服/行程记录联系司机；出租车：当地出租车调度台；地铁/公交：运营商失物招领；火车/飞机：官方失物电话）——物品随车辆移动，每延误5分钟找回概率下降20%，打电话比亲自寻找快10倍。'
+          : '📞 Call the transit operator IMMEDIATELY (rideshare: platform support + contact driver via trip history; taxi: local dispatch; subway/bus: operator lost property; train/plane: official lost & found hotline) — the item is moving away from you. Every 5-minute delay reduces recovery odds by 20%. One phone call beats any physical search.';
+      }
 
-      // --- 3. Compass 兜底：防止 AI 输出 None 或空字符串导致前端崩溃 ---
-      const validDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-      const rawDir = result.compass?.direction?.trim().toUpperCase() || '';
-      const isValidDir = validDirections.includes(rawDir);
+      // 宠物（躲藏型）：仓鼠/猫 → 放气味诱导，人离开
+      if (params.targetClass === 'Living_Pet' && params.physicsTag === 'Denning') {
+        return isZH
+          ? '👕 立即把你穿过的衣物和宠物食碗放在它最后出现的地点，然后所有人离开该区域至少30分钟——受惊的仓鼠/猫只有在感觉安全时才会出来，人的存在会让它一直躲着。'
+          : '👕 Place worn clothing + food bowl at the last-seen spot, then ALL humans must leave the area for 30+ minutes — frightened hamsters/cats only emerge when they feel safe. Human presence keeps them hiding.';
+      }
 
-      const finalDirection = isValidDir ? rawDir : (params.physicsTag === 'Roll' ? 'SE' : 'N');
-      const finalConfidence = isValidDir
-        ? (parseInt(String(result.compass?.confidence || '60')) || 60)
-        : 40;
+      // 宠物（奔跑型）：狗 → 气味锚点
+      if (params.targetClass === 'Living_Pet' && params.physicsTag === 'Wander') {
+        return isZH
+          ? '👕 在最后目击点放置主人穿过的衣物作为气味锚点，不要追逐——奔跑型宠物被追会跑得更远，自行返回的概率远高于被追回的概率。'
+          : '👕 Place worn owner clothing at last-seen point as scent anchor, DO NOT chase — running pets flee further when pursued. Probability of self-return far exceeds catch-by-chase.';
+      }
 
-      // --- 多语言兜底文案 ---
-      const fallbacks = {
-        summary: isZH ? '基于当前环境变量的系统综合分析' : 'Analysis based on current environmental variables.',
-        encouragement: isZH ? '保持冷静，遵循上述战术动作排查，成功率很大。' : 'Stay calm and follow the tactical steps above. Success rate is high.',
-        directionDesc: isZH ? '基于物理轨迹或环境地形的方向推算' : 'Inferred from physical trajectory or terrain layout.',
-        primaryLabel: isZH ? '北方' : 'North',
-        basicSearchPoints: isZH
-          ? ['【附近显眼处】: 视觉疲劳导致的注意力盲区', '【动线沿途】: 移动中无意识的掉落点', '【异常高低处】: 随手搁置的异常落点']
-          : ['【Immediate Area】: Inattentional blindness zone', '【Transit Path】: Unconscious drop during movement', '【Abnormal Heights】: Hasty placement spot'],
-      };
+      // 人（认知障碍/老人）→ 立刻报警
+      if (params.targetClass === 'Living_Human') {
+        return isZH
+          ? '🚨 立即拨打110报警并同时联系社区/街道网格员——走失老人/儿童每过一小时找回概率下降15%，专业搜救资源是个人搜索效率的20倍，报警是唯一正确的第一步。'
+          : '🚨 Call 110 police immediately AND contact community grid officers — recovery probability drops 15% per hour for missing persons. Professional search resources are 20x more effective than individual search.';
+      }
 
-      // --- API 层：领域专家动作注入 ---
-      // 对于特定物品类型，强制把最高洞察力的动作放到 checklist[0]
-      const rawChecklist: string[] = result.checklist || [];
+      // 充电宝/移动电源/充电器/数据线 — 共同特征：极易插在插座后忘记
+      if (['移动电源', '充电宝', 'power bank', 'powerbank', '充电器', '数据线', 'charger', 'charging cable', 'cable', 'usb', 'adapter', '插头', '电源适配器'].some(k => nameLC.includes(k) || descLC.includes(k)) || typeLC === 'cable') {
+        return isZH
+          ? '🔌 立即检查工位及周边5米内所有插座、充电口和排插：充电器/数据线极易插上后忘记取走——这比任何物理搜索的找回率都高，先确认插座再找其他地方。'
+          : '🔌 Check every power outlet, charging dock, and power strip within 5 meters FIRST — chargers and cables are most often found still plugged in and forgotten. Do this BEFORE any physical search.';
+      }
 
-      const domainFirstAction = (() => {
-        const nameLC = String(itemName || '').toLowerCase();
-        const descLC = String(itemDescription || '').toLowerCase();
-        const typeLC = String(itemType || '').toLowerCase();
+      // 手机
+      if (['手机', 'phone', 'iphone', 'android', 'smartphone'].some(k => nameLC.includes(k) || typeLC === 'phone')) {
+        return isZH
+          ? '📞 立刻用另一部手机拨打丢失号码，保持安静聆听铃声方向——这是找手机ROI最高的第一动作。'
+          : '📞 Call the lost phone from another device right now and listen for the ringtone direction — highest ROI first action for any phone search.';
+      }
 
-        // 电子设备：充电宝/移动电源 — 最高概率在充电口
-        if (['移动电源','充电宝','power bank','powerbank'].some(k => nameLC.includes(k) || descLC.includes(k))) {
-          return isZH
-            ? '🔌 立即检查工位及周边5米内所有插座和充电口：充电宝极易被插上后忘记取走，这比任何物理搜索的找回率都高。'
-            : '🔌 Check every power outlet and charging dock within 5 meters immediately — power banks are most often found still plugged in, forgotten after charging. Do this BEFORE any physical search.';
-        }
-        // 手机 — 拨打听声音
-        if (['手机','phone','iphone','android','smartphone'].some(k => nameLC.includes(k) || typeLC === 'phone')) {
-          return isZH
-            ? '📞 立刻用另一部手机拨打丢失号码，保持安静聆听铃声方向——这是找手机ROI最高的第一动作。'
-            : '📞 Call the lost phone from another device right now and listen for the ringtone direction — highest ROI first action for any phone search.';
-        }
-        // 钥匙 — 检查所有锁孔
-        if (['钥匙','key','keys'].some(k => nameLC.includes(k))) {
-          return isZH
-            ? '🗝️ 检查你今天经过的所有门锁和抽屉锁的锁孔：钥匙极易留在锁里，这是最常见的"遗失"原因。'
-            : '🗝️ Check every door lock and drawer lock you used today — keys are most commonly found still inserted in the lock.';
-        }
-        // 戒指/首饰 — 检查排水口
-        if (['戒指','耳环','首饰','项链','ring','earring','jewelry','bracelet','necklace'].some(k => nameLC.includes(k))) {
-          return isZH
-            ? '🚿 立即检查3米内所有排水口（洗手盆下水、地漏、浴室排水）：小型圆形首饰在3秒内就能滚入排水口，时间至关重要。'
-            : '🚿 Check every drain within 3 meters immediately (sink drain, floor drain, shower drain) — small round jewelry rolls into drains within seconds, time is critical.';
-        }
-        // 护照/重要证件 — 先打电话给机构
-        if (['护照','passport','身份证','id card','证件'].some(k => nameLC.includes(k) || descLC.includes(k))) {
-          return isZH
-            ? '📞 立即致电所在机构（机场失物招领：400热线/航司；酒店：前台；地铁：运营商失物处）——工作人员可能已经找到，先电话确认比自行搜索效率高10倍。'
-            : '📞 Call the institution immediately (airport: airline lost & found hotline; hotel: front desk; transit: operator lost property) — staff may already have it. Phone call beats manual search by 10x.';
-        }
-        return null; // 其他物品不注入，由 AI 自由生成
-      })();
+      // 钥匙
+      if (['钥匙', 'key', 'keys'].some(k => nameLC.includes(k) || nameLC === k)) {
+        return isZH
+          ? '🗝️ 检查你今天经过的所有门锁和抽屉锁的锁孔：钥匙极易留在锁里，这是最常见的"遗失"原因。'
+          : '🗝️ Check every door lock and drawer lock you used today — keys are most commonly found still inserted in the lock.';
+      }
 
-      // 注入规则：如果有领域特定动作，且 AI 的 Action 1 包含"手电筒/flashlight"等通用词，替换掉
-      const genericFirstActionPatterns = /手电筒|flashlight|用光|照射|flash\s*light/i;
-      const finalChecklist = (() => {
-        if (!domainFirstAction || rawChecklist.length === 0) return rawChecklist;
-        // 如果 Action 1 是通用手电筒类，替换；否则在最前面插入
-        if (genericFirstActionPatterns.test(rawChecklist[0])) {
+      // 戒指/首饰
+      if (['戒指', '耳环', '首饰', '项链', '手链', 'ring', 'earring', 'jewelry', 'bracelet', 'necklace'].some(k => nameLC.includes(k))) {
+        return isZH
+          ? '🚿 立即检查3米内所有排水口（洗手盆下水、地漏、浴室排水）：小型圆形首饰在3秒内就能滚入排水口，时间至关重要。'
+          : '🚿 Check every drain within 3 meters immediately (sink drain, floor drain, shower drain) — small round jewelry rolls into drains within seconds, time is critical.';
+      }
+
+      // 银行卡/信用卡 — 最高价值第一动作：先冻结再找
+      if (['银行卡', '信用卡', '储蓄卡', '借记卡', 'bank card', 'credit card', 'debit card', 'atm card'].some(k => nameLC.includes(k) || descLC.includes(k))) {
+        return isZH
+          ? '🔐 立即拨打银行客服热线冻结卡片（工行95588/建行95533/招行95555等），同时查询最后一笔交易记录——冻结防止盗刷，交易记录可反向锁定丢失时间和地点，这比任何物理搜索都优先。'
+          : '🔐 Call your bank hotline IMMEDIATELY to freeze the card and request recent transaction history — freezing prevents unauthorized use, and the last transaction timestamp + location can pinpoint exactly when and where you lost it. This is the highest-priority action before any physical search.';
+      }
+
+      // 笔记本电脑/平板 在交通工具（已被 isTransitScene 覆盖，此处处理非交通场景的数码大件）
+      if (['笔记本', '电脑', 'laptop', 'notebook', '平板', 'tablet', 'ipad', 'macbook'].some(k => nameLC.includes(k) || descLC.includes(k))) {
+        return isZH
+          ? '📍 立即打开 Find My / 设备管理远程定位——笔记本/平板都有GPS或Wi-Fi定位功能，数字手段定位比物理搜索快100倍，同时开启远程锁定防止数据泄露。'
+          : '📍 Open Find My / device management to get real-time location IMMEDIATELY — laptops and tablets have GPS/Wi-Fi tracking. Digital location beats physical search by 100x. Also enable remote lock to protect your data.';
+      }
+
+      // 护照/重要证件
+      if (['护照', 'passport', '身份证', 'id card', '证件'].some(k => nameLC.includes(k) || descLC.includes(k))) {
+        return isZH
+          ? '📞 立即致电所在机构（机场：航司失物招领热线；酒店：前台；地铁：运营商失物处）——工作人员可能已经找到，先电话确认比自行搜索效率高10倍。'
+          : '📞 Call the institution immediately (airport: airline lost & found hotline; hotel: front desk; transit: operator lost property) — staff may already have it. Phone call beats manual search by 10x.';
+      }
+
+      // 手表 — 最常在洗手/做饭时摘下忘在水槽旁
+      if (['手表', 'watch', '腕表', 'apple watch', 'smartwatch'].some(k => nameLC.includes(k))) {
+        return isZH
+          ? '🚰 立即检查最近使用过的水槽/洗手台边缘和排水口——手表在洗手时被摘下放在台面，是最常见的"遗忘点"，而且可能已经滑入排水网。'
+          : '🚰 Check every sink/basin edge and drain you visited recently — watches are removed for hand-washing and forgotten on countertops. They may have slid into the drain grate.';
+      }
+
+      // 耳机/AirPods — 用 Find My 定位
+      if (['耳机', 'airpods', 'earbud', '蓝牙耳机', 'earphone', 'headphone', 'buds'].some(k => nameLC.includes(k))) {
+        return isZH
+          ? '📍 立即打开 Find My / 厂商定位App 搜索耳机位置——蓝牙耳机有定位功能，这比任何物理搜索都快，先用数字手段定位再行动。'
+          : '📍 Open Find My / manufacturer tracking app to ping the earbuds location RIGHT NOW — Bluetooth earbuds have location tracking. Digital search before physical search.';
+      }
+
+      // 眼镜 — 检查头顶和衣领
+      if (['眼镜', '墨镜', 'glasses', 'sunglasses', '太阳镜'].some(k => nameLC.includes(k))) {
+        return isZH
+          ? '👤 先摸一下自己的头顶和衣领——眼镜被推到头顶或挂在领口后遗忘的概率高达30%，这是最容易被忽视的"灯下黑"。'
+          : '👤 Touch your head and collar FIRST — glasses pushed onto the head or hung on the collar are forgotten 30% of the time. This is the most overlooked blind spot.';
+      }
+
+      return null; // 其他物品由 AI 自由生成
+    })();
+
+    // ============================================================
+    // 通用手电筒检测模式：匹配各种手电筒表达方式
+    const genericPatterns = /手电筒|flashlight|闪光灯|flash\s*light|用光|照射|torch|lantern/i;
+
+    // 通用动作质检：判断一条 action 是否"太通用"（不含具体场景信息）
+    const isGenericAction = (action: string): boolean => {
+      if (genericPatterns.test(action)) return true;
+      // 其他通用模式：蹲下/改变视角/整理/回想 但不含具体地点名称
+      if (/蹲下|弯腰|crouch|kneel|get low/i.test(action) && !/具体|specific|under the|在.*下方/.test(action)) return true;
+      return false;
+    };
+
+    // 通用重排逻辑：当 Action 1 是通用动作且没有领域注入时，
+    // 从 Actions 2-5 中找最"高价值"的（含电话/联系/app/冻结/系统等关键词）提升到首位
+    const reorderForBestAction1 = (checklist: string[]): string[] => {
+      if (checklist.length < 2) return checklist;
+      if (!isGenericAction(checklist[0])) return checklist; // Action 1 已经足够好
+
+      // 高价值关键词：打电话、联系机构、数字手段、防损失措施
+      const highValuePatterns = /电话|联系|拨打|call|contact|freeze|冻结|定位|find my|app|platform|平台|客服|lost.*found|失物|报警|police|dispatch|schedule|清洁|cleaning|hotline/i;
+
+      // 找第一个高价值动作的索引
+      const bestIdx = checklist.findIndex((action, idx) => idx > 0 && highValuePatterns.test(action));
+
+      if (bestIdx === -1) return checklist; // 没找到更好的，保持原样
+
+      // 把高价值动作移到首位，其余顺序不变
+      const reordered = [...checklist];
+      const [best] = reordered.splice(bestIdx, 1);
+      reordered.unshift(best);
+      return reordered;
+    };
+
+    // 最终 checklist 生成逻辑
+    const finalChecklist = (() => {
+      if (rawChecklist.length === 0) return domainFirstAction ? [domainFirstAction] : [];
+
+      // 有领域注入：直接使用注入动作
+      if (domainFirstAction) {
+        if (genericPatterns.test(rawChecklist[0])) {
           return [domainFirstAction, ...rawChecklist.slice(1)];
         }
-        // Action 1 已经是好内容，把领域动作插入 Action 1 位置，原内容后移
         return [domainFirstAction, ...rawChecklist.slice(0, 4)];
-      })();
-
-      // --- 构建最终安全数据结构 ---
-      const transformedResult = {
-        probability: numericProbability,
-        probabilityLevel,
-        summary: result.summary || result.diagnosis || fallbacks.summary,
-        safetyAlert,
-        priorityAction: result.priorityAction || {
-          target: isZH ? '最后确认接触点' : 'Last confirmed contact point',
-          action: isZH ? '物理隔离排查法' : 'Physical isolation check',
-          why: isZH ? '缩小核心嫌疑区域' : 'Narrow down the core suspect radius'
-        },
-        predictions: (result.predictions || []).map((pred: any) => ({
-          location: pred.location || '',
-          confidence: typeof pred.confidence === 'number'
-            ? pred.confidence
-            : (parseInt(String(pred.confidence || pred.probability || '50')) || 50),
-          reason: pred.reason || pred.reasoning || '',
-          technique: pred.technique || ''
-        })),
-        direction: {
-          primary: finalDirection,
-          primaryLabel: isValidDir ? (result.compass?.direction || finalDirection) : fallbacks.primaryLabel,
-          confidence: finalConfidence,
-          description: result.compass?.reasoning || fallbacks.directionDesc
-        },
-        behaviorAnalysis: result.behaviorAnalysis || '',
-        environmentAnalysis: result.environmentAnalysis || '',
-        timelineAnalysis: result.timelineAnalysis || '',
-        basicSearchPoints: (result.basicSearchPoints && result.basicSearchPoints.length > 0)
-          ? result.basicSearchPoints
-          : fallbacks.basicSearchPoints,
-        checklist: finalChecklist,
-        cognitiveOverride: result.cognitiveOverride || '',
-        stopCondition: result.stopCondition || '',
-        encouragement: result.encouragement || fallbacks.encouragement,
-        _thought_process: result._thought_process || ''
-      };
-
-      console.log('=== ✅ CogniSeek V17 分析完成 ===');
-      console.log('📊 概率:', numericProbability, '| 级别:', probabilityLevel, '| 安全警告:', !!safetyAlert);
-      
-      return NextResponse.json({
-        success: true,
-        result: transformedResult,
-        classification: params,
-        usage: data.usage,
-      });
-
-    } catch (fetchError) {
-      clearTimeout(timeoutId);
-      
-      if (fetchError instanceof Error && fetchError.name === 'AbortError') {
-        console.error('⏱️ 请求超时');
-        return NextResponse.json({ error: 'AI 服务响应超时，请重试' }, { status: 504 });
       }
-      
-      throw fetchError;
-    }
+
+      // 无领域注入：用通用重排逻辑提升最佳 Action
+      return reorderForBestAction1(rawChecklist);
+    })();
+
+    result.checklist = finalChecklist.length > 0 ? finalChecklist : rawChecklist;
+
+    // ============================================================
+    // 5. 返回结果
+    // ============================================================
+    const transformedResult = {
+      probability: numericProbability,
+      probabilityLevel: result.probabilityLevel,
+      summary: result.summary || '',
+      priorityAction: result.priorityAction || {},
+      predictions: result.predictions || [],
+      basicSearchPoints: result.basicSearchPoints || [],
+      checklist: result.checklist || [],
+      cognitiveOverride: result.cognitiveOverride || '',
+      stopCondition: result.stopCondition || '',
+      encouragement: result.encouragement || '',
+      compass: result.compass || {},
+      behaviorAnalysis: result.behaviorAnalysis || '',
+      environmentAnalysis: result.environmentAnalysis || '',
+      timelineAnalysis: result.timelineAnalysis || '',
+      safetyAlert: result.safetyAlert || null,
+      _thought_process: result._thought_process || '',
+    };
+
+    console.log('✅ 分析完成，targetClass:', params.targetClass, '| probabilityLevel:', probabilityLevel);
+
+    return NextResponse.json({
+      success: true,
+      result: transformedResult,
+      classification: params,
+      usage: data.usage,
+    });
 
   } catch (error) {
-    console.error('❌ 分析请求处理失败:', error);
+    console.error('❌ analyze route 错误:', error);
     return NextResponse.json(
-      { error: '服务器内部错误', details: String(error) },
+      { success: false, error: String(error) },
       { status: 500 }
     );
   }

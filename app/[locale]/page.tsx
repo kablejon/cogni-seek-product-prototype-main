@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl"
 import { Link } from "@/lib/navigation"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { InteractiveFog } from "@/components/ui/interactive-fog"
 import { LanguageSwitcher } from "@/components/shared/language-switcher"
@@ -47,10 +46,6 @@ export default function HomePage() {
             <span className="text-xl font-semibold">CogniSeek</span>
           </div>
           <div className="flex items-center gap-3">
-            <Badge variant="secondary" className="text-xs hidden md:flex">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
-              AI Online
-            </Badge>
             <LanguageSwitcher />
           </div>
         </div>
@@ -59,11 +54,6 @@ export default function HomePage() {
       <main className="flex-1 relative z-10">
         {/* Hero */}
         <section className="container mx-auto px-4 py-16 md:py-24 text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary animate-fade-in">
-            <Zap className="w-4 h-4" />
-            {t('badge')}
-          </div>
-
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in-up">
             {t('heroTitle1')}<br />
             <span className="bg-gradient-to-r from-[#2DE1FC] via-[#10b981] to-[#FFD700] bg-clip-text text-transparent">
@@ -77,12 +67,16 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
             <Link href="/detect/intro">
-              <Button size="lg" className="rounded-full px-8 text-lg font-semibold bg-gradient-to-r from-[#2DE1FC] to-[#10b981] hover:shadow-[0_0_30px_rgba(45,225,252,0.4)] transition-all group">
+              <Button className="h-14 rounded-full px-10 text-lg font-bold bg-gradient-to-r from-[#2DE1FC] to-[#10b981] hover:shadow-[0_0_40px_rgba(45,225,252,0.5)] hover:scale-105 transition-all duration-300 group">
                 {t('ctaStart')}
-                <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+                <ChevronRight className="w-5 h-5 ml-1.5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="rounded-full px-8 text-lg">
+            <Button
+              variant="outline"
+              className="h-14 rounded-full px-10 text-lg font-semibold border-[#2DE1FC]/40 text-[#2DE1FC] hover:bg-[#2DE1FC]/10 hover:border-[#2DE1FC]/70 hover:shadow-[0_0_20px_rgba(45,225,252,0.15)] transition-all duration-300"
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               {t('ctaDemo')}
             </Button>
           </div>
@@ -102,7 +96,7 @@ export default function HomePage() {
         </section>
 
         {/* Features Grid */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
+        <section id="how-it-works" className="container mx-auto px-4 py-12 md:py-16">
           <div className="text-center space-y-3 mb-10">
             <h2 className="text-2xl md:text-3xl font-bold">{t('featuresTitle')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('featuresSubtitle')}</p>
@@ -171,18 +165,23 @@ export default function HomePage() {
 
         {/* CTA Banner */}
         <section className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-3xl mx-auto text-center space-y-6 scifi-container p-10 md:p-16">
-            <div className="text-5xl">🔍</div>
+          <div className="max-w-3xl mx-auto text-center space-y-8 scifi-container p-10 md:p-16">
+            <div className="text-6xl">🔍</div>
             <h2 className="text-2xl md:text-3xl font-bold">{t('ctaBannerTitle')}</h2>
             <p className="text-muted-foreground">{t('ctaBannerSubtitle')}</p>
             <Link href="/detect/intro">
-              <Button size="lg" className="rounded-full px-12 text-lg font-semibold bg-gradient-to-r from-[#2DE1FC] to-[#10b981] hover:shadow-[0_0_40px_rgba(45,225,252,0.5)] transition-all">
-                {t('ctaStart')} <ChevronRight className="w-5 h-5 ml-1" />
+              <Button className="rounded-full px-16 py-6 text-xl font-bold bg-gradient-to-r from-[#2DE1FC] to-[#10b981] hover:shadow-[0_0_50px_rgba(45,225,252,0.6)] hover:scale-105 transition-all duration-300 group">
+                {t('ctaStart')} <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground pt-2">
-              <span className="flex items-center gap-1"><Shield className="w-3.5 h-3.5 text-emerald-400" /> {t('trust.privacy')}</span>
-              <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400" /> {t('trust.free')}</span>
+            <div className="flex items-center justify-center gap-6 pt-1">
+              <span className="flex items-center gap-2 text-sm font-medium text-emerald-400">
+                <Shield className="w-5 h-5" /> {t('trust.privacy')}
+              </span>
+              <span className="w-px h-4 bg-border/60" />
+              <span className="flex items-center gap-2 text-sm font-medium text-amber-400">
+                <Star className="w-5 h-5 fill-amber-400" /> {t('trust.free')}
+              </span>
             </div>
           </div>
         </section>

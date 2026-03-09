@@ -127,9 +127,10 @@ export default function Step1Page() {
 
   const handleNext = () => {
     if (!canProceed) return
+    // Use td() so the stored name matches the UI language (e.g. "Power bank" in EN, "充电宝" in ZH)
     const finalItemName = (selectedItem.endsWith('_other') || selectedItem === 'completely_other' || selectedItem === 'custom_item')
       ? itemCustomName
-      : selectedItem
+      : (td(`items.${selectedItem}`) || itemCategories.find(c => c.id === selectedCategory)?.items.find(i => i.id === selectedItem)?.label || selectedItem)
     updateSession({
       itemCategory: selectedCategory,
       itemName: finalItemName,

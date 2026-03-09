@@ -104,14 +104,11 @@ export default function Step5Page() {
   }
 
   const getSmartFeatureText = (textKey: string): string => {
-    const textMap: Record<string, string> = {
-      tried_find_phone: 'Tried "Find My" or calling the phone',
-      tried_find_tablet: 'Tried locating via cloud service',
-      tried_find_laptop: 'Tried "Find My" function',
-      tried_call_pet: 'Tried calling by name or tapping food bowl',
-      tried_find_smart: 'Tried using companion app or location feature',
+    try {
+      return t(`smartFeature.${textKey}`) || textKey
+    } catch {
+      return textKey
     }
-    return textMap[textKey] || textKey
   }
 
   return (

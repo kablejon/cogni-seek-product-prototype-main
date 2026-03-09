@@ -73,7 +73,7 @@
   },
   "step0": {
     "title": "锁定第一现场",
-    "subtitle": "Identify Environment Profile",
+    "subtitle": "识别环境特征",
     "description": "闭上眼回忆一下，你**最后一次**确信它在身边的位置是？",
     "selectPrompt": "👆 请选择一个区域开始分析",
     "sectors": {
@@ -155,6 +155,16 @@
       "preciseDesc": "AI 仅分析选中的时段"
     },
     "aiAnalysis": "时空分析：",
+    "lightContext": {
+      "fullDay": "全天分析",
+      "locked": "时间锁定",
+      "fullPeriod": "全时段分析",
+      "fresh": "记忆新鲜度：极高"
+    },
+    "timeDesc": {
+      "uncertain": "较早前（时间不确定）",
+      "macroUncertain": "{label}（时间不确定）"
+    },
     "missing": {
       "noTime": "请选择时间范围",
       "noLight": "请选择光线时段或开启\"时间不确定\"开关",
@@ -269,6 +279,13 @@
     "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的「视觉和记忆盲区」",
     "toggleHint": "开关开启表示「已尝试过」，AI将不再建议；关闭表示「未尝试」，AI将为您提供相关建议",
     "startAnalysis": "开始 AI 分析",
+    "smartFeature": {
+      "tried_find_phone": "已尝试「查找」或拨打手机",
+      "tried_find_tablet": "已尝试云端定位服务",
+      "tried_find_laptop": "已尝试「查找我的」功能",
+      "tried_call_pet": "已尝试呼唤名字或敲击食盆",
+      "tried_find_smart": "已尝试配套App或定位功能"
+    },
     "duration": {
       "10min": "10分钟内",
       "30min": "半小时左右",
@@ -293,7 +310,8 @@
       "prob": "CALCULATING_PROBABILITY_MATRIX...",
       "coords": "GENERATING_TACTICAL_COORDINATES...",
       "complete": "TARGET_LOCKED."
-    }
+    },
+    "matchingTarget": "目标锁定："
   },
   "result": {
     "title": "逻辑推演成功率：",

@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "@/lib/navigation"
-import domtoimage from "dom-to-image-more"
+// dom-to-image-more loaded dynamically to avoid SSR issues (browser-only)
 import {
   Brain, MapPin, Lock, ArrowRight, ShieldCheck, Zap, ScanLine, Activity,
   CarFront, Armchair, Briefcase, Microscope, Stethoscope, Waves,
@@ -114,6 +114,7 @@ export default function ReportPage() {
       if (!reportElement) throw new Error('Report element not found')
       const footerElement = document.querySelector('[class*="fixed bottom-0"]') as HTMLElement
       if (footerElement) footerElement.style.display = 'none'
+      const domtoimage = (await import('dom-to-image-more')).default;
       const dataUrl = await domtoimage.toPng(reportElement, {
         quality: 1, bgcolor: '#020617',
         style: { 'transform': 'none', 'color-scheme': 'dark' },
@@ -201,7 +202,7 @@ export default function ReportPage() {
                   <div className="w-1 h-1 bg-amber-500/50 rounded-full" />
                 </div>
                 <div className="absolute top-6 px-2 py-0.5 bg-amber-950/80 border border-amber-500/30 backdrop-blur-sm rounded text-[9px] font-bold text-amber-500 tracking-widest whitespace-nowrap z-10">
-                  Zone {i + 1}
+                  {t('zoneLabel')} {i + 1}
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "@/lib/navigation"
 import {
   Scan, Search, Crosshair,
@@ -33,6 +33,7 @@ const LOGS = [
 export default function LoadingPage() {
   const router = useRouter()
   const locale = useLocale()
+  const t = useTranslations('loading')
   const { session, setAnalysisResult, setAnalysisError } = useSearchStore()
 
   const [progress, setProgress] = useState(0)
@@ -180,7 +181,7 @@ export default function LoadingPage() {
         <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 opacity-60">
           <div className="flex items-center gap-2 text-xs text-slate-500">
             <Search className="w-3 h-3" />
-            <span>MATCHING TARGET:</span>
+            <span>{t('matchingTarget')}</span>
           </div>
           <div className="flex items-center gap-2">
             <Crosshair className="w-3 h-3 text-red-400" />
