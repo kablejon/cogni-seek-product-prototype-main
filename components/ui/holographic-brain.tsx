@@ -68,7 +68,7 @@ export function HolographicBrain({ keywords = [], className = "" }: HolographicB
           vy: 0,
           size: Math.random() * 3 + 1,
           opacity: Math.random() * 0.5 + 0.5,
-          color: `rgba(59, 130, 246, ${Math.random() * 0.5 + 0.5})`
+          color: `rgba(45, 225, 252, ${Math.random() * 0.5 + 0.5})`
         })
       }
     }
@@ -99,7 +99,7 @@ export function HolographicBrain({ keywords = [], className = "" }: HolographicB
           vy: 0,
           size: Math.random() * 4 + 2,
           opacity: 1,
-          color: `rgba(34, 211, 238, ${Math.random() * 0.3 + 0.7})`
+          color: `rgba(0, 255, 157, ${Math.random() * 0.3 + 0.7})`
         })
       }
     }
@@ -140,7 +140,7 @@ export function HolographicBrain({ keywords = [], className = "" }: HolographicB
 
         // 如果是飞入的粒子，到达中心后淡出并删除
         const distToCenter = Math.sqrt(dx * dx + dy * dy)
-        if (distToCenter < 10 && particle.color.includes('34, 211, 238')) {
+        if (distToCenter < 10 && particle.color.includes('0, 255, 157')) {
           particle.opacity -= 0.02
           if (particle.opacity <= 0) {
             particlesRef.current.splice(index, 1)
@@ -160,7 +160,7 @@ export function HolographicBrain({ keywords = [], className = "" }: HolographicB
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = "rgba(59, 130, 246, 0.3)"
+            ctx.strokeStyle = "rgba(45, 225, 252, 0.25)"
             ctx.lineWidth = 1
             ctx.stroke()
           }
@@ -170,8 +170,8 @@ export function HolographicBrain({ keywords = [], className = "" }: HolographicB
       // 绘制中心光晕
       ctx.globalAlpha = 0.4
       const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 100)
-      gradient.addColorStop(0, "rgba(59, 130, 246, 0.3)")
-      gradient.addColorStop(0.5, "rgba(34, 211, 238, 0.1)")
+      gradient.addColorStop(0, "rgba(45, 225, 252, 0.3)")
+      gradient.addColorStop(0.5, "rgba(0, 255, 157, 0.1)")
       gradient.addColorStop(1, "transparent")
       ctx.fillStyle = gradient
       ctx.beginPath()

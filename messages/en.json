@@ -420,7 +420,19 @@
     "homeZoneC": "Zone C: Visible floor area",
     "defaultZoneA": "Zone A",
     "defaultZoneB": "Zone B",
-    "defaultZoneC": "Zone C"
+    "defaultZoneC": "Zone C",
+    "priorityActionTitle": "Immediate Priority Action",
+    "priorityActionTarget": "Target:",
+    "priorityActionWhy": "Why:",
+    "predictionsTitle": "High-Probability Micro Locations",
+    "predictionsLocked": "3 Precision Spots Locked",
+    "predictionsLockedDesc": "Unlock to view exact locations & search techniques",
+    "predictionsConfidence": "Confidence",
+    "predictionsReasoning": "Reasoning:",
+    "predictionsMethod": "Technique:",
+    "timelineTitle": "Timeline Analysis",
+    "stopConditionTitle": "Escalation Threshold",
+    "cognitiveInsightLabel": "Cognitive Override Command"
   },
   "data": {
     "categories": {

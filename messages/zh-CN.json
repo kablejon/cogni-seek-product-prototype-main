@@ -420,7 +420,19 @@
     "homeZoneC": "C区：可见地板区域",
     "defaultZoneA": "A区",
     "defaultZoneB": "B区",
-    "defaultZoneC": "C区"
+    "defaultZoneC": "C区",
+    "priorityActionTitle": "立刻执行：首要紧急行动",
+    "priorityActionTarget": "目标：",
+    "priorityActionWhy": "原因：",
+    "predictionsTitle": "高危微观落点推演",
+    "predictionsLocked": "3 个精准微观落点已锁定",
+    "predictionsLockedDesc": "解锁查看具体位置与专项搜索手法",
+    "predictionsConfidence": "置信度",
+    "predictionsReasoning": "推理依据：",
+    "predictionsMethod": "搜索手法：",
+    "timelineTitle": "时间线演变分析",
+    "stopConditionTitle": "强制止损节点",
+    "cognitiveInsightLabel": "认知覆盖命令"
   },
   "data": {
     "categories": {

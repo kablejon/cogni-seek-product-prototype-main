@@ -7,7 +7,8 @@ import { useRouter } from "@/lib/navigation"
 import {
   Brain, MapPin, Lock, ArrowRight, ShieldCheck, Zap, ScanLine, Activity,
   CarFront, Armchair, Briefcase, Microscope, Stethoscope, Waves,
-  Search, CheckCircle2, Download, Home
+  Search, CheckCircle2, Download, Home, AlertTriangle, Target,
+  Clock, Octagon, Crosshair, ShieldAlert
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSearchStore } from "@/lib/store"
@@ -27,6 +28,12 @@ const SCENE_CONFIG_BASE = {
     icon: Briefcase,
     macroZonesBase: [{ t: '30%', l: '30%' }, { t: '70%', l: '70%' }, { t: '50%', l: '50%' }]
   }
+}
+
+// 从 basicSearchPoints 的【】格式中提取短标签，防止地图 UI 溢出
+function extractShortLabel(fullText: string, fallback: string): string {
+  const match = fullText.match(/【(.*?)】/)
+  return match ? match[1] : (fullText.length > 12 ? fallback : fullText)
 }
 
 export default function ReportPage() {
@@ -91,10 +98,15 @@ export default function ReportPage() {
     return [t('defaultZoneA'), t('defaultZoneB'), t('defaultZoneC')]
   }, [session, t])
 
+  // 地图标签提取短标签，清单使用完整描述
   const dynamicMacroZones = useMemo(() => {
     const baseZones = currentSceneBase.macroZonesBase
     const basicPoints = aiResult.basicSearchPoints || []
-    return baseZones.map((zone, index) => ({ t: zone.t, l: zone.l, label: basicPoints[index] || fallbackZoneLabels[index] }))
+    return baseZones.map((zone, index) => {
+      const fullText = basicPoints[index] || ''
+      const shortLabel = extractShortLabel(fullText, fallbackZoneLabels[index])
+      return { t: zone.t, l: zone.l, label: shortLabel, fullDesc: fullText || fallbackZoneLabels[index] }
+    })
   }, [currentSceneBase, aiResult.basicSearchPoints, fallbackZoneLabels])
 
   const [recoveryIndex, setRecoveryIndex] = useState("85.0")
@@ -146,10 +158,12 @@ export default function ReportPage() {
       className="min-h-screen bg-[#020617] text-slate-200 font-mono selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-hidden flex flex-col"
       style={{ fontFamily: cjkFontStack }}
     >
+      {/* 背景网格 */}
       <div className="absolute inset-0 pointer-events-none opacity-20"
         style={{ backgroundImage: 'linear-gradient(#1e3a8a 1px, transparent 1px), linear-gradient(90deg, #1e3a8a 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-blue-600/10 blur-[100px] pointer-events-none" />
 
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-[#020617]/80 backdrop-blur-md border-b border-blue-900/30 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 bg-cyan-950/50 border border-cyan-400 text-cyan-400 rounded flex items-center justify-center">
@@ -170,9 +184,19 @@ export default function ReportPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-xl mx-auto px-6 py-8 space-y-8 overflow-y-auto w-full pb-32">
+      {/* 安全警告横幅（人命/宠物/医疗类自动触发）*/}
+      {aiResult.safetyAlert && (
+        <div className="w-full bg-red-950/80 border-b border-red-500/50 p-3 backdrop-blur-md relative z-40 shadow-[0_4px_20px_rgba(239,68,68,0.2)]">
+          <div className="max-w-xl mx-auto flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5 animate-pulse" />
+            <p className="text-xs text-red-100 font-bold leading-relaxed">{aiResult.safetyAlert}</p>
+          </div>
+        </div>
+      )}
 
-        {/* Recovery Index */}
+      <main className="flex-1 max-w-xl mx-auto px-6 py-8 space-y-8 overflow-y-auto w-full pb-36">
+
+        {/* 1. 寻回指数 */}
         <section className="text-center space-y-2 relative">
           <h1 className="text-7xl font-bold tracking-tighter text-white drop-shadow-[0_0_25px_rgba(34,211,238,0.3)]">{recoveryIndex}</h1>
           <div className="flex items-center justify-center gap-3 text-[10px] font-bold tracking-[0.2em] text-cyan-500 uppercase mt-2">
@@ -181,11 +205,35 @@ export default function ReportPage() {
             <span>{t('probabilityLabel')}</span>
           </div>
           <div className="max-w-xs mx-auto mt-4 p-2 bg-blue-950/20 rounded border border-blue-900/30">
-            <p className="text-[10px] text-slate-500 leading-relaxed scale-90">{t('aiDisclaimer')}</p>
+            <p className="text-[10px] text-slate-500 leading-relaxed">{t('aiDisclaimer')}</p>
           </div>
         </section>
 
-        {/* Holographic Map */}
+        {/* 2. 首要紧急行动（免费）—— 建立第一眼专业信任 */}
+        {aiResult.priorityAction?.action && (
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="bg-gradient-to-br from-amber-500/10 to-orange-600/5 border border-amber-500/40 rounded-xl p-5 shadow-[0_0_25px_rgba(245,158,11,0.12)] relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-400 to-amber-600 shadow-[0_0_8px_#f59e0b]" />
+              <div className="flex items-center gap-2 mb-3">
+                <Target className="w-4 h-4 text-amber-500" />
+                <h2 className="text-[10px] font-bold text-amber-500 tracking-widest uppercase">{t('priorityActionTitle')}</h2>
+              </div>
+              <p className="text-sm font-bold text-amber-50 leading-relaxed bg-amber-950/30 p-3 rounded border border-amber-500/20 mb-3">
+                {aiResult.priorityAction.action}
+              </p>
+              <div className="grid grid-cols-1 gap-1.5 text-[11px] text-slate-400">
+                {aiResult.priorityAction.target && (
+                  <p><span className="text-amber-500/80 font-bold">{t('priorityActionTarget')}</span> {aiResult.priorityAction.target}</p>
+                )}
+                {aiResult.priorityAction.why && (
+                  <p><span className="text-amber-500/80 font-bold">{t('priorityActionWhy')}</span> <span className="italic text-slate-500">{aiResult.priorityAction.why}</span></p>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 3. 全息场景地图 */}
         <section className="relative w-full aspect-video bg-[#0B1121] border border-blue-800/30 rounded-xl overflow-hidden group shadow-[0_0_40px_rgba(2,6,23,0.8)_inset]">
           <div className="absolute top-4 left-4 w-12 h-[1px] bg-cyan-500/30" />
           <div className="absolute bottom-4 right-4 w-[1px] h-12 bg-cyan-500/30" />
@@ -201,8 +249,8 @@ export default function ReportPage() {
                 <div className="absolute w-8 h-8 border border-amber-500/30 rounded-full flex items-center justify-center animate-[spin_8s_linear_infinite]">
                   <div className="w-1 h-1 bg-amber-500/50 rounded-full" />
                 </div>
-                <div className="absolute top-6 px-2 py-0.5 bg-amber-950/80 border border-amber-500/30 backdrop-blur-sm rounded text-[9px] font-bold text-amber-500 tracking-widest whitespace-nowrap z-10">
-                  {t('zoneLabel')} {i + 1}
+                <div className="absolute top-6 px-2 py-0.5 bg-amber-950/80 border border-amber-500/30 backdrop-blur-sm rounded text-[9px] font-bold text-amber-500 tracking-widest whitespace-nowrap z-10 max-w-[90px] truncate">
+                  {zone.label}
                 </div>
               </div>
             </div>
@@ -211,10 +259,10 @@ export default function ReportPage() {
           {isPaid && (
             <div className="absolute" style={{ top: '65%', left: '60%' }}>
               <div className="relative -translate-x-1/2 -translate-y-1/2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-20 animate-ping"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 shadow-[0_0_20px_#ef4444]"></span>
-                <div className="absolute left-10 top-[-20px] bg-red-950/90 border border-red-500/50 px-2 py-1 rounded">
-                  <div className="text-[10px] text-red-400 font-bold whitespace-nowrap flex items-center gap-1">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-20 animate-ping"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_20px_#06b6d4]"></span>
+                <div className="absolute left-10 top-[-20px] bg-cyan-950/90 border border-cyan-500/50 px-2 py-1 rounded">
+                  <div className="text-[10px] text-cyan-400 font-bold whitespace-nowrap flex items-center gap-1">
                     <MapPin className="w-3 h-3" /> {t('precisionPin')}
                   </div>
                 </div>
@@ -225,21 +273,23 @@ export default function ReportPage() {
           <div className="absolute bottom-0 left-0 right-0 py-2 bg-[#0B1121]/90 border-t border-blue-900/30 flex justify-center backdrop-blur-sm">
             {!isPaid ? (
               <div className="flex items-center gap-2 text-[10px] text-amber-500 font-bold tracking-wide">
-                <ScanLine className="w-3 h-3" /> {t('basicSearchTitle')}
+                <ScanLine className="w-3 h-3" /> {currentSceneLabel}
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-[10px] text-red-400 font-bold tracking-wide">
+              <div className="flex items-center gap-2 text-[10px] text-cyan-400 font-bold tracking-wide">
                 <ShieldCheck className="w-3 h-3" /> {t('deepScanDecrypted')}
               </div>
             )}
           </div>
         </section>
 
-        {/* Diagnostic Report */}
+        {/* 4. 诊断报告（环境扫描 + 行为心理学）*/}
         <section className="space-y-4">
           <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 flex items-center gap-2">
             <Microscope className="w-3 h-3" /> {t('diagnosisTitle')}
           </h2>
+
+          {/* 环境物理扫描 */}
           <div className="bg-[#0f172a]/40 p-4 rounded-lg border border-blue-800/20 backdrop-blur-sm flex gap-4 items-start">
             <div className="p-2 bg-indigo-950/40 text-indigo-400 border border-indigo-500/20 rounded-md shrink-0">
               <Waves className="w-5 h-5" />
@@ -257,85 +307,183 @@ export default function ReportPage() {
             </div>
           </div>
 
+          {/* 行为心理学分析 */}
           <div className="bg-[#0f172a]/40 p-4 rounded-lg border border-blue-800/20 backdrop-blur-sm flex gap-4 items-start hover:border-blue-500/30 transition-colors">
             <div className="p-2 bg-blue-950/40 text-blue-400 border border-blue-500/20 rounded-md shrink-0">
               <Brain className="w-5 h-5" />
             </div>
-            <div>
+            <div className="flex-1 space-y-2">
               <h3 className="font-bold text-sm text-blue-100">{t('psychTitle')}</h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">{content.psychology.content}</p>
-              <div className="mt-3 inline-flex items-center text-[10px] font-medium text-blue-300 bg-blue-900/30 px-2 py-0.5 rounded border border-blue-500/20">
-                {t('cognitiveOverride')}: {content.psychology.tag}
-              </div>
+              <p className="text-xs text-slate-400 leading-relaxed">{content.psychology.content}</p>
+              {/* 认知覆盖命令 —— 使用 AI 实际输出的文本 */}
+              {aiResult.cognitiveOverride && (
+                <div className="mt-3 flex items-start gap-2 text-[11px] font-medium text-cyan-300 bg-cyan-950/25 px-3 py-2.5 rounded border border-cyan-500/20">
+                  <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5 text-cyan-500" />
+                  <div>
+                    <span className="block text-[9px] text-cyan-600 font-bold tracking-widest mb-1">{t('cognitiveInsightLabel')}</span>
+                    <span className="leading-relaxed">{aiResult.cognitiveOverride}</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
 
-        {/* Tactical Protocol */}
+        {/* 5. 高危微观落点推演（付费诱饵墙）*/}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <Crosshair className="w-3 h-3 text-cyan-500" />
+            <h2 className="text-[10px] font-bold text-cyan-500 uppercase tracking-widest">{t('predictionsTitle')}</h2>
+            {!isPaid && <Lock className="w-3 h-3 text-cyan-700 ml-auto" />}
+          </div>
+
+          {!isPaid ? (
+            /* 毛玻璃诱饵墙 */
+            <div className="relative rounded-xl border border-cyan-900/30 overflow-hidden bg-[#0f172a]/20">
+              {/* 模糊底层 */}
+              <div className="opacity-25 blur-[3px] space-y-3 p-5 pointer-events-none select-none">
+                {[0, 1, 2].map(i => (
+                  <div key={i} className="h-[72px] bg-cyan-950/30 rounded-lg border border-cyan-900/40 w-full" />
+                ))}
+              </div>
+              {/* 解锁遮罩 */}
+              <div className="absolute inset-0 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center bg-[#020617]/50 gap-2">
+                <div className="w-10 h-10 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                  <Lock className="w-5 h-5 text-cyan-500" />
+                </div>
+                <p className="text-xs text-cyan-200 font-bold tracking-widest">{t('predictionsLocked')}</p>
+                <p className="text-[10px] text-slate-500">{t('predictionsLockedDesc')}</p>
+              </div>
+            </div>
+          ) : (
+            /* 解锁后展示 */
+            <div className="space-y-3 animate-in fade-in duration-700">
+              {(aiResult.predictions || []).map((pred, i) => (
+                <div key={i} className="bg-[#0f172a]/60 p-4 rounded-lg border border-cyan-900/50 shadow-[0_0_15px_rgba(8,145,178,0.05)] relative overflow-hidden">
+                  <div className="absolute top-0 right-0 px-2 py-1 bg-cyan-950 border-b border-l border-cyan-800/60 text-[9px] text-cyan-400 rounded-bl font-bold tracking-widest">
+                    {t('predictionsConfidence')}: {pred.confidence}%
+                  </div>
+                  <h3 className="text-sm font-bold text-cyan-100 pr-24 mb-2">{pred.location}</h3>
+                  <div className="space-y-1.5 text-[11px]">
+                    <p className="text-slate-400">
+                      <span className="text-slate-500 font-bold">{t('predictionsReasoning')}</span> {pred.reason}
+                    </p>
+                    <p className="text-cyan-200/80 bg-cyan-950/30 p-2 rounded border-l-2 border-cyan-700">
+                      <span className="text-cyan-600 font-bold">{t('predictionsMethod')}</span> {pred.technique}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* 6. 战术行动清单 */}
         <section>
           <div className="flex justify-between items-end mb-4 px-1">
             <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
               <Stethoscope className="w-3 h-3" /> {t('tacticsTitle')}
             </h2>
-            {!isPaid && <span className="text-[10px] font-bold text-cyan-600 flex items-center gap-1 opacity-80"><Lock className="w-3 h-3" /> {t('deepScanEncrypted')}</span>}
+            {!isPaid && <span className="text-[10px] font-bold text-cyan-700 flex items-center gap-1"><Lock className="w-3 h-3" /> {t('deepScanEncrypted')}</span>}
           </div>
 
           <div className="space-y-3">
+            {/* 免费：基础排查清单 */}
             {!isPaid && (
               <div className="p-4 bg-amber-950/10 border border-amber-500/20 rounded-lg">
                 <div className="flex items-center gap-2 mb-2 text-amber-500">
                   <CheckCircle2 className="w-4 h-4" />
                   <h4 className="text-xs font-bold">{t('basicLabel')}</h4>
                 </div>
-                <p className="text-[10px] text-slate-400 mb-3">{t('basicSearchDesc')}</p>
+                <p className="text-[10px] text-slate-500 mb-3">{t('basicSearchDesc')}</p>
                 <ul className="space-y-2 mb-3">
                   {dynamicMacroZones.map((z, i) => (
                     <li key={i} className="flex items-start gap-2 text-[10px] text-slate-400">
                       <div className="w-4 h-4 shrink-0 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mt-0.5">
                         <span className="text-[8px] text-amber-500 font-bold">{i + 1}</span>
                       </div>
-                      <span className="flex-1">{z.label}</span>
+                      <span className="flex-1 leading-relaxed">{z.fullDesc}</span>
                     </li>
                   ))}
                 </ul>
-                <div className="p-2 bg-amber-900/20 rounded text-[10px] text-amber-400/80 leading-relaxed border-l-2 border-amber-500/50">
-                  <strong>💡 AI: </strong> {content.macroReview}
-                </div>
+                {content.macroReview && (
+                  <div className="p-2 bg-amber-900/20 rounded text-[10px] text-amber-400/80 leading-relaxed border-l-2 border-amber-500/50">
+                    <strong>💡 AI: </strong>{content.macroReview}
+                  </div>
+                )}
               </div>
             )}
 
-            {content.actions.map((action, i) => (
-              <div key={i} className={`relative flex items-start gap-3 p-4 bg-[#0f172a]/40 rounded border transition-all ${isPaid ? 'border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.1)]' : 'border-blue-900/10'}`}>
-                {!isPaid && (
-                  <div className="absolute inset-0 bg-[#020617]/60 backdrop-blur-[4px] z-10 flex items-center justify-center">
-                    {i === 1 && (
-                      <div className="flex items-center gap-2 px-3 py-1 bg-cyan-950/80 border border-cyan-500/30 rounded text-cyan-400 shadow-lg">
-                        <Lock className="w-3 h-3" />
-                        <span className="text-[10px] font-bold tracking-widest">{t('microTacticsLocked')}</span>
-                      </div>
-                    )}
-                  </div>
-                )}
-                <div className="mt-0.5">
-                  {isPaid ? (
-                    <div className="w-4 h-4 rounded border border-cyan-500/50 bg-cyan-950/30 text-cyan-400 flex items-center justify-center shadow-[0_0_5px_rgba(34,211,238,0.2)]">
-                      <ArrowRight className="w-2.5 h-2.5" />
+            {/* 战术行动（付费锁定/解锁）*/}
+            <div className="space-y-3">
+              {content.actions.map((action, i) => {
+                const isLocked = !isPaid && i > 0
+                return (
+                  <div key={i} className={`flex items-start gap-3 p-4 bg-[#0f172a]/40 rounded border transition-all ${isPaid ? 'border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.08)]' : i === 0 ? 'border-blue-900/20' : 'border-blue-900/10'}`}>
+                    <div className="mt-0.5 shrink-0">
+                      {isPaid ? (
+                        <div className="w-5 h-5 rounded border border-cyan-500/50 bg-cyan-950/30 text-cyan-400 flex items-center justify-center shadow-[0_0_5px_rgba(34,211,238,0.15)]">
+                          <ArrowRight className="w-3 h-3" />
+                        </div>
+                      ) : (
+                        <div className={`w-4 h-4 rounded border ${isLocked ? 'border-slate-800/40 bg-slate-900/40' : 'border-slate-700 bg-slate-900'}`} />
+                      )}
                     </div>
-                  ) : (
-                    <div className="w-4 h-4 rounded border border-slate-800 bg-slate-900" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <h4 className={`text-xs font-bold ${isPaid ? 'text-cyan-50' : 'text-slate-600'}`}>{action.title}</h4>
-                  <p className={`text-[10px] mt-1 ${isPaid ? 'text-slate-300' : 'text-slate-700'}`}>{action.desc}</p>
-                </div>
-              </div>
-            ))}
+                    <div className="flex-1">
+                      {isLocked ? (
+                        /* 骨架占位，彻底杜绝文字泄露 */
+                        <div className="space-y-2 select-none pointer-events-none">
+                          <div className="h-2.5 bg-slate-800/50 rounded w-14" />
+                          <div className="h-2.5 bg-slate-800/30 rounded w-full" />
+                          <div className="h-2.5 bg-slate-800/30 rounded w-4/5" />
+                          {i === 1 && (
+                            <div className="flex items-center gap-1.5 mt-3 text-[9px] text-cyan-700 font-bold tracking-widest">
+                              <Lock className="w-3 h-3" /> {t('microTacticsLocked')}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <>
+                          <h4 className={`text-[10px] font-bold mb-1 ${isPaid ? 'text-cyan-500' : 'text-slate-400'}`}>{action.title}</h4>
+                          <p className={`text-xs leading-relaxed ${isPaid ? 'text-slate-200' : 'text-slate-300'}`}>{action.desc}</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </section>
+
+        {/* 7. 时间线演变分析 + 强制止损节点（付费解锁后显示）*/}
+        {isPaid && (
+          <div className="space-y-4 animate-in fade-in duration-700">
+            {aiResult.timelineAnalysis && (
+              <section className="pt-4 border-t border-blue-900/30">
+                <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 mb-3 flex items-center gap-2">
+                  <Clock className="w-3 h-3" /> {t('timelineTitle')}
+                </h2>
+                <p className="text-xs text-slate-400 leading-relaxed bg-[#0f172a]/40 p-4 rounded-lg border border-blue-900/20">
+                  {aiResult.timelineAnalysis}
+                </p>
+              </section>
+            )}
+
+            {aiResult.stopCondition && (
+              <section className="bg-red-950/15 border border-red-900/40 rounded-lg p-4 flex items-start gap-3">
+                <Octagon className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1.5">{t('stopConditionTitle')}</h3>
+                  <p className="text-xs text-red-200/70 leading-relaxed">{aiResult.stopCondition}</p>
+                </div>
+              </section>
+            )}
+          </div>
+        )}
       </main>
 
-      {/* Unlock CTA */}
+      {/* 底部悬浮条：未付费 CTA */}
       {!isPaid && (
         <div className="fixed bottom-0 left-0 right-0 p-5 bg-[#020617]/80 backdrop-blur-xl border-t border-blue-900/30 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
           <div className="max-w-xl mx-auto space-y-3">
@@ -350,7 +498,7 @@ export default function ReportPage() {
               </div>
             </div>
             <Button onClick={handleUnlock} size="lg" disabled={loadingPay}
-              className="w-full h-12 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded font-bold shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-[1.01] active:scale-[0.99] relative overflow-hidden group border border-cyan-400/20">
+              className="w-full h-12 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded font-bold shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-[1.01] active:scale-[0.99] border border-cyan-400/20">
               {loadingPay ? (
                 <span className="flex items-center gap-2"><ScanLine className="w-4 h-4 animate-spin" /> {t('unlocking')}</span>
               ) : (
@@ -361,14 +509,17 @@ export default function ReportPage() {
         </div>
       )}
 
-      {/* Post-purchase footer */}
+      {/* 底部悬浮条：已付费 */}
       {isPaid && (
-        <div className="fixed bottom-0 left-0 right-0 p-6 bg-[#020617]/95 backdrop-blur-md border-t border-blue-900/30 z-20">
-          <div className="max-w-xl mx-auto flex flex-col gap-4">
-            <p className="text-[10px] text-slate-500 text-center">{t('encouragement')}</p>
+        <div className="fixed bottom-0 left-0 right-0 p-5 bg-[#020617]/95 backdrop-blur-md border-t border-cyan-900/40 z-20 shadow-[0_-10px_30px_rgba(6,182,212,0.08)]">
+          <div className="max-w-xl mx-auto flex flex-col gap-3">
+            {/* AI 动态鼓励文案（使用 AI 实际输出，fallback 到静态翻译）*/}
+            <p className="text-[11px] text-cyan-200/80 text-center font-medium px-2 leading-relaxed">
+              {aiResult.encouragement || t('encouragement')}
+            </p>
             <div className="grid grid-cols-2 gap-3">
               <Button onClick={handleGeneratePoster} disabled={isGenerating}
-                className="h-11 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold border border-cyan-400/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                className="h-11 bg-cyan-950 hover:bg-cyan-900 text-cyan-400 font-bold border border-cyan-500/30 flex items-center justify-center gap-2 disabled:opacity-50">
                 <Download className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
                 {isGenerating ? t('unlocking') : t('downloadReport')}
               </Button>

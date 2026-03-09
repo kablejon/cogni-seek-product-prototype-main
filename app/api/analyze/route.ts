@@ -311,12 +311,10 @@ export async function POST(request: NextRequest) {
     const finalChecklist = (() => {
       if (rawChecklist.length === 0) return domainFirstAction ? [domainFirstAction] : [];
 
-      // 有领域注入：直接使用注入动作
+      // 有领域注入：注入动作替换 AI 的 Action 0，统一跳过 rawChecklist[0]
+      // 避免注入动作与 AI 生成的第一条内容相近造成重复
       if (domainFirstAction) {
-        if (genericPatterns.test(rawChecklist[0])) {
-          return [domainFirstAction, ...rawChecklist.slice(1)];
-        }
-        return [domainFirstAction, ...rawChecklist.slice(0, 4)];
+        return [domainFirstAction, ...rawChecklist.slice(1)];
       }
 
       // 无领域注入：用通用重排逻辑提升最佳 Action
