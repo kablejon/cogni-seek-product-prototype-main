@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useRouter } from "next/navigation"
-import domtoimage from "dom-to-image-more"
+// dom-to-image-more loaded dynamically to avoid SSR issues (browser-only)
 import { 
   Brain, 
   MapPin, 
@@ -282,7 +282,8 @@ export default function ReportPage() {
         footerElement.style.display = 'none'
       }
 
-      // 使用 dom-to-image-more 生成 PNG
+      // 使用 dom-to-image-more 生成 PNG（动态加载，避免 SSR 崩溃）
+      const domtoimage = (await import('dom-to-image-more')).default;
       const dataUrl = await domtoimage.toPng(reportElement, {
         quality: 1,
         bgcolor: '#020617',
