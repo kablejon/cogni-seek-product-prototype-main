@@ -636,7 +636,7 @@ export default function ReportPage() {
          </div>
       )}
         
-      <style jsx global>{`
+      <style>{`
         @keyframes scan-slow {
           0% { transform: translateY(-100%); opacity: 0; }
           20% { opacity: 1; }

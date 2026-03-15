@@ -532,7 +532,7 @@ export default function ReportPage() {
         </div>
       )}
 
-      <style jsx global>{`
+      <style>{`
         @keyframes scan-slow { 0% { transform: translateY(-100%); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(500%); opacity: 0; } }
         .animate-scan-slow { animation: scan-slow 4s linear infinite; }
       `}</style>

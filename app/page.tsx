@@ -425,7 +425,7 @@ export default function Home() {
       </div>
 
       {/* 样式注入 */}
-      <style jsx global>{`
+      <style>{`
         @keyframes scroll-left {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }

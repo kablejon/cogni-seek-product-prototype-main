@@ -361,7 +361,7 @@ export default function Step1Page() {
         </div>
       </main>
 
-      <style jsx>{`
+      <style>{`
         @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-slide-up { animation: slide-up 0.4s ease-out; }
       `}</style>

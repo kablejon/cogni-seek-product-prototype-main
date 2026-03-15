@@ -1130,7 +1130,7 @@ export default function Step1Page() {
       </main>
 
       {/* 滑入动画样式 */}
-      <style jsx>{`
+      <style>{`
         @keyframes slide-up {
           from {
             opacity: 0;

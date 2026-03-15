@@ -190,7 +190,7 @@ export default function LoadingPage() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spin-slow 10s linear infinite; }
         @keyframes lock-in { 0% { transform: scale(2); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
