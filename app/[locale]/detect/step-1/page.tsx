@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "@/lib/navigation"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, ChevronLeft, Check, X } from "lucide-react"
@@ -33,6 +33,8 @@ export default function Step1Page() {
   const router = useRouter()
   const { session, updateSession } = useSearchStore()
   const t = useTranslations('step1')
+  const locale = useLocale()
+  const isZH = locale === 'zh-CN' || locale === 'zh-TW'
   const td = useTranslations('data')
   const tc = useTranslations('common')
 
@@ -64,7 +66,10 @@ export default function Step1Page() {
     }
   }, [selectedItem, currentConfig])
 
-  const getFeatureTags = () => currentConfig?.tags || []
+  const getFeatureTags = () => {
+    if (!currentConfig) return []
+    return isZH ? (currentConfig.tags || []) : (currentConfig.tagsEn || currentConfig.tags || [])
+  }
 
   const handleTagClick = (tag: string) => {
     if (!itemFeatures.includes(tag)) {

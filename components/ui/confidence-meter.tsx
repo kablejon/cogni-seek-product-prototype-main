@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useLocale } from "next-intl"
 
 interface ConfidenceMeterProps {
   probability: number // 0-100
@@ -9,6 +10,8 @@ interface ConfidenceMeterProps {
 
 export function ConfidenceMeter({ probability, className = "" }: ConfidenceMeterProps) {
   const [animatedValue, setAnimatedValue] = useState(0)
+  const locale = useLocale()
+  const isZH = locale === 'zh-CN' || locale === 'zh-TW'
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,15 +20,13 @@ export function ConfidenceMeter({ probability, className = "" }: ConfidenceMeter
     return () => clearTimeout(timer)
   }, [probability])
 
-  // 计算指针角度 (从-90度到90度，对应0-100%)
   const rotation = -90 + (animatedValue / 100) * 180
 
-  // 根据概率确定颜色
   const getColor = () => {
-    if (probability >= 70) return { stroke: "rgb(16, 185, 129)", text: "text-chart-2", label: "高概率" }
-    if (probability >= 50) return { stroke: "rgb(59, 130, 246)", text: "text-primary", label: "中等概率" }
-    if (probability >= 30) return { stroke: "rgb(251, 146, 60)", text: "text-chart-3", label: "较低概率" }
-    return { stroke: "rgb(239, 68, 68)", text: "text-destructive", label: "低概率" }
+    if (probability >= 70) return { stroke: "rgb(16, 185, 129)", text: "text-chart-2", label: isZH ? "高概率" : "HIGH" }
+    if (probability >= 50) return { stroke: "rgb(59, 130, 246)", text: "text-primary", label: isZH ? "中等概率" : "MEDIUM" }
+    if (probability >= 30) return { stroke: "rgb(251, 146, 60)", text: "text-chart-3", label: isZH ? "较低概率" : "LOW" }
+    return { stroke: "rgb(239, 68, 68)", text: "text-destructive", label: isZH ? "低概率" : "VERY LOW" }
   }
 
   const colorInfo = getColor()
