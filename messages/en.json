@@ -1,10 +1,27 @@
 {
   "auth": {
+    "signIn": "Sign In",
+    "modalTitle": "Sign In",
+    "modalSubtitle": "Choose a sign-in method to continue",
     "signInWithGithub": "Sign in with GitHub",
+    "signInWithGoogle": "Sign in with Google",
+    "orDivider": "OR",
+    "redirecting": "Redirecting...",
     "signOut": "Sign Out",
+    "termsNote": "By signing in you agree to our",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy",
     "loginRequired": "Please sign in to start searching",
     "loginRequiredDesc": "Create a free account to access the AI detection flow.",
-    "authError": "Login failed, please try again"
+    "authError": "Login failed, please try again",
+    "userId": "User ID",
+    "email": "Email",
+    "loginMethod": "Login Method",
+    "emailVerified": "Email Verified",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "account": "Account"
   },
   "common": {
     "brand": "CogniSeek",

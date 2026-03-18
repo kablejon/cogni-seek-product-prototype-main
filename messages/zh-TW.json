@@ -1,10 +1,27 @@
 {
   "auth": {
-    "signInWithGithub": "GitHub 登入",
+    "signIn": "登入",
+    "modalTitle": "登入",
+    "modalSubtitle": "選擇以下方式登入您的帳戶",
+    "signInWithGithub": "使用 GitHub 登入",
+    "signInWithGoogle": "使用 Google 登入",
+    "orDivider": "或",
+    "redirecting": "跳轉中...",
     "signOut": "登出",
+    "termsNote": "登入即表示您同意我們的",
+    "terms": "服務條款",
+    "and": "和",
+    "privacy": "隱私政策",
     "loginRequired": "請登入後開始尋物",
     "loginRequiredDesc": "註冊免費帳號即可使用 AI 檢測功能。",
-    "authError": "登入失敗，請重試"
+    "authError": "登入失敗，請重試",
+    "userId": "用戶 ID",
+    "email": "郵箱",
+    "loginMethod": "登入方式",
+    "emailVerified": "郵箱驗證",
+    "verified": "已驗證",
+    "unverified": "未驗證",
+    "account": "帳戶"
   },
   "common": {
     "brand": "CogniSeek",
