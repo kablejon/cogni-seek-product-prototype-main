@@ -1,4 +1,11 @@
 {
+  "auth": {
+    "signInWithGithub": "Sign in with GitHub",
+    "signOut": "Sign Out",
+    "loginRequired": "Please sign in to start searching",
+    "loginRequiredDesc": "Create a free account to access the AI detection flow.",
+    "authError": "Login failed, please try again"
+  },
   "common": {
     "brand": "CogniSeek",
     "next": "Continue",

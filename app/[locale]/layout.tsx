@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getMessages } from 'next-intl/server';
 import { SHARE_VIRAL } from '@/lib/config/share';
+import { Toaster } from '@/components/ui/sonner';
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
+      <Toaster position="top-center" richColors />
     </NextIntlClientProvider>
   );
 }

@@ -1,4 +1,11 @@
 {
+  "auth": {
+    "signInWithGithub": "GitHub 登录",
+    "signOut": "退出登录",
+    "loginRequired": "请登录后开始寻物",
+    "loginRequiredDesc": "注册免费账号即可使用 AI 检测功能。",
+    "authError": "登录失败，请重试"
+  },
   "common": {
     "brand": "CogniSeek",
     "next": "继续下一步",

@@ -1,15 +1,38 @@
 "use client"
 
 import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
+import { useEffect, Suspense } from "react"
 import { Link } from "@/lib/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { InteractiveFog } from "@/components/ui/interactive-fog"
-import { LanguageSwitcher } from "@/components/shared/language-switcher"
+import { Header } from "@/components/shared/header"
+import { toast } from "sonner"
 import {
   Brain, MapPin, Clock, Zap, Shield, ChevronRight, Star, Search,
   TrendingUp, Eye, Waves
 } from "lucide-react"
+
+// Separate component for search params reading (requires Suspense in App Router)
+function AuthToastHandler() {
+  const ta = useTranslations('auth')
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.get('authRequired') === '1') {
+      toast.info(ta('loginRequired'), {
+        description: ta('loginRequiredDesc'),
+        duration: 5000,
+      })
+    }
+    if (searchParams.get('authError') === '1') {
+      toast.error(ta('authError'))
+    }
+  }, [searchParams])
+
+  return null
+}
 
 export default function HomePage() {
   const t = useTranslations('home')
@@ -32,24 +55,14 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <Suspense fallback={null}>
+        <AuthToastHandler />
+      </Suspense>
       <div className="fixed inset-0 z-0">
         <InteractiveFog color="45, 225, 252" />
       </div>
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 glass border-b border-border/50">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">C</span>
-            </div>
-            <span className="text-xl font-semibold">CogniSeek</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <LanguageSwitcher />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-1 relative z-10">
         {/* Hero */}
