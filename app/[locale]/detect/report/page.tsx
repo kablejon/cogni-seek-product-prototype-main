@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "@/lib/navigation"
+import { useSearchParams } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
 // dom-to-image-more loaded dynamically to avoid SSR issues (browser-only)
 import {
   Brain, MapPin, Lock, ArrowRight, ShieldCheck, Zap, ScanLine, Activity,
@@ -40,6 +42,7 @@ export default function ReportPage() {
   const router = useRouter()
   const t = useTranslations('report')
   const locale = useLocale()
+  const searchParams = useSearchParams()
   const { session, resetSession, analysisResult } = useSearchStore()
   const [isPaid, setIsPaid] = useState(false)
   const [loadingPay, setLoadingPay] = useState(false)
@@ -48,6 +51,29 @@ export default function ReportPage() {
   const reportRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { setCaseId(Math.floor(Math.random() * 10000)) }, [])
+
+  // Check if user already has active subscription on mount
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return
+      supabase
+        .from('user_subscriptions')
+        .select('subscription_active')
+        .eq('user_id', user.id)
+        .single()
+        .then(({ data }) => {
+          if (data?.subscription_active) setIsPaid(true)
+        })
+    })
+  }, [])
+
+  // Check if returning from successful Creem checkout
+  useEffect(() => {
+    if (searchParams.get('paid') === '1') {
+      setIsPaid(true)
+    }
+  }, [searchParams])
 
   const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session, locale), [analysisResult, session, locale])
 
@@ -112,9 +138,17 @@ export default function ReportPage() {
   const [recoveryIndex, setRecoveryIndex] = useState("85.0")
   useEffect(() => { setRecoveryIndex((aiResult.probability || 85).toFixed(1)) }, [aiResult])
 
-  const handleUnlock = () => {
+  const handleUnlock = async () => {
     setLoadingPay(true)
-    setTimeout(() => { setLoadingPay(false); setIsPaid(true) }, 1500)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      const productId = process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID
+      const checkoutUrl = `/checkout?productId=${productId}&referenceId=${user?.id || ''}`
+      window.location.href = checkoutUrl
+    } catch {
+      setLoadingPay(false)
+    }
   }
 
   const handleReturnHome = () => { resetSession(); router.push('/') }

@@ -55,7 +55,7 @@ export const config = {
   matcher: [
     '/',
     '/(en|zh-CN|zh-TW)/:path*',
-    // Exclude Next.js internals, static files, API routes, and auth callback
-    '/((?!_next|_vercel|api|auth/callback|.*\\..*).*)',
+    // Exclude Next.js internals, static files, API routes, auth callback, and checkout
+    '/((?!_next|_vercel|api|auth/callback|checkout|.*\\..*).*)',
   ],
 }
