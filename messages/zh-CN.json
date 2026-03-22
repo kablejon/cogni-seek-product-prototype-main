@@ -338,8 +338,8 @@
     "matchingTarget": "目标锁定："
   },
   "result": {
-    "title": "逻辑推演成功率：",
-    "titleHighlight": "极高",
+    "title": "排查引导评分：",
+    "titleHighlight": "结构化",
     "subtitle": "基于你提交的场景信息、行为线索与概率模型生成综合推演。",
     "gauge": {
       "label": "推演置信度"
@@ -347,7 +347,9 @@
     "psychProfile": {
       "subtitle": "心理学盲区分析"
     },
-    "encryptedSection": "精准位置分析",
+    "encryptedSection": "重点排查区域",
+    "digitalServiceBadge": "一次性数字解锁",
+    "checkoutNote": "支付确认后安全结账并交付数字内容",
     "clues": {
       "high": "高概率",
       "medium": "中概率",
@@ -355,12 +357,9 @@
     },
     "clueStatus": "🔒 待解锁",
     "ctaTitle": "解锁「视觉盲区」坐标与战术搜寻指令",
-    "ctaDesc": "解锁高概率微观落点、完整战术清单与时间线分析，让排查更有结构和优先级。",
+    "ctaDesc": "解锁重点排查区域、完整战术清单与时间线分析，让寻找过程更有结构和优先级。",
     "price": "$1.99",
-    "originalPrice": "$9.99",
-    "ctaButton": "获取盲区坐标 & 逆向搜寻战术",
-    "urgency": "距记忆黄金找回期仅剩 {time}",
-    "limitedOffer": "限时优惠",
+    "ctaButton": "解锁高级排查指引",
     "trust": {
       "rate": "基于概率的 AI 辅助分析",
       "cases": "行为 + 环境 + 时间线综合推演",
@@ -369,11 +368,12 @@
     "purchaseNote": {
       "title": "支付 $1.99 后你将获得",
       "oneTime": "本次为一次性付款，不是自动续费订阅。",
-      "instantDelivery": "支付成功确认后，将立即解锁高级内容。",
-      "digitalGoods": "你购买的是 AI 生成的数字分析内容，包括高级战术指令、微观落点推演与时间线分析。",
+      "instantDelivery": "支付确认成功后，将以数字内容形式解锁高级内容。",
+      "digitalGoods": "你购买的是 AI 生成的数字分析内容，包括战术指引、重点排查区域与时间线分析支持。",
       "accountBinding": "高级权益将绑定到你付款时当前登录的账户。",
       "billingSupport": "如遇账单、退款审核或交付问题，请尽量使用购买邮箱联系我们。",
       "noGuarantee": "CogniSeek 提供的是基于概率的辅助建议，不保证一定找回失物。",
+      "secureCheckout": "安全结账由 Creem 提供，最终税费或支付处理信息将在结账页面按适用情况展示。",
       "policyPrefix": "购买即表示你同意我们的",
       "terms": "服务条款",
       "refund": "退款政策",
@@ -387,30 +387,30 @@
     },
     "diagnosis": {
       "tunnelVision": {
-        "title": "认知隧道效应（Tunnel Vision）",
-        "content": "检测到你处于高压状态，大脑自动屏蔽了【非习惯性位置】的视觉信号。你不是没看到，而是大脑把你看到的画面「P」掉了。"
+        "title": "注意力收窄",
+        "content": "你当前的紧张或着急状态，可能让注意力更集中在习惯区域，从而忽略了平时不常查看的位置。"
       },
       "camouflage": {
-        "title": "伪装警告（视觉伪装）",
-        "content": "目标物品颜色与环境发生【光谱融合】。简单说，它和背景「撞色」了，变成了「保护色」。在当前光线下，人眼识别率降低至 15%。需采用逆向视觉排查。"
+        "title": "视觉混入风险",
+        "content": "物品的颜色或形状可能与周围环境混在一起，快速扫视时更容易忽略。建议放慢速度，从反方向重新排查。"
       },
       "memoryDeception": {
-        "title": "记忆欺骗效应",
-        "content": "在自动驾驶模式下，记忆系统出现了「时序错位」。物品往往不在你「记得」的位置，而在你「动作中断」的那一瞬间。"
+        "title": "中断记忆模式",
+        "content": "如果你的动作流程当时被打断，物品更可能停留在行为发生变化的节点附近，而不一定是你最先回想的位置。"
       }
     },
     "encryptedClues": {
       "primary": {
-        "title": "核心嫌疑区：重力沉降点",
-        "hint": "符合物理规律的 90% 概率区域，极易被忽略……"
+        "title": "主要排查区域",
+        "hint": "这是物品可能停留或在快速排查中容易被忽略的常见区域。"
       },
       "secondary": {
-        "title": "次要嫌疑区：视觉盲区",
-        "hint": "位于视线水平面以下的习惯死角……"
+        "title": "次要排查区域",
+        "hint": "通常位于习惯性视觉盲区，或低于正常视线的位置。"
       },
       "auxiliary": {
-        "title": "辅助嫌疑区：社交转移点",
-        "hint": "他人可能无意识转移物品的位置……"
+        "title": "补充复查区域",
+        "hint": "也可以留意是否有人在无意中移动或暂时放置过该物品。"
       }
     }
   },
@@ -425,6 +425,7 @@
     "unlockDesc": "5 项微观死角战术 + 精准坐标解密",
     "unlockPrice": "$1.99",
     "unlockButton": "立即解锁方案",
+    "secureCheckoutNote": "通过 Creem 安全结账",
     "purchaseTitle": "你支付 $1.99 后将解锁",
     "purchaseNote": {
       "oneTime": "本次为一次性付款，不会自动续费。",
@@ -432,7 +433,8 @@
       "digitalGoods": "本次购买解锁高级 AI 推演、战术行动、时间线分析和完整报告中的付费模块。",
       "accountBinding": "高级权益会绑定到你当前登录的账户。",
       "billingSupport": "如需账单支持或退款审核，请尽量使用购买邮箱联系我们。",
-      "noGuarantee": "这是基于概率的数字服务，不承诺一定找回失物。"
+      "noGuarantee": "这是基于概率的数字服务，不承诺一定找回失物。",
+      "secureCheckout": "安全结账由 Creem 提供，最终税费或支付处理信息会在适用情况下于结账页展示。"
     },
     "premiumIncludes": {
       "spot1": "3 个精准微观落点",
@@ -684,14 +686,22 @@
       "5": { "title": "汇报已搜索区域", "desc": "告诉我们你找过哪里——以及没找过哪里。" },
       "6": { "title": "获取 AI 报告", "desc": "获得含战术行动的精准寻回方案。" }
     },
-    "testimonialsTitle": "真实案例",
+    "testimonialsTitle": "示例排查场景",
+    "testimonialsSubtitle": "以下为示例场景，用于说明 CogniSeek 如何帮助用户整理可能的排查路径与优先级。",
     "testimonials": {
-      "1": { "text": "我找了 40 分钟都没找到。CogniSeek 指向了我从没想过要查的座椅滑轨缝隙——两分钟就找到了我的 AirPods。", "name": "Alex R.", "item": "找到了：AirPods" },
-      "2": { "text": "心理学分析简直太准了。它知道我当时很着急，提示我检查随手搭在椅子上的夹克口袋。就在那里。", "name": "Sarah M.", "item": "找到了：车钥匙" },
-      "3": { "text": "我的猫不见了。空间概率地图指向了壁橱的某个角落。打开一看，她就在那里。", "name": "Jordan L.", "item": "找到了：宠物猫" }
+      "1": { "label": "场景 01", "text": "小件物品在坐下、起身或移动过程中，可能滑入座椅边缘、缝隙或低位区域，这些地方常在快速寻找时被忽略。", "item": "示例物品：耳机类小件" },
+      "2": { "label": "场景 02", "text": "如果当时处于分心或匆忙状态，重新检查临时放置过的衣物、包袋或桌面边缘，往往更有帮助。", "item": "示例物品：钥匙或钱包" },
+      "3": { "label": "场景 03", "text": "对于宠物或可移动物品，先排查封闭角落、低干扰躲藏点和最近开启过的空间，能建立更有结构的起点。", "item": "示例物品：宠物或家居物件" }
     },
     "ctaBannerTitle": "停止盲目翻找",
-    "ctaBannerSubtitle": "让 AI 还原失去的那一刻，精准告诉你该去哪里找。",
+    "ctaBannerSubtitle": "让 AI 帮你整理当时的线索，缩小可能区域，并决定优先从哪里开始找。",
+    "ctaPanel": {
+      "badge": "AI 搜索控制台",
+      "insight1Title": "行为 × 空间",
+      "insight1Desc": "将行为线索、空间轨迹与时间节点收束成一份更有优先级的搜索入口。",
+      "insight2Title": "引导式排查",
+      "insight2Desc": "不是重复堆叠信息，而是把上方能力模块汇聚为一个更可执行的起点。"
+    },
     "trust": {
       "privacy": "隐私保护",
       "free": "基础分析免费"
@@ -702,7 +712,7 @@
       "refund": "退款政策",
       "contact": "联系我们",
       "tagline": "AI 驱动的物品寻回助手",
-      "disclaimer": "CogniSeek 提供基于概率的寻回指引，不保证 100% 找回。仅供娱乐及认知辅助用途。"
+      "disclaimer": "CogniSeek 提供基于概率的数字辅助指引，不保证找回结果。仅供信息参考与决策辅助用途。"
     }
   },
   "legal": {
@@ -788,7 +798,11 @@
         "billingLabel": "计费模式",
         "billingValue": "一次性数字购买 · 不自动续费",
         "deliveryLabel": "权益交付",
-        "deliveryValue": "支付确认后，付费内容将交付到当前登录账户"
+        "deliveryValue": "支付确认后，付费内容将交付到当前登录账户",
+        "scopeLabel": "支持范围",
+        "scopeValue": "账单问题、退款审核、高级内容交付、账户访问与报告恢复支持",
+        "regionLabel": "服务范围",
+        "regionValue": "在线数字服务，面向结账流程支持的地区提供"
       },
       "sections": {
         "merchantInfo": { "heading": "1. 商家与服务信息", "body": ["服务名称：CogniSeek。服务类型：AI 驱动的数字分析服务，用于协助用户整理线索并生成失物排查报告。", "当前高级内容为一次性数字购买，不是自动续费订阅。支付确认后，付费内容会交付到你当前登录的账户中。"] },

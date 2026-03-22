@@ -338,8 +338,8 @@
     "matchingTarget": "MATCHING TARGET:"
   },
   "result": {
-    "title": "Recovery Probability:",
-    "titleHighlight": "Very High",
+    "title": "Search Guidance Score:",
+    "titleHighlight": "Structured",
     "subtitle": "Generated from your submitted context, behavioral cues, and probability analysis.",
     "gauge": {
       "label": "Confidence Index"
@@ -347,7 +347,9 @@
     "psychProfile": {
       "subtitle": "Psychology blind spot analysis"
     },
-    "encryptedSection": "Precision Location Analysis",
+    "encryptedSection": "Focused Search Areas",
+    "digitalServiceBadge": "One-time digital unlock",
+    "checkoutNote": "Secure checkout and digital delivery after payment confirmation",
     "clues": {
       "high": "High Probability",
       "medium": "Medium Probability",
@@ -355,12 +357,9 @@
     },
     "clueStatus": "🔒 Locked",
     "ctaTitle": "Unlock \"Visual Blind Spot\" Coordinates & Tactical Search Commands",
-    "ctaDesc": "Unlock high-probability micro-location predictions, a full tactical checklist, and timeline guidance for a more structured search.",
+    "ctaDesc": "Unlock focused search-area guidance, a full tactical checklist, and timeline guidance for a more structured search process.",
     "price": "$1.99",
-    "originalPrice": "$9.99",
-    "ctaButton": "Get Blind Spot Coordinates & Reverse Search Tactics",
-    "urgency": "Distance from memory golden recovery window: only {time} left",
-    "limitedOffer": "Limited Offer",
+    "ctaButton": "Unlock Premium Search Guidance",
     "trust": {
       "rate": "Probability-based AI guidance",
       "cases": "Behavior + environment + timeline reasoning",
@@ -369,11 +368,12 @@
     "purchaseNote": {
       "title": "What you unlock for $1.99",
       "oneTime": "One-time payment only. This unlock is not a recurring subscription.",
-      "instantDelivery": "Premium content unlocks immediately after successful payment confirmation.",
-      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including premium tactics, micro-location insights, and timeline guidance.",
+      "instantDelivery": "Premium content unlocks digitally after successful payment confirmation.",
+      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including tactical guidance, focused search areas, and timeline support.",
       "accountBinding": "Premium access is tied to the signed-in account used during purchase.",
       "billingSupport": "For billing support, refund review, or delivery issues, contact us using your purchase email whenever possible.",
       "noGuarantee": "CogniSeek provides probability-based guidance and does not guarantee item recovery.",
+      "secureCheckout": "Secure checkout is provided through Creem and final taxes or payment handling are shown at checkout where applicable.",
       "policyPrefix": "By purchasing, you agree to our",
       "terms": "Terms of Service",
       "refund": "Refund Policy",
@@ -387,30 +387,30 @@
     },
     "diagnosis": {
       "tunnelVision": {
-        "title": "Tunnel Vision Effect",
-        "content": "High-stress state detected. Your brain automatically filtered out visual signals from non-habitual locations. You didn't fail to see it — your brain \"edited it out\" of the image."
+        "title": "Attention Narrowing",
+        "content": "Your current stress or urgency may have narrowed your attention, making it easier to overlook places that are outside your normal habits."
       },
       "camouflage": {
-        "title": "Camouflage Warning (Visual Mimicry)",
-        "content": "The item's color is causing spectral fusion with the environment. Simply put, it blends in — becoming \"camouflage.\" Under current lighting, human eye detection rate drops to 15%. A reverse visual scan is required."
+        "title": "Visual Blending Risk",
+        "content": "The item's color or shape may blend into the surrounding environment, making it easier to miss during a quick scan. A slower reverse scan may help."
       },
       "memoryDeception": {
-        "title": "Memory Deception Effect",
-        "content": "In autopilot mode, the memory system experienced a \"temporal displacement.\" The item is often not where you \"remember\" placing it, but at the exact moment your action was interrupted."
+        "title": "Interrupted Memory Pattern",
+        "content": "If your routine was interrupted, the item may be closer to the point where your action changed rather than the place you first remember checking."
       }
     },
     "encryptedClues": {
       "primary": {
-        "title": "Primary Suspect Zone: Gravity Sink Point",
-        "hint": "The 90% probability zone following physics laws — easily overlooked..."
+        "title": "Primary Focus Area",
+        "hint": "A common area where objects may settle or be overlooked during a fast scan."
       },
       "secondary": {
-        "title": "Secondary Suspect Zone: Visual Blind Spot",
-        "hint": "Located in habitual dead angles below eye level..."
+        "title": "Secondary Focus Area",
+        "hint": "Often located in habitual blind spots or below normal eye level."
       },
       "auxiliary": {
-        "title": "Auxiliary Zone: Social Transfer Point",
-        "hint": "Locations where others may have unconsciously moved it..."
+        "title": "Additional Review Area",
+        "hint": "Consider places where another person may have moved or set the item down."
       }
     }
   },
@@ -425,6 +425,7 @@
     "unlockDesc": "5 micro-tactic precision commands + exact coordinate decryption",
     "unlockPrice": "$1.99",
     "unlockButton": "Unlock Solution Now",
+    "secureCheckoutNote": "Secure checkout via Creem",
     "purchaseTitle": "What your $1.99 unlock includes",
     "purchaseNote": {
       "oneTime": "One-time payment only. No recurring billing or auto-renewal.",
@@ -432,7 +433,8 @@
       "digitalGoods": "This purchase unlocks advanced AI analysis, tactical actions, premium report sections, and timeline guidance.",
       "accountBinding": "Premium access is tied to your current signed-in account.",
       "billingSupport": "For billing support or refund review, contact us using the same email used for purchase whenever possible.",
-      "noGuarantee": "This is a probability-based digital service and does not guarantee recovery of the lost item."
+      "noGuarantee": "This is a probability-based digital service and does not guarantee recovery of the lost item.",
+      "secureCheckout": "Secure checkout is provided through Creem, and final taxes or payment handling are shown at checkout where applicable."
     },
     "premiumIncludes": {
       "spot1": "3 precision micro-location predictions",
@@ -684,14 +686,22 @@
       "5": { "title": "Report Prior Searches", "desc": "Tell us where you've already looked — and haven't." },
       "6": { "title": "Get Your AI Report", "desc": "Receive a precision recovery plan with tactical actions." }
     },
-    "testimonialsTitle": "Real Stories",
+    "testimonialsTitle": "Example Search Scenarios",
+    "testimonialsSubtitle": "Illustrative scenarios showing how CogniSeek can help users organize likely search paths and priorities.",
     "testimonials": {
-      "1": { "text": "I searched everywhere for 40 minutes. CogniSeek pointed me to the seat rail gap I'd never think to check — found my AirPods in 2 minutes.", "name": "Alex R.", "item": "Found: AirPods" },
-      "2": { "text": "The psychological analysis was uncanny. It knew I was rushed and suggested the jacket pocket I threw on a chair. There it was.", "name": "Sarah M.", "item": "Found: Car keys" },
-      "3": { "text": "My cat went missing. The spatial probability map highlighted the exact closet corner. Opened it and she was there.", "name": "Jordan L.", "item": "Found: Pet cat" }
+      "1": { "label": "Scenario 01", "text": "A small item may slide into narrow gaps near where you last sat, especially if it was handled while moving or standing up quickly.", "item": "Example item: earbuds" },
+      "2": { "label": "Scenario 02", "text": "If you were distracted or rushed, a quick clothing or bag re-check can help surface items placed during a brief interruption.", "item": "Example item: keys or wallet" },
+      "3": { "label": "Scenario 03", "text": "For pets or movable items, checking enclosed corners, low-traffic hiding spots, and recently opened spaces can provide a structured starting point.", "item": "Example item: pet or household object" }
     },
     "ctaBannerTitle": "Stop Searching Blindly",
-    "ctaBannerSubtitle": "Let AI reconstruct the moment and tell you exactly where to look.",
+    "ctaBannerSubtitle": "Let AI help you organize the moment, narrow likely search areas, and decide where to look first.",
+    "ctaPanel": {
+      "badge": "AI Search Console",
+      "insight1Title": "Behavior × Space",
+      "insight1Desc": "Bring behavior clues, movement paths, and time markers together into a search entry point with clearer priority.",
+      "insight2Title": "Guided Search",
+      "insight2Desc": "Rather than repeating information, this section turns the capability modules above into a more actionable starting point."
+    },
     "trust": {
       "privacy": "Privacy protected",
       "free": "Free basic analysis"
@@ -702,7 +712,7 @@
       "refund": "Refund Policy",
       "contact": "Contact",
       "tagline": "AI-powered item recovery assistant",
-      "disclaimer": "CogniSeek provides probability-based guidance and does not guarantee recovery. For entertainment and cognitive assistance purposes."
+      "disclaimer": "CogniSeek provides probability-based digital guidance and does not guarantee recovery. For informational and decision-support purposes."
     }
   },
   "legal": {
@@ -788,7 +798,11 @@
         "billingLabel": "Billing model",
         "billingValue": "One-time digital purchase · no auto-renewal",
         "deliveryLabel": "Access delivery",
-        "deliveryValue": "Premium content is delivered to the currently signed-in account after payment confirmation"
+        "deliveryValue": "Premium content is delivered to the currently signed-in account after payment confirmation",
+        "scopeLabel": "Support scope",
+        "scopeValue": "Billing issues, refund review, premium access delivery, account access, and report restoration support",
+        "regionLabel": "Service region",
+        "regionValue": "Online digital service available to supported regions based on checkout availability"
       },
       "sections": {
         "merchantInfo": { "heading": "1. Merchant and Service Information", "body": ["Service name: CogniSeek. Service type: AI-powered digital analysis service designed to help users organize clues and generate lost-item search reports.", "The current premium unlock is a one-time digital purchase, not an auto-renewing subscription. After payment confirmation, premium content is delivered to the account currently signed in during purchase."] },

@@ -4,5 +4,4 @@
  */
 export const PRICE_CONFIG = {
   price: '$1.99',
-  originalPrice: '$9.99',
 } as const;

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { Lock, Sparkles, TrendingUp } from "lucide-react"
+import { Lock, Sparkles } from "lucide-react"
 import { Link } from "@/lib/navigation"
 import { useRouter } from "@/lib/navigation"
 import { useSearchStore } from "@/lib/store"
@@ -164,15 +164,13 @@ export default function ResultPage() {
           <div className="bg-gradient-to-br from-[#2DE1FC]/20 to-[#FFD700]/20 rounded-3xl border-2 border-[#2DE1FC]/40 p-8 text-center space-y-6 relative overflow-hidden">
             <div className="absolute inset-0 opacity-20" style={{ background: 'radial-gradient(circle at 50% 50%, #2DE1FC 0%, transparent 50%)', animation: 'pulse 3s ease-in-out infinite' }} />
             <div className="relative z-10 space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFD700]/20 border border-[#FFD700]/40">
-                <TrendingUp className="w-4 h-4 text-[#FFD700]" />
-                <span className="text-sm font-bold text-[#FFD700]">{t('limitedOffer')}</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2DE1FC]/12 border border-[#2DE1FC]/30 text-[#2DE1FC]">
+                <span className="text-sm font-semibold">{t('digitalServiceBadge')}</span>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold">{t('ctaTitle')}</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">{t('ctaDesc')}</p>
               <div className="flex items-baseline justify-center gap-2">
                 <span className="text-5xl font-bold text-[#2DE1FC]">{PRICE_CONFIG.price}</span>
-                <span className="text-muted-foreground line-through">{PRICE_CONFIG.originalPrice}</span>
               </div>
               <Button size="lg" className="rounded-full px-12 text-lg font-bold bg-gradient-to-r from-[#2DE1FC] to-[#10b981] hover:shadow-[0_0_30px_rgba(45,225,252,0.5)] transition-all"
                 onClick={() => router.push('/detect/report')}>
@@ -205,8 +203,8 @@ export default function ResultPage() {
                 </p>
               </div>
               <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-                <span className="text-[#FF9F0A]">⚡️</span>
-                {t('urgency').replace('{time}', '2h')}
+                <span className="text-[#10b981]">✓</span>
+                {t('checkoutNote')}
               </p>
             </div>
           </div>

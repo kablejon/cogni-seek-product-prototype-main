@@ -348,7 +348,7 @@ export default function ReportPage() {
             <Activity className="w-3 h-3" />
           </div>
           <span className="font-bold tracking-tight text-sm text-cyan-100">
-            CogniSeek <span className="text-cyan-700">///</span> MED-SCAN
+            CogniSeek <span className="text-cyan-700">///</span> AI ANALYSIS
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -662,7 +662,7 @@ export default function ReportPage() {
                 </div>
                 <div className="shrink-0 text-right pl-2">
                   <div className="text-lg font-bold text-white leading-none">{PRICE_CONFIG.price}</div>
-                  <div className="text-[11px] text-slate-500 line-through mt-1">{PRICE_CONFIG.originalPrice}</div>
+                  <div className="text-[11px] text-slate-400 mt-1">{t('secureCheckoutNote')}</div>
                 </div>
               </div>
 
@@ -694,7 +694,7 @@ export default function ReportPage() {
                 <div className="rounded-2xl border border-blue-900/40 bg-slate-950/60 p-3 space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-200">
                   <p className="text-xs font-semibold text-cyan-100">{t('purchaseTitle')}</p>
                   <ul className="space-y-2 text-[11px] leading-relaxed text-slate-300/90">
-                    {['oneTime', 'instantDelivery', 'digitalGoods', 'accountBinding', 'billingSupport', 'noGuarantee'].map((key) => (
+                    {['oneTime', 'instantDelivery', 'digitalGoods', 'accountBinding', 'billingSupport', 'noGuarantee', 'secureCheckout'].map((key) => (
                       <li key={key} className="flex items-start gap-2">
                         <span className="mt-0.5 text-cyan-400">•</span>
                         <span>{t(`purchaseNote.${key}`)}</span>

@@ -59,6 +59,16 @@ export default async function ContactPage({
       label: t('merchantCard.deliveryLabel'),
       value: t('merchantCard.deliveryValue'),
     },
+    {
+      icon: Mail,
+      label: t('merchantCard.scopeLabel'),
+      value: t('merchantCard.scopeValue'),
+    },
+    {
+      icon: Building2,
+      label: t('merchantCard.regionLabel'),
+      value: t('merchantCard.regionValue'),
+    },
   ]
 
   return (
