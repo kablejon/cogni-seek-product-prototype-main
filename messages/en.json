@@ -80,9 +80,9 @@
       "contact": "Contact"
     },
     "trust": {
-      "recovery": "87.3% Recovery Rate",
-      "cases": "15,000+ Success Cases",
-      "guarantee": "Free Re-analysis if Not Found"
+      "recovery": "Probability-based AI guidance",
+      "cases": "Behavior + environment + timeline reasoning",
+      "guarantee": "Billing support for delivery issues"
     }
   },
   "intro": {
@@ -340,7 +340,7 @@
   "result": {
     "title": "Recovery Probability:",
     "titleHighlight": "Very High",
-    "subtitle": "Based on 15,000+ success cases",
+    "subtitle": "Generated from your submitted context, behavioral cues, and probability analysis.",
     "gauge": {
       "label": "Confidence Index"
     },
@@ -355,26 +355,29 @@
     },
     "clueStatus": "🔒 Locked",
     "ctaTitle": "Unlock \"Visual Blind Spot\" Coordinates & Tactical Search Commands",
-    "ctaDesc": "Tells you **3 spots you've definitely never checked**, plus a **5-step reverse search method**.",
+    "ctaDesc": "Unlock high-probability micro-location predictions, a full tactical checklist, and timeline guidance for a more structured search.",
     "price": "$1.99",
     "originalPrice": "$9.99",
     "ctaButton": "Get Blind Spot Coordinates & Reverse Search Tactics",
     "urgency": "Distance from memory golden recovery window: only {time} left",
     "limitedOffer": "Limited Offer",
     "trust": {
-      "rate": "87.3% Recovery Rate",
-      "cases": "15,000+ Success Cases",
-      "guarantee": "Free Re-analysis if Not Found"
+      "rate": "Probability-based AI guidance",
+      "cases": "Behavior + environment + timeline reasoning",
+      "guarantee": "Billing support for delivery issues"
     },
     "purchaseNote": {
       "title": "What you unlock for $1.99",
       "oneTime": "One-time payment only. This unlock is not a recurring subscription.",
       "instantDelivery": "Premium content unlocks immediately after successful payment confirmation.",
-      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including premium tactics and micro-location insights.",
+      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including premium tactics, micro-location insights, and timeline guidance.",
+      "accountBinding": "Premium access is tied to the signed-in account used during purchase.",
+      "billingSupport": "For billing support, refund review, or delivery issues, contact us using your purchase email whenever possible.",
       "noGuarantee": "CogniSeek provides probability-based guidance and does not guarantee item recovery.",
       "policyPrefix": "By purchasing, you agree to our",
       "terms": "Terms of Service",
-      "refund": "Refund Policy"
+      "refund": "Refund Policy",
+      "contact": "Contact"
     },
     "premiumIncludes": {
       "spot1": "3 high-probability micro-locations",
@@ -426,7 +429,9 @@
     "purchaseNote": {
       "oneTime": "One-time payment only. No recurring billing or auto-renewal.",
       "instantDelivery": "Premium report content is delivered digitally immediately after payment confirmation.",
-      "digitalGoods": "This purchase unlocks advanced AI analysis, tactical actions, and premium report sections.",
+      "digitalGoods": "This purchase unlocks advanced AI analysis, tactical actions, premium report sections, and timeline guidance.",
+      "accountBinding": "Premium access is tied to your current signed-in account.",
+      "billingSupport": "For billing support or refund review, contact us using the same email used for purchase whenever possible.",
       "noGuarantee": "This is a probability-based digital service and does not guarantee recovery of the lost item."
     },
     "premiumIncludes": {
@@ -438,6 +443,7 @@
     "policyPrefix": "By purchasing, you agree to our",
     "policyTerms": "Terms of Service",
     "policyRefund": "Refund Policy",
+    "contactSupport": "Contact",
     "unlocking": "Decrypting...",
     "downloadReport": "Download Full Report",
     "backHome": "Return Home",
@@ -650,13 +656,13 @@
     "badge": "Powered by AI Cognitive Engine",
     "heroTitle1": "Lost Something?",
     "heroTitle2": "AI Will Find It.",
-    "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and AI cognition to pinpoint your item's most likely location in minutes.",
+    "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and AI cognition to help you narrow down your item's most likely location in minutes.",
     "ctaStart": "Start Finding",
     "ctaDemo": "See How It Works",
     "stats": {
-      "rate": { "value": "87%", "label": "Recovery Rate" },
-      "cases": { "value": "12,000+", "label": "Cases Solved" },
-      "time": { "value": "< 3 min", "label": "Avg. Time" }
+      "rate": { "value": "Behavior Clues", "label": "Reconstruct key actions before and after the loss" },
+      "cases": { "value": "Six-Dimensional", "label": "Cross-analyze time, place, and user state" },
+      "time": { "value": "Digital Delivery", "label": "Quickly generate an actionable search report" }
     },
     "featuresTitle": "How CogniSeek Works",
     "featuresSubtitle": "Six-dimensional analysis combining psychology, physics, and AI to trace what your memory missed.",
@@ -755,7 +761,7 @@
       "contactEmail": "kablejon@gmail.com",
       "sections": {
         "digitalService": { "heading": "1. Digital Service Nature", "body": ["CogniSeek sells digital analysis and premium access delivered electronically after payment confirmation.", "Because delivery can begin immediately, refund eligibility may be limited once premium content has been unlocked or consumed."] },
-        "eligibility": { "heading": "2. When Refunds May Be Considered", "body": ["We may review refund requests in cases such as duplicate charges, clear billing errors, or technical failures that prevented delivery of the purchased feature.", "Requests must include the purchase email, order details, and a description of the issue."] },
+        "eligibility": { "heading": "2. When Refunds May Be Considered", "body": ["We may review refund requests in cases such as duplicate charges, clear billing errors, technical failures that prevented delivery of the purchased feature, or successful payment where premium access was not properly delivered.", "Requests must include the purchase email, order details, and a description of the issue."] },
         "nonRefundable": { "heading": "3. Non-Refundable Situations", "body": ["Refunds are generally not provided for dissatisfaction with probability-based AI results, successful delivery of unlocked premium content, or failure to recover the item after using the report.", "Refunds may also be denied where misuse, abuse, chargeback manipulation, or policy violations are involved."] },
         "duplicateCharges": { "heading": "4. Duplicate or Incorrect Charges", "body": ["If you believe you were charged more than once or billed incorrectly, contact us promptly so we can investigate.", "If confirmed, the duplicate or incorrect portion will be refunded through the original payment method where available."] },
         "subscriptionCancellation": { "heading": "5. No Recurring Subscription", "body": ["The current premium unlock is sold as a one-time digital purchase and does not renew automatically.", "If CogniSeek introduces recurring plans in the future, their renewal and cancellation terms will be disclosed separately before purchase."] },
@@ -769,14 +775,27 @@
       "backToReport": "Back to report",
       "backToResult": "Back to free analysis",
       "title": "Contact Us",
-      "intro": "If you need help with billing, account access, privacy requests, or product support, contact the CogniSeek team using the details below. We aim to respond within 3 to 5 business days for standard support requests.",
+      "intro": "If you need help with billing, account access, privacy requests, or product support, contact the CogniSeek team using the details below. For standard support requests, we typically respond within 3 to 5 business days, while some billing or refund reviews may take 3 to 7 business days.",
       "contactLabel": "Support email:",
       "contactEmail": "kablejon@gmail.com",
+      "merchantCard": {
+        "badge": "Merchant Details",
+        "title": "Seller & billing information",
+        "sellerLabel": "Service name",
+        "sellerValue": "CogniSeek",
+        "typeLabel": "Service type",
+        "typeValue": "AI-powered digital analysis service",
+        "billingLabel": "Billing model",
+        "billingValue": "One-time digital purchase · no auto-renewal",
+        "deliveryLabel": "Access delivery",
+        "deliveryValue": "Premium content is delivered to the currently signed-in account after payment confirmation"
+      },
       "sections": {
-        "support": { "heading": "1. Product and Account Support", "body": ["Contact us if you have issues signing in, restoring reports, accessing premium content, or using the service.", "Please include the email address associated with your account and a clear description of the problem so we can assist faster."] },
-        "billing": { "heading": "2. Billing Questions", "body": ["For payment, refund, duplicate charge, or checkout-related questions, contact support with your purchase details.", "Include the payment email, approximate purchase time, and any relevant order information if available."] },
-        "privacy": { "heading": "3. Privacy Requests", "body": ["If you want to request access to or deletion of your stored account data or reports, contact us by email.", "We may need to verify your identity before processing privacy-related requests."] },
-        "responseTime": { "heading": "4. Response Time", "body": ["We aim to respond to support inquiries as soon as reasonably possible.", "Complex billing, fraud, or privacy issues may require additional verification time before final resolution."] }
+        "merchantInfo": { "heading": "1. Merchant and Service Information", "body": ["Service name: CogniSeek. Service type: AI-powered digital analysis service designed to help users organize clues and generate lost-item search reports.", "The current premium unlock is a one-time digital purchase, not an auto-renewing subscription. After payment confirmation, premium content is delivered to the account currently signed in during purchase."] },
+        "support": { "heading": "2. Product and Account Support", "body": ["Contact us if you have issues signing in, restoring reports, accessing premium content, or using the service.", "Please include the email address associated with your account and a clear description of the problem so we can assist faster."] },
+        "billing": { "heading": "3. Billing Questions", "body": ["For payment, refund, duplicate charge, or checkout-related questions, contact support with your purchase details.", "Include the payment email, approximate purchase time, and any relevant order information if available."] },
+        "privacy": { "heading": "4. Privacy Requests", "body": ["If you want to request access to or deletion of your stored account data or reports, contact us by email.", "We may need to verify your identity before processing privacy-related requests."] },
+        "responseTime": { "heading": "5. Response Time", "body": ["We aim to respond to support inquiries as soon as reasonably possible.", "Complex billing, fraud, or privacy issues may require additional verification time before final resolution."] }
       }
     }
   }

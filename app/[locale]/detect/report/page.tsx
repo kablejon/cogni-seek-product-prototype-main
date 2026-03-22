@@ -694,7 +694,7 @@ export default function ReportPage() {
                 <div className="rounded-2xl border border-blue-900/40 bg-slate-950/60 p-3 space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-200">
                   <p className="text-xs font-semibold text-cyan-100">{t('purchaseTitle')}</p>
                   <ul className="space-y-2 text-[11px] leading-relaxed text-slate-300/90">
-                    {['oneTime', 'instantDelivery', 'digitalGoods', 'noGuarantee'].map((key) => (
+                    {['oneTime', 'instantDelivery', 'digitalGoods', 'accountBinding', 'billingSupport', 'noGuarantee'].map((key) => (
                       <li key={key} className="flex items-start gap-2">
                         <span className="mt-0.5 text-cyan-400">•</span>
                         <span>{t(`purchaseNote.${key}`)}</span>
@@ -711,6 +711,8 @@ export default function ReportPage() {
                     <a href={`/${locale}/terms?from=report${currentReportId ? `&reportId=${encodeURIComponent(currentReportId)}` : ''}${isPaid ? '&paid=1' : ''}`} className="underline underline-offset-4 hover:text-cyan-200">{t('policyTerms')}</a>
                     {' · '}
                     <a href={`/${locale}/refund?from=report${currentReportId ? `&reportId=${encodeURIComponent(currentReportId)}` : ''}${isPaid ? '&paid=1' : ''}`} className="underline underline-offset-4 hover:text-cyan-200">{t('policyRefund')}</a>
+                    {' · '}
+                    <a href={`/${locale}/contact?from=report${currentReportId ? `&reportId=${encodeURIComponent(currentReportId)}` : ''}${isPaid ? '&paid=1' : ''}`} className="underline underline-offset-4 hover:text-cyan-200">{t('contactSupport')}</a>
                   </p>
                 </div>
               )}

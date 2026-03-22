@@ -111,7 +111,7 @@ export function ClueCards({ psychologyBlindSpot, predictions, checklist, onUnloc
             </button>
             
             <p className="text-xs text-muted-foreground mt-4 font-mono">
-              🔓 87.3% 的用户在解锁后找到了失物
+              🔓 解锁高级数字分析后，可查看微观落点、战术步骤与时间线指引
             </p>
           </div>
         )}

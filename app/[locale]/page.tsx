@@ -95,14 +95,21 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto pt-4 animate-fade-in-up delay-300">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-4xl mx-auto pt-6 animate-fade-in-up delay-300">
             {stats.map(({ key, icon: Icon, color }) => (
-              <div key={key} className="text-center space-y-1">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Icon className={`w-4 h-4 ${color}`} />
+              <div
+                key={key}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md px-4 py-5 md:px-5 md:py-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.12)] transition-all duration-300 hover:border-white/15 hover:bg-white/[0.045]"
+              >
+                <div className="flex items-center justify-center mb-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]">
+                    <Icon className={`w-4 h-4 ${color}`} />
+                  </div>
                 </div>
-                <div className={`text-2xl md:text-3xl font-bold ${color}`}>{t(`stats.${key}.value`)}</div>
-                <div className="text-xs md:text-sm text-muted-foreground">{t(`stats.${key}.label`)}</div>
+                <div className={`text-[1.7rem] md:text-[2.15rem] leading-none font-bold tracking-tight ${color}`}>{t(`stats.${key}.value`)}</div>
+                <div className="mx-auto mt-2 max-w-[12rem] text-[12px] md:text-[13px] leading-[1.45] font-medium text-slate-300/80 tracking-[0.01em]">
+                  {t(`stats.${key}.label`)}
+                </div>
               </div>
             ))}
           </div>

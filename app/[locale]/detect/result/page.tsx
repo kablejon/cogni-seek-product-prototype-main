@@ -21,7 +21,7 @@ export default function ResultPage() {
 
   useEffect(() => {
     setMounted(true)
-    setTimeout(() => { setMeterValue(87.3) }, 500)
+    setTimeout(() => { setMeterValue(82.4) }, 500)
   }, [])
 
   if (!mounted) return null
@@ -181,7 +181,7 @@ export default function ResultPage() {
               <div className="max-w-2xl mx-auto rounded-2xl border border-border/40 bg-background/50 p-4 text-left space-y-3">
                 <p className="text-sm font-medium text-foreground">{t('purchaseNote.title')}</p>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  {['oneTime', 'instantDelivery', 'digitalGoods', 'noGuarantee'].map((key) => (
+                  {['oneTime', 'instantDelivery', 'digitalGoods', 'accountBinding', 'billingSupport', 'noGuarantee'].map((key) => (
                     <li key={key} className="flex items-start gap-2">
                       <span className="mt-0.5 text-[#10b981]">•</span>
                       <span>{t(`purchaseNote.${key}`)}</span>
@@ -200,6 +200,8 @@ export default function ResultPage() {
                   <Link href="/terms?from=result" className="underline underline-offset-4 hover:text-foreground">{t('purchaseNote.terms')}</Link>
                   {' · '}
                   <Link href="/refund?from=result" className="underline underline-offset-4 hover:text-foreground">{t('purchaseNote.refund')}</Link>
+                  {' · '}
+                  <Link href="/contact?from=result" className="underline underline-offset-4 hover:text-foreground">{t('purchaseNote.contact')}</Link>
                 </p>
               </div>
               <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
