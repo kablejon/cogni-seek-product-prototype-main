@@ -34,7 +34,7 @@ export default function LoadingPage() {
   const router = useRouter()
   const locale = useLocale()
   const t = useTranslations('loading')
-  const { session, setAnalysisResult, setAnalysisError } = useSearchStore()
+  const { session, setAnalysisResult, setAnalysisError, setCurrentReportId } = useSearchStore()
 
   const [progress, setProgress] = useState(0)
   const [logIndex, setLogIndex] = useState(0)
@@ -66,8 +66,12 @@ export default function LoadingPage() {
     let isMounted = true
     async function performAnalysis() {
       try {
-        const result = await analyzeWithAI(session, locale)
-        if (isMounted) { setAnalysisResult(result); setApiCallCompleted(true) }
+        const payload = await analyzeWithAI(session, locale)
+        if (isMounted) {
+          setAnalysisResult(payload.result)
+          setCurrentReportId(payload.reportId)
+          setApiCallCompleted(true)
+        }
       } catch (error) {
         if (isMounted) {
           const errorMessage = error instanceof Error ? error.message : 'Analysis failed, please retry'
@@ -78,7 +82,7 @@ export default function LoadingPage() {
     }
     performAnalysis()
     return () => { isMounted = false }
-  }, [session, locale, setAnalysisResult, setAnalysisError])
+  }, [session, locale, setAnalysisResult, setAnalysisError, setCurrentReportId])
 
   useEffect(() => {
     const interval = 50
@@ -126,7 +130,6 @@ export default function LoadingPage() {
         </div>
       </div>
 
-      {/* Core scan visualization */}
       <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center group">
         <div className="absolute inset-0 border border-slate-800 rounded-full opacity-50 scale-110" />
         <div className="absolute inset-0 border border-dashed border-slate-800 rounded-full opacity-30 scale-125 animate-spin-slow" />
@@ -161,7 +164,6 @@ export default function LoadingPage() {
         </div>
       </div>
 
-      {/* Console */}
       <div className="w-full max-w-sm px-6 mt-12 space-y-5">
         <div className="space-y-2">
           <div className="flex justify-between items-end text-xs font-mono font-bold">

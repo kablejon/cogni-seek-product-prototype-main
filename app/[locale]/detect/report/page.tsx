@@ -5,17 +5,16 @@ import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "@/lib/navigation"
 import { useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
-// dom-to-image-more loaded dynamically to avoid SSR issues (browser-only)
 import {
   Brain, MapPin, Lock, ArrowRight, ShieldCheck, Zap, ScanLine, Activity,
   CarFront, Armchair, Briefcase, Microscope, Stethoscope, Waves,
   Search, CheckCircle2, Download, Home, AlertTriangle, Target,
-  Clock, Octagon, Crosshair, ShieldAlert
+  Clock, Octagon, Crosshair, ShieldAlert, Loader2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSearchStore } from "@/lib/store"
 import { PRICE_CONFIG } from "@/lib/config/pricing"
-import { getDefaultAnalysisResult } from "@/lib/ai-service"
+import { getDefaultAnalysisResult, type AIPremiumResult, type AIAnalysisResult } from "@/lib/ai-service"
 
 const SCENE_CONFIG_BASE = {
   vehicle: {
@@ -32,7 +31,6 @@ const SCENE_CONFIG_BASE = {
   }
 }
 
-// 从 basicSearchPoints 的【】格式中提取短标签，防止地图 UI 溢出
 function extractShortLabel(fullText: string, fallback: string): string {
   const match = fullText.match(/【(.*?)】/)
   return match ? match[1] : (fullText.length > 12 ? fallback : fullText)
@@ -43,16 +41,33 @@ export default function ReportPage() {
   const t = useTranslations('report')
   const locale = useLocale()
   const searchParams = useSearchParams()
-  const { session, resetSession, analysisResult } = useSearchStore()
+  const {
+    session,
+    resetSession,
+    analysisResult,
+    currentReportId,
+    setAnalysisResult,
+    setCurrentReportId,
+  } = useSearchStore()
   const [isPaid, setIsPaid] = useState(false)
   const [loadingPay, setLoadingPay] = useState(false)
   const [caseId, setCaseId] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [premiumResult, setPremiumResult] = useState<AIPremiumResult | null>(null)
+  const [loadingPremium, setLoadingPremium] = useState(false)
+  const [confirmingPayment, setConfirmingPayment] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
+
+  const urlReportId = searchParams.get('reportId')
 
   useEffect(() => { setCaseId(Math.floor(Math.random() * 10000)) }, [])
 
-  // Check if user already has active subscription on mount
+  useEffect(() => {
+    if (urlReportId && urlReportId !== currentReportId) {
+      setCurrentReportId(urlReportId)
+    }
+  }, [urlReportId, currentReportId, setCurrentReportId])
+
   useEffect(() => {
     const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -68,14 +83,138 @@ export default function ReportPage() {
     })
   }, [])
 
-  // Check if returning from successful Creem checkout
   useEffect(() => {
     if (searchParams.get('paid') === '1') {
       setIsPaid(true)
     }
   }, [searchParams])
 
+  useEffect(() => {
+    if (searchParams.get('paid') !== '1') return
+
+    const checkout_id = searchParams.get('checkout_id')
+    const order_id = searchParams.get('order_id')
+    const customer_id = searchParams.get('customer_id')
+    const subscription_id = searchParams.get('subscription_id')
+    const product_id = searchParams.get('product_id')
+    const request_id = searchParams.get('request_id')
+    const signature = searchParams.get('signature')
+
+    if (!checkout_id || !product_id || !signature) return
+
+    let active = true
+    async function confirmPayment() {
+      setConfirmingPayment(true)
+      try {
+        await fetch('/api/payment-confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            checkout_id,
+            order_id,
+            customer_id,
+            subscription_id,
+            product_id,
+            request_id,
+            signature,
+          }),
+        })
+      } catch {
+        // ignore and rely on webhook / premium polling fallback
+      } finally {
+        if (active) setConfirmingPayment(false)
+      }
+    }
+
+    confirmPayment()
+    return () => { active = false }
+  }, [searchParams])
+
+  useEffect(() => {
+    if (analysisResult) return
+    if (!urlReportId) return
+
+    let active = true
+    async function restoreReport() {
+      try {
+        const response = await fetch(`/api/report-latest?reportId=${encodeURIComponent(urlReportId)}`)
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok || !data.report?.free_result) return
+
+        if (active) {
+          setAnalysisResult(data.report.free_result as AIAnalysisResult)
+          setCurrentReportId(data.report.id)
+        }
+      } catch {
+        // ignore restore failure for now
+      }
+    }
+
+    restoreReport()
+    return () => { active = false }
+  }, [analysisResult, urlReportId, setAnalysisResult, setCurrentReportId])
+
+  useEffect(() => {
+    const effectiveReportId = urlReportId || currentReportId
+    if (!isPaid || !effectiveReportId) return
+
+    let active = true
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    async function fetchPremium(attempt: number) {
+      if (!active) return
+
+      if (attempt === 0) {
+        setLoadingPremium(true)
+      }
+
+      try {
+        const response = await fetch(`/api/report-premium?reportId=${encodeURIComponent(effectiveReportId)}`)
+        const data = await response.json().catch(() => ({}))
+
+        if (response.ok && data.premium) {
+          if (active) {
+            setPremiumResult(data.premium as AIPremiumResult)
+            setLoadingPremium(false)
+          }
+          return
+        }
+
+        if (response.status === 403 && attempt < 6) {
+          timer = setTimeout(() => fetchPremium(attempt + 1), 1500)
+          return
+        }
+
+        if (active) {
+          setLoadingPremium(false)
+        }
+      } catch {
+        if (attempt < 6) {
+          timer = setTimeout(() => fetchPremium(attempt + 1), 1500)
+          return
+        }
+        if (active) {
+          setLoadingPremium(false)
+        }
+      }
+    }
+
+    fetchPremium(0)
+
+    return () => {
+      active = false
+      if (timer) clearTimeout(timer)
+    }
+  }, [isPaid, currentReportId, urlReportId])
+
   const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session, locale), [analysisResult, session, locale])
+
+  const mergedActions = useMemo(() => {
+    if (isPaid && premiumResult?.checklist?.length) {
+      return premiumResult.checklist.slice(0, 5)
+    }
+    return aiResult.checklist || []
+  }, [isPaid, premiumResult, aiResult.checklist])
 
   const levelLabel = useMemo(() => {
     if (aiResult.probabilityLevel === 'High') return t('levelHigh')
@@ -95,11 +234,11 @@ export default function ReportPage() {
       desc: aiResult.environmentAnalysis || ''
     },
     macroReview: aiResult.summary || '',
-    actions: (aiResult.checklist || []).slice(0, 5).map((item, index) => ({
+    actions: mergedActions.slice(0, 5).map((item, index) => ({
       title: `${t('actionPrefix')} ${index + 1}`,
       desc: item
     }))
-  }), [aiResult, t, levelLabel])
+  }), [aiResult, mergedActions, t, levelLabel])
 
   const currentSceneBase = useMemo(() => {
     const cat = (session.locationCategory || 'default').toLowerCase()
@@ -124,7 +263,6 @@ export default function ReportPage() {
     return [t('defaultZoneA'), t('defaultZoneB'), t('defaultZoneC')]
   }, [session, t])
 
-  // 地图标签提取短标签，清单使用完整描述
   const dynamicMacroZones = useMemo(() => {
     const baseZones = currentSceneBase.macroZonesBase
     const basicPoints = aiResult.basicSearchPoints || []
@@ -144,8 +282,15 @@ export default function ReportPage() {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       const productId = process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID
-      const checkoutUrl = `/checkout?productId=${productId}&referenceId=${user?.id || ''}`
-      window.location.href = checkoutUrl
+      const query = new URLSearchParams({
+        productId: productId || '',
+        referenceId: user?.id || '',
+      })
+      const effectiveReportId = currentReportId || urlReportId
+      if (effectiveReportId) {
+        query.set('reportId', effectiveReportId)
+      }
+      window.location.href = `/checkout?${query.toString()}`
     } catch {
       setLoadingPay(false)
     }
@@ -192,12 +337,10 @@ export default function ReportPage() {
       className="min-h-screen bg-[#020617] text-slate-200 font-mono selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-hidden flex flex-col"
       style={{ fontFamily: cjkFontStack }}
     >
-      {/* 背景网格 */}
       <div className="absolute inset-0 pointer-events-none opacity-20"
         style={{ backgroundImage: 'linear-gradient(#1e3a8a 1px, transparent 1px), linear-gradient(90deg, #1e3a8a 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-blue-600/10 blur-[100px] pointer-events-none" />
 
-      {/* Header */}
       <header className="sticky top-0 z-50 bg-[#020617]/80 backdrop-blur-md border-b border-blue-900/30 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 bg-cyan-950/50 border border-cyan-400 text-cyan-400 rounded flex items-center justify-center">
@@ -218,7 +361,6 @@ export default function ReportPage() {
         </div>
       </header>
 
-      {/* 安全警告横幅（人命/宠物/医疗类自动触发）*/}
       {aiResult.safetyAlert && (
         <div className="w-full bg-red-950/80 border-b border-red-500/50 p-3 backdrop-blur-md relative z-40 shadow-[0_4px_20px_rgba(239,68,68,0.2)]">
           <div className="max-w-xl mx-auto flex items-start gap-3">
@@ -229,8 +371,6 @@ export default function ReportPage() {
       )}
 
       <main className="flex-1 max-w-xl mx-auto px-6 py-8 space-y-8 overflow-y-auto w-full pb-36">
-
-        {/* 1. 寻回指数 */}
         <section className="text-center space-y-2 relative">
           <h1 className="text-7xl font-bold tracking-tighter text-white drop-shadow-[0_0_25px_rgba(34,211,238,0.3)]">{recoveryIndex}</h1>
           <div className="flex items-center justify-center gap-3 text-[10px] font-bold tracking-[0.2em] text-cyan-500 uppercase mt-2">
@@ -243,7 +383,6 @@ export default function ReportPage() {
           </div>
         </section>
 
-        {/* 2. 首要紧急行动（免费）—— 建立第一眼专业信任 */}
         {aiResult.priorityAction?.action && (
           <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-gradient-to-br from-amber-500/10 to-orange-600/5 border border-amber-500/40 rounded-xl p-5 shadow-[0_0_25px_rgba(245,158,11,0.12)] relative overflow-hidden">
@@ -267,7 +406,6 @@ export default function ReportPage() {
           </section>
         )}
 
-        {/* 3. 全息场景地图 */}
         <section className="relative w-full aspect-video bg-[#0B1121] border border-blue-800/30 rounded-xl overflow-hidden group shadow-[0_0_40px_rgba(2,6,23,0.8)_inset]">
           <div className="absolute top-4 left-4 w-12 h-[1px] bg-cyan-500/30" />
           <div className="absolute bottom-4 right-4 w-[1px] h-12 bg-cyan-500/30" />
@@ -297,7 +435,7 @@ export default function ReportPage() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_20px_#06b6d4]"></span>
                 <div className="absolute left-10 top-[-20px] bg-cyan-950/90 border border-cyan-500/50 px-2 py-1 rounded">
                   <div className="text-[10px] text-cyan-400 font-bold whitespace-nowrap flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {t('precisionPin')}
+                    <MapPin className="w-3 h-3" /> {loadingPremium || confirmingPayment ? 'Decrypting...' : t('precisionPin')}
                   </div>
                 </div>
               </div>
@@ -311,19 +449,17 @@ export default function ReportPage() {
               </div>
             ) : (
               <div className="flex items-center gap-2 text-[10px] text-cyan-400 font-bold tracking-wide">
-                <ShieldCheck className="w-3 h-3" /> {t('deepScanDecrypted')}
+                {loadingPremium || confirmingPayment ? <Loader2 className="w-3 h-3 animate-spin" /> : <ShieldCheck className="w-3 h-3" />} {confirmingPayment ? '正在同步支付状态...' : t('deepScanDecrypted')}
               </div>
             )}
           </div>
         </section>
 
-        {/* 4. 诊断报告（环境扫描 + 行为心理学）*/}
         <section className="space-y-4">
           <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 flex items-center gap-2">
             <Microscope className="w-3 h-3" /> {t('diagnosisTitle')}
           </h2>
 
-          {/* 环境物理扫描 */}
           <div className="bg-[#0f172a]/40 p-4 rounded-lg border border-blue-800/20 backdrop-blur-sm flex gap-4 items-start">
             <div className="p-2 bg-indigo-950/40 text-indigo-400 border border-indigo-500/20 rounded-md shrink-0">
               <Waves className="w-5 h-5" />
@@ -341,7 +477,6 @@ export default function ReportPage() {
             </div>
           </div>
 
-          {/* 行为心理学分析 */}
           <div className="bg-[#0f172a]/40 p-4 rounded-lg border border-blue-800/20 backdrop-blur-sm flex gap-4 items-start hover:border-blue-500/30 transition-colors">
             <div className="p-2 bg-blue-950/40 text-blue-400 border border-blue-500/20 rounded-md shrink-0">
               <Brain className="w-5 h-5" />
@@ -349,7 +484,6 @@ export default function ReportPage() {
             <div className="flex-1 space-y-2">
               <h3 className="font-bold text-sm text-blue-100">{t('psychTitle')}</h3>
               <p className="text-xs text-slate-400 leading-relaxed">{content.psychology.content}</p>
-              {/* 认知覆盖命令 —— 使用 AI 实际输出的文本 */}
               {aiResult.cognitiveOverride && (
                 <div className="mt-3 flex items-start gap-2 text-[11px] font-medium text-cyan-300 bg-cyan-950/25 px-3 py-2.5 rounded border border-cyan-500/20">
                   <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5 text-cyan-500" />
@@ -363,7 +497,6 @@ export default function ReportPage() {
           </div>
         </section>
 
-        {/* 5. 高危微观落点推演（付费诱饵墙）*/}
         <section className="space-y-4">
           <div className="flex items-center gap-2 px-1">
             <Crosshair className="w-3 h-3 text-cyan-500" />
@@ -372,15 +505,12 @@ export default function ReportPage() {
           </div>
 
           {!isPaid ? (
-            /* 毛玻璃诱饵墙 */
             <div className="relative rounded-xl border border-cyan-900/30 overflow-hidden bg-[#0f172a]/20">
-              {/* 模糊底层 */}
               <div className="opacity-25 blur-[3px] space-y-3 p-5 pointer-events-none select-none">
                 {[0, 1, 2].map(i => (
                   <div key={i} className="h-[72px] bg-cyan-950/30 rounded-lg border border-cyan-900/40 w-full" />
                 ))}
               </div>
-              {/* 解锁遮罩 */}
               <div className="absolute inset-0 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center bg-[#020617]/50 gap-2">
                 <div className="w-10 h-10 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                   <Lock className="w-5 h-5 text-cyan-500" />
@@ -389,10 +519,13 @@ export default function ReportPage() {
                 <p className="text-[10px] text-slate-500">{t('predictionsLockedDesc')}</p>
               </div>
             </div>
+          ) : (loadingPremium || confirmingPayment) && !(premiumResult?.predictions?.length) ? (
+            <div className="rounded-xl border border-cyan-900/30 bg-[#0f172a]/30 p-5 flex items-center justify-center gap-2 text-sm text-cyan-300">
+              <Loader2 className="w-4 h-4 animate-spin" /> {confirmingPayment ? '正在同步支付结果...' : '正在解密高级推演...'}
+            </div>
           ) : (
-            /* 解锁后展示 */
             <div className="space-y-3 animate-in fade-in duration-700">
-              {(aiResult.predictions || []).map((pred, i) => (
+              {(premiumResult?.predictions || []).map((pred, i) => (
                 <div key={i} className="bg-[#0f172a]/60 p-4 rounded-lg border border-cyan-900/50 shadow-[0_0_15px_rgba(8,145,178,0.05)] relative overflow-hidden">
                   <div className="absolute top-0 right-0 px-2 py-1 bg-cyan-950 border-b border-l border-cyan-800/60 text-[9px] text-cyan-400 rounded-bl font-bold tracking-widest">
                     {t('predictionsConfidence')}: {pred.confidence}%
@@ -412,7 +545,6 @@ export default function ReportPage() {
           )}
         </section>
 
-        {/* 6. 战术行动清单 */}
         <section>
           <div className="flex justify-between items-end mb-4 px-1">
             <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
@@ -422,7 +554,6 @@ export default function ReportPage() {
           </div>
 
           <div className="space-y-3">
-            {/* 免费：基础排查清单 */}
             {!isPaid && (
               <div className="p-4 bg-amber-950/10 border border-amber-500/20 rounded-lg">
                 <div className="flex items-center gap-2 mb-2 text-amber-500">
@@ -448,7 +579,6 @@ export default function ReportPage() {
               </div>
             )}
 
-            {/* 战术行动（付费锁定/解锁）*/}
             <div className="space-y-3">
               {content.actions.map((action, i) => {
                 const isLocked = !isPaid && i > 0
@@ -465,7 +595,6 @@ export default function ReportPage() {
                     </div>
                     <div className="flex-1">
                       {isLocked ? (
-                        /* 骨架占位，彻底杜绝文字泄露 */
                         <div className="space-y-2 select-none pointer-events-none">
                           <div className="h-2.5 bg-slate-800/50 rounded w-14" />
                           <div className="h-2.5 bg-slate-800/30 rounded w-full" />
@@ -490,26 +619,25 @@ export default function ReportPage() {
           </div>
         </section>
 
-        {/* 7. 时间线演变分析 + 强制止损节点（付费解锁后显示）*/}
         {isPaid && (
           <div className="space-y-4 animate-in fade-in duration-700">
-            {aiResult.timelineAnalysis && (
+            {premiumResult?.timelineAnalysis && (
               <section className="pt-4 border-t border-blue-900/30">
                 <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 mb-3 flex items-center gap-2">
                   <Clock className="w-3 h-3" /> {t('timelineTitle')}
                 </h2>
                 <p className="text-xs text-slate-400 leading-relaxed bg-[#0f172a]/40 p-4 rounded-lg border border-blue-900/20">
-                  {aiResult.timelineAnalysis}
+                  {premiumResult.timelineAnalysis}
                 </p>
               </section>
             )}
 
-            {aiResult.stopCondition && (
+            {premiumResult?.stopCondition && (
               <section className="bg-red-950/15 border border-red-900/40 rounded-lg p-4 flex items-start gap-3">
                 <Octagon className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                 <div>
                   <h3 className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1.5">{t('stopConditionTitle')}</h3>
-                  <p className="text-xs text-red-200/70 leading-relaxed">{aiResult.stopCondition}</p>
+                  <p className="text-xs text-red-200/70 leading-relaxed">{premiumResult.stopCondition}</p>
                 </div>
               </section>
             )}
@@ -517,7 +645,6 @@ export default function ReportPage() {
         )}
       </main>
 
-      {/* 底部悬浮条：未付费 CTA */}
       {!isPaid && (
         <div className="fixed bottom-0 left-0 right-0 p-5 bg-[#020617]/80 backdrop-blur-xl border-t border-blue-900/30 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
           <div className="max-w-xl mx-auto space-y-3">
@@ -543,11 +670,9 @@ export default function ReportPage() {
         </div>
       )}
 
-      {/* 底部悬浮条：已付费 */}
       {isPaid && (
         <div className="fixed bottom-0 left-0 right-0 p-5 bg-[#020617]/95 backdrop-blur-md border-t border-cyan-900/40 z-20 shadow-[0_-10px_30px_rgba(6,182,212,0.08)]">
           <div className="max-w-xl mx-auto flex flex-col gap-3">
-            {/* AI 动态鼓励文案（使用 AI 实际输出，fallback 到静态翻译）*/}
             <p className="text-[11px] text-cyan-200/80 text-center font-medium px-2 leading-relaxed">
               {aiResult.encouragement || t('encouragement')}
             </p>
