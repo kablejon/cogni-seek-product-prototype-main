@@ -3,6 +3,6 @@
  * Price config - for future Stripe multi-currency integration
  */
 export const PRICE_CONFIG = {
-  price: '$2.99',
+  price: '$1.99',
   originalPrice: '$9.99',
 } as const;

@@ -9,7 +9,7 @@ import {
   Brain, MapPin, Lock, ArrowRight, ShieldCheck, Zap, ScanLine, Activity,
   CarFront, Armchair, Briefcase, Microscope, Stethoscope, Waves,
   Search, CheckCircle2, Download, Home, AlertTriangle, Target,
-  Clock, Octagon, Crosshair, ShieldAlert, Loader2
+  Clock, Octagon, Crosshair, ShieldAlert, Loader2, ChevronUp, ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSearchStore } from "@/lib/store"
@@ -56,6 +56,7 @@ export default function ReportPage() {
   const [premiumResult, setPremiumResult] = useState<AIPremiumResult | null>(null)
   const [loadingPremium, setLoadingPremium] = useState(false)
   const [confirmingPayment, setConfirmingPayment] = useState(false)
+  const [showUnlockDetails, setShowUnlockDetails] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
 
   const urlReportId = searchParams.get('reportId')
@@ -370,7 +371,7 @@ export default function ReportPage() {
         </div>
       )}
 
-      <main className="flex-1 max-w-xl mx-auto px-6 py-8 space-y-8 overflow-y-auto w-full pb-36">
+      <main className="flex-1 max-w-xl mx-auto px-6 py-8 space-y-8 overflow-y-auto w-full pb-44 md:pb-40">
         <section className="text-center space-y-2 relative">
           <h1 className="text-7xl font-bold tracking-tighter text-white drop-shadow-[0_0_25px_rgba(34,211,238,0.3)]">{recoveryIndex}</h1>
           <div className="flex items-center justify-center gap-3 text-[10px] font-bold tracking-[0.2em] text-cyan-500 uppercase mt-2">
@@ -646,26 +647,74 @@ export default function ReportPage() {
       </main>
 
       {!isPaid && (
-        <div className="fixed bottom-0 left-0 right-0 p-5 bg-[#020617]/80 backdrop-blur-xl border-t border-blue-900/30 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-          <div className="max-w-xl mx-auto space-y-3">
-            <div className="flex justify-between items-center px-1">
-              <div className="flex items-center gap-2">
-                <Search className="w-4 h-4 text-cyan-400" />
-                <span className="text-xs font-bold text-slate-300">{t('unlockTitle')}</span>
+        <div className="fixed bottom-0 left-0 right-0 p-3 md:p-4 bg-[#020617]/78 backdrop-blur-xl border-t border-blue-900/30 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.45)]">
+          <div className="max-w-xl mx-auto">
+            <div className="rounded-2xl border border-blue-900/40 bg-[#020617]/92 px-3 py-3 md:px-4 md:py-4 space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex items-start gap-2.5">
+                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-950/60 border border-cyan-500/20">
+                    <Search className="w-4 h-4 text-cyan-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-slate-100 leading-relaxed">{t('unlockTitle')}</p>
+                    <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">{t('purchaseNote.oneTime')}</p>
+                  </div>
+                </div>
+                <div className="shrink-0 text-right pl-2">
+                  <div className="text-lg font-bold text-white leading-none">{PRICE_CONFIG.price}</div>
+                  <div className="text-[11px] text-slate-500 line-through mt-1">{PRICE_CONFIG.originalPrice}</div>
+                </div>
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-lg font-bold text-white">{PRICE_CONFIG.price}</span>
-                <span className="text-xs text-slate-500 line-through decoration-slate-500">{PRICE_CONFIG.originalPrice}</span>
+
+              <div className="grid grid-cols-[1fr_auto] gap-2">
+                <Button
+                  onClick={handleUnlock}
+                  size="lg"
+                  disabled={loadingPay}
+                  className="h-11 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl font-bold shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-[1.01] active:scale-[0.99] border border-cyan-400/20"
+                >
+                  {loadingPay ? (
+                    <span className="flex items-center gap-2"><ScanLine className="w-4 h-4 animate-spin" /> {t('unlocking')}</span>
+                  ) : (
+                    <span className="flex items-center gap-2">{t('unlockButton')} <Zap className="w-4 h-4 text-white fill-white" /></span>
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowUnlockDetails((prev) => !prev)}
+                  className="h-11 px-3 rounded-xl border-blue-900/50 bg-slate-900/50 text-slate-300 hover:bg-slate-800 hover:text-white"
+                >
+                  <span className="sr-only">toggle unlock details</span>
+                  {showUnlockDetails ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                </Button>
               </div>
-            </div>
-            <Button onClick={handleUnlock} size="lg" disabled={loadingPay}
-              className="w-full h-12 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded font-bold shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-[1.01] active:scale-[0.99] border border-cyan-400/20">
-              {loadingPay ? (
-                <span className="flex items-center gap-2"><ScanLine className="w-4 h-4 animate-spin" /> {t('unlocking')}</span>
-              ) : (
-                <span className="flex items-center gap-2">{t('unlockButton')} <Zap className="w-4 h-4 text-white fill-white" /></span>
+
+              {showUnlockDetails && (
+                <div className="rounded-2xl border border-blue-900/40 bg-slate-950/60 p-3 space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-200">
+                  <p className="text-xs font-semibold text-cyan-100">{t('purchaseTitle')}</p>
+                  <ul className="space-y-2 text-[11px] leading-relaxed text-slate-300/90">
+                    {['oneTime', 'instantDelivery', 'digitalGoods', 'noGuarantee'].map((key) => (
+                      <li key={key} className="flex items-start gap-2">
+                        <span className="mt-0.5 text-cyan-400">•</span>
+                        <span>{t(`purchaseNote.${key}`)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300/90">
+                    {['spot1', 'spot2', 'spot3', 'spot4'].map((key) => (
+                      <div key={key} className="rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2">{t(`premiumIncludes.${key}`)}</div>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    {t('policyPrefix')}{' '}
+                    <a href={`/${locale}/terms?from=report${currentReportId ? `&reportId=${encodeURIComponent(currentReportId)}` : ''}${isPaid ? '&paid=1' : ''}`} className="underline underline-offset-4 hover:text-cyan-200">{t('policyTerms')}</a>
+                    {' · '}
+                    <a href={`/${locale}/refund?from=report${currentReportId ? `&reportId=${encodeURIComponent(currentReportId)}` : ''}${isPaid ? '&paid=1' : ''}`} className="underline underline-offset-4 hover:text-cyan-200">{t('policyRefund')}</a>
+                  </p>
+                </div>
               )}
-            </Button>
+            </div>
           </div>
         </div>
       )}

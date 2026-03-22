@@ -102,7 +102,7 @@ export function ClueCards({ psychologyBlindSpot, predictions, checklist, onUnloc
               }}
             >
               <span className="relative z-10 flex items-center gap-2">
-                立即解锁 <span className="text-white">¥2.99</span>
+                立即解锁 <span className="text-white">$1.99</span>
                 <ChevronRight className="h-5 w-5" />
               </span>
               

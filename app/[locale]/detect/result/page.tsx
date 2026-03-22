@@ -178,6 +178,30 @@ export default function ResultPage() {
                 onClick={() => router.push('/detect/report')}>
                 {t('ctaButton')}
               </Button>
+              <div className="max-w-2xl mx-auto rounded-2xl border border-border/40 bg-background/50 p-4 text-left space-y-3">
+                <p className="text-sm font-medium text-foreground">{t('purchaseNote.title')}</p>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {['oneTime', 'instantDelivery', 'digitalGoods', 'noGuarantee'].map((key) => (
+                    <li key={key} className="flex items-start gap-2">
+                      <span className="mt-0.5 text-[#10b981]">•</span>
+                      <span>{t(`purchaseNote.${key}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="grid gap-2 text-sm text-muted-foreground md:grid-cols-2">
+                  {['spot1', 'spot2', 'spot3', 'spot4'].map((key) => (
+                    <div key={key} className="rounded-xl border border-border/30 bg-background/40 px-3 py-2">
+                      {t(`premiumIncludes.${key}`)}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {t('purchaseNote.policyPrefix')}{' '}
+                  <Link href="/terms?from=result" className="underline underline-offset-4 hover:text-foreground">{t('purchaseNote.terms')}</Link>
+                  {' · '}
+                  <Link href="/refund?from=result" className="underline underline-offset-4 hover:text-foreground">{t('purchaseNote.refund')}</Link>
+                </p>
+              </div>
               <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
                 <span className="text-[#FF9F0A]">⚡️</span>
                 {t('urgency').replace('{time}', '2h')}

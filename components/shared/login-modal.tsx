@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react"
 import { useTranslations } from "next-intl"
 import { Github, Loader2, X } from "lucide-react"
+import { Link } from "@/lib/navigation"
 import { createClient } from "@/lib/supabase/client"
 
 const supabase = createClient()
@@ -113,13 +114,13 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
         <div className="px-8 pb-6 text-center">
           <p className="text-[11px] text-white/25 leading-relaxed">
             {t('termsNote')}{' '}
-            <span className="text-white/40 underline underline-offset-2 cursor-pointer hover:text-white/60 transition-colors">
+            <Link href="/terms" className="text-white/40 underline underline-offset-2 hover:text-white/60 transition-colors">
               {t('terms')}
-            </span>
+            </Link>
             {' '}{t('and')}{' '}
-            <span className="text-white/40 underline underline-offset-2 cursor-pointer hover:text-white/60 transition-colors">
+            <Link href="/privacy" className="text-white/40 underline underline-offset-2 hover:text-white/60 transition-colors">
               {t('privacy')}
-            </span>
+            </Link>
           </p>
         </div>
       </div>

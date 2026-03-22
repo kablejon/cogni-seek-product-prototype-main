@@ -356,7 +356,7 @@
     "clueStatus": "🔒 Locked",
     "ctaTitle": "Unlock \"Visual Blind Spot\" Coordinates & Tactical Search Commands",
     "ctaDesc": "Tells you **3 spots you've definitely never checked**, plus a **5-step reverse search method**.",
-    "price": "$2.99",
+    "price": "$1.99",
     "originalPrice": "$9.99",
     "ctaButton": "Get Blind Spot Coordinates & Reverse Search Tactics",
     "urgency": "Distance from memory golden recovery window: only {time} left",
@@ -365,6 +365,22 @@
       "rate": "87.3% Recovery Rate",
       "cases": "15,000+ Success Cases",
       "guarantee": "Free Re-analysis if Not Found"
+    },
+    "purchaseNote": {
+      "title": "What you unlock for $1.99",
+      "oneTime": "One-time payment only. This unlock is not a recurring subscription.",
+      "instantDelivery": "Premium content unlocks immediately after successful payment confirmation.",
+      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including premium tactics and micro-location insights.",
+      "noGuarantee": "CogniSeek provides probability-based guidance and does not guarantee item recovery.",
+      "policyPrefix": "By purchasing, you agree to our",
+      "terms": "Terms of Service",
+      "refund": "Refund Policy"
+    },
+    "premiumIncludes": {
+      "spot1": "3 high-probability micro-locations",
+      "spot2": "5 tactical search actions",
+      "spot3": "Timeline evolution analysis",
+      "spot4": "Escalation threshold guidance"
     },
     "diagnosis": {
       "tunnelVision": {
@@ -404,8 +420,24 @@
     "tacticsTitle": "Tactical Protocol",
     "unlockTitle": "5 Micro Tactics + Tactical Commands",
     "unlockDesc": "5 micro-tactic precision commands + exact coordinate decryption",
-    "unlockPrice": "$2.99",
+    "unlockPrice": "$1.99",
     "unlockButton": "Unlock Solution Now",
+    "purchaseTitle": "What your $1.99 unlock includes",
+    "purchaseNote": {
+      "oneTime": "One-time payment only. No recurring billing or auto-renewal.",
+      "instantDelivery": "Premium report content is delivered digitally immediately after payment confirmation.",
+      "digitalGoods": "This purchase unlocks advanced AI analysis, tactical actions, and premium report sections.",
+      "noGuarantee": "This is a probability-based digital service and does not guarantee recovery of the lost item."
+    },
+    "premiumIncludes": {
+      "spot1": "3 precision micro-location predictions",
+      "spot2": "5 tactical action steps",
+      "spot3": "Timeline analysis",
+      "spot4": "Stop-condition guidance"
+    },
+    "policyPrefix": "By purchasing, you agree to our",
+    "policyTerms": "Terms of Service",
+    "policyRefund": "Refund Policy",
     "unlocking": "Decrypting...",
     "downloadReport": "Download Full Report",
     "backHome": "Return Home",
@@ -659,8 +691,93 @@
       "free": "Free basic analysis"
     },
     "footer": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "refund": "Refund Policy",
+      "contact": "Contact",
       "tagline": "AI-powered item recovery assistant",
       "disclaimer": "CogniSeek provides probability-based guidance and does not guarantee recovery. For entertainment and cognitive assistance purposes."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "badge": "Privacy Policy",
+      "backLabel": "Back to home",
+      "backToReport": "Back to report",
+      "backToResult": "Back to free analysis",
+      "title": "Privacy Policy",
+      "intro": "This policy explains what information CogniSeek collects, how it is used, and how we protect it when you use our AI-powered item recovery service.",
+      "contactLabel": "Privacy questions:",
+      "contactEmail": "kablejon@gmail.com",
+      "sections": {
+        "overview": { "heading": "1. Overview", "body": ["CogniSeek provides AI-assisted probability analysis to help users locate lost items or pets.", "By using the service, you acknowledge that the platform processes the information you submit in order to generate analysis reports, manage your account, and deliver paid features."] },
+        "dataWeCollect": { "heading": "2. Information We Collect", "body": ["We collect account data such as your email address and authentication provider when you sign in.", "We also collect the search information you submit, including item details, locations, time clues, behavioral context, and report history necessary to generate and restore your analysis results."] },
+        "howWeUseData": { "heading": "3. How We Use Information", "body": ["We use your information to generate AI reports, restore your historical reports, improve service reliability, prevent abuse, and provide support.", "We do not sell your personal information. Data is used only for service delivery, internal operations, analytics, fraud prevention, and legal compliance."] },
+        "payments": { "heading": "4. Payments", "body": ["Payments are processed by third-party payment providers and Merchant of Record partners. CogniSeek does not store your full card number or full payment instrument details on its own servers.", "Payment-related identifiers, order status, one-time purchase entitlement, and access status may be stored to provide purchased features and resolve billing issues."] },
+        "storage": { "heading": "5. Data Storage and Security", "body": ["Your account and report data are stored using our infrastructure providers and database services with access controls designed to protect user information.", "While we apply reasonable technical and organizational safeguards, no online service can guarantee absolute security."] },
+        "sharing": { "heading": "6. When We Share Data", "body": ["We may share limited information with infrastructure, authentication, analytics, AI inference, and payment providers only where necessary to operate the service.", "We may also disclose information when required by law, to protect rights and safety, or in connection with a business transfer."] },
+        "yourRights": { "heading": "7. Your Rights and Choices", "body": ["You may request access, correction, or deletion of your account-related personal data, subject to legal and operational limitations.", "You may also contact us if you want your stored reports removed or if you have questions about how your data is handled."] },
+        "children": { "heading": "8. Children", "body": ["CogniSeek is not intended for children under the age required by applicable law to consent to digital services in their region.", "If you believe a child has submitted personal data without proper authorization, please contact us so we can review and remove the information where appropriate."] },
+        "changes": { "heading": "9. Changes to This Policy", "body": ["We may update this Privacy Policy from time to time to reflect product, legal, or operational changes.", "When material changes are made, we will update this page and revise the policy content accordingly."] }
+      }
+    },
+    "terms": {
+      "badge": "Terms of Service",
+      "backLabel": "Back to home",
+      "backToReport": "Back to report",
+      "backToResult": "Back to free analysis",
+      "title": "Terms of Service",
+      "intro": "These Terms govern your access to and use of CogniSeek, including free analysis features, paid premium reports, and account-based history restoration.",
+      "contactLabel": "Terms questions:",
+      "contactEmail": "kablejon@gmail.com",
+      "sections": {
+        "serviceDescription": { "heading": "1. Service Description", "body": ["CogniSeek provides AI-generated, probability-based guidance intended to assist users in searching for lost items or pets.", "The service is informational in nature and does not guarantee recovery, accuracy, or any specific real-world outcome."] },
+        "eligibility": { "heading": "2. Eligibility", "body": ["You must use CogniSeek in compliance with applicable laws and provide truthful information when creating an account or purchasing premium features.", "If you are using the service on behalf of a business or organization, you represent that you have authority to bind that entity."] },
+        "accounts": { "heading": "3. Accounts", "body": ["Some parts of the service require sign-in through supported authentication providers.", "You are responsible for maintaining the security of your account and for activities that occur under your account."] },
+        "acceptableUse": { "heading": "4. Acceptable Use", "body": ["You may not use the service for unlawful, harmful, deceptive, abusive, or fraudulent purposes.", "You may not attempt to interfere with the platform, reverse engineer protected parts of the service, bypass access controls, or exploit payment logic."] },
+        "aiOutputs": { "heading": "5. AI Outputs and Disclaimers", "body": ["AI outputs are generated from user-provided context and model inference. They may be incomplete, inaccurate, or unsuitable for your situation.", "You should not rely on CogniSeek output as the sole factual basis or sole decision-making basis for important actions.", "CogniSeek is not a replacement for law enforcement, emergency response, veterinary care, insurance advice, or professional investigation services."] },
+        "billing": { "heading": "6. Billing", "body": ["Certain premium features require payment before access is granted. The current premium unlock is sold as a one-time digital purchase and the final price is shown at checkout.", "By completing a purchase, you authorize the applicable charge and agree that access to paid digital features may begin immediately after payment confirmation."] },
+        "subscriptions": { "heading": "7. Access After Purchase", "body": ["The current premium unlock is not sold as a recurring subscription and does not auto-renew.", "Access may be suspended or revoked if payment is reversed, refunded, disputed, or determined to be fraudulent."] },
+        "intellectualProperty": { "heading": "8. Intellectual Property", "body": ["The CogniSeek brand, interface, prompts, software, and service design are protected by applicable intellectual property laws.", "You may use your purchased reports for personal or internal use, but you may not resell or reproduce the platform as a competing service."] },
+        "termination": { "heading": "9. Suspension or Termination", "body": ["We may suspend or terminate access if you violate these Terms, abuse the service, create platform risk, or if continued access is not commercially or legally feasible.", "You may stop using the service at any time."] },
+        "liability": { "heading": "10. Limitation of Liability", "body": ["To the maximum extent permitted by law, CogniSeek is provided on an as-is and as-available basis without warranties of any kind.", "We are not liable for indirect, incidental, consequential, special, or punitive damages arising from your use of the service or reliance on AI-generated outputs."] },
+        "changes": { "heading": "11. Changes to These Terms", "body": ["We may update these Terms as the product, pricing model, legal requirements, or operational practices evolve.", "Your continued use of the service after updates take effect constitutes acceptance of the revised Terms."] }
+      }
+    },
+    "refund": {
+      "badge": "Refund Policy",
+      "backLabel": "Back to home",
+      "backToReport": "Back to report",
+      "backToResult": "Back to free analysis",
+      "title": "Refund Policy",
+      "intro": "This policy explains how CogniSeek handles refunds for one-time digital premium analysis purchases.",
+      "contactLabel": "Billing support:",
+      "contactEmail": "kablejon@gmail.com",
+      "sections": {
+        "digitalService": { "heading": "1. Digital Service Nature", "body": ["CogniSeek sells digital analysis and premium access delivered electronically after payment confirmation.", "Because delivery can begin immediately, refund eligibility may be limited once premium content has been unlocked or consumed."] },
+        "eligibility": { "heading": "2. When Refunds May Be Considered", "body": ["We may review refund requests in cases such as duplicate charges, clear billing errors, or technical failures that prevented delivery of the purchased feature.", "Requests must include the purchase email, order details, and a description of the issue."] },
+        "nonRefundable": { "heading": "3. Non-Refundable Situations", "body": ["Refunds are generally not provided for dissatisfaction with probability-based AI results, successful delivery of unlocked premium content, or failure to recover the item after using the report.", "Refunds may also be denied where misuse, abuse, chargeback manipulation, or policy violations are involved."] },
+        "duplicateCharges": { "heading": "4. Duplicate or Incorrect Charges", "body": ["If you believe you were charged more than once or billed incorrectly, contact us promptly so we can investigate.", "If confirmed, the duplicate or incorrect portion will be refunded through the original payment method where available."] },
+        "subscriptionCancellation": { "heading": "5. No Recurring Subscription", "body": ["The current premium unlock is sold as a one-time digital purchase and does not renew automatically.", "If CogniSeek introduces recurring plans in the future, their renewal and cancellation terms will be disclosed separately before purchase."] },
+        "howToRequest": { "heading": "6. How to Request a Refund", "body": ["Send your refund or billing support request to our contact email using the same email address associated with your purchase whenever possible.", "We may ask for additional information to verify the transaction and assess eligibility."] },
+        "responseTime": { "heading": "7. Review Time", "body": ["We aim to review billing and refund requests within a reasonable timeframe, typically within 3 to 7 business days.", "Approved refunds are returned via the original payment channel, subject to payment processor timing."] }
+      }
+    },
+    "contact": {
+      "badge": "Contact",
+      "backLabel": "Back to home",
+      "backToReport": "Back to report",
+      "backToResult": "Back to free analysis",
+      "title": "Contact Us",
+      "intro": "If you need help with billing, account access, privacy requests, or product support, contact the CogniSeek team using the details below. We aim to respond within 3 to 5 business days for standard support requests.",
+      "contactLabel": "Support email:",
+      "contactEmail": "kablejon@gmail.com",
+      "sections": {
+        "support": { "heading": "1. Product and Account Support", "body": ["Contact us if you have issues signing in, restoring reports, accessing premium content, or using the service.", "Please include the email address associated with your account and a clear description of the problem so we can assist faster."] },
+        "billing": { "heading": "2. Billing Questions", "body": ["For payment, refund, duplicate charge, or checkout-related questions, contact support with your purchase details.", "Include the payment email, approximate purchase time, and any relevant order information if available."] },
+        "privacy": { "heading": "3. Privacy Requests", "body": ["If you want to request access to or deletion of your stored account data or reports, contact us by email.", "We may need to verify your identity before processing privacy-related requests."] },
+        "responseTime": { "heading": "4. Response Time", "body": ["We aim to respond to support inquiries as soon as reasonably possible.", "Complex billing, fraud, or privacy issues may require additional verification time before final resolution."] }
+      }
     }
   }
 }

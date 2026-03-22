@@ -202,6 +202,12 @@ export default function HomePage() {
 
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground relative z-10">
         <div className="container mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm mb-3">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">{t('footer.privacy')}</Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors">{t('footer.terms')}</Link>
+            <Link href="/refund" className="hover:text-foreground transition-colors">{t('footer.refund')}</Link>
+            <Link href="/contact" className="hover:text-foreground transition-colors">{t('footer.contact')}</Link>
+          </div>
           <p>© 2025 CogniSeek · {t('footer.tagline')}</p>
           <p className="mt-1 text-xs opacity-60">{t('footer.disclaimer')}</p>
         </div>
