@@ -659,6 +659,7 @@
     "heroTitle1": "Lost Something?",
     "heroTitle2": "AI Will Find It.",
     "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and AI cognition to help you narrow down your item's most likely location in minutes.",
+    "pricingHint": "⚡ Basic Scan: Free | Premium Tactical Report: $1.99 (One-time payment)",
     "ctaStart": "Start Finding",
     "ctaDemo": "See How It Works",
     "stats": {
@@ -711,6 +712,7 @@
       "terms": "Terms of Service",
       "refund": "Refund Policy",
       "contact": "Contact",
+      "support": "✉️ Questions or support? Email us at:",
       "tagline": "AI-powered item recovery assistant",
       "disclaimer": "CogniSeek provides probability-based digital guidance and does not guarantee recovery. For informational and decision-support purposes."
     }

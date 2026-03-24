@@ -659,6 +659,7 @@
     "heroTitle1": "丢东西了？",
     "heroTitle2": "AI 帮你找回来。",
     "heroSubtitle": "CogniSeek 运用行为心理学、时空还原和 AI 认知分析，在几分钟内帮助你锁定物品最可能所在的区域。",
+    "pricingHint": "⚡ 基础排查：免费 | 高级战术报告：$1.99（一次性买断）",
     "ctaStart": "开始寻找",
     "ctaDemo": "了解工作原理",
     "stats": {
@@ -711,6 +712,7 @@
       "terms": "服务条款",
       "refund": "退款政策",
       "contact": "联系我们",
+      "support": "✉️ 客户支持与反馈：",
       "tagline": "AI 驱动的物品寻回助手",
       "disclaimer": "CogniSeek 提供基于概率的数字辅助指引，不保证找回结果。仅供信息参考与决策辅助用途。"
     }

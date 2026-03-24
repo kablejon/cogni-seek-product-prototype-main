@@ -94,6 +94,12 @@ export default function HomePage() {
             </Button>
           </div>
 
+          <div className="mt-6 flex justify-center animate-fade-in-up delay-300">
+            <div className="inline-flex items-center px-5 py-2.5 rounded-full border border-[#2DE1FC]/30 bg-white/5 backdrop-blur-md shadow-[0_0_15px_rgba(45,225,252,0.05)] text-sm font-medium text-slate-200 tracking-wide">
+              {t('pricingHint')}
+            </div>
+          </div>
+
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-4xl mx-auto pt-6 animate-fade-in-up delay-300">
             {stats.map(({ key, icon: Icon, color }) => (
@@ -277,14 +283,20 @@ export default function HomePage() {
 
       <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground relative z-10">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm mb-3">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm mb-4">
             <Link href="/privacy" className="hover:text-foreground transition-colors">{t('footer.privacy')}</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">{t('footer.terms')}</Link>
             <Link href="/refund" className="hover:text-foreground transition-colors">{t('footer.refund')}</Link>
             <Link href="/contact" className="hover:text-foreground transition-colors">{t('footer.contact')}</Link>
           </div>
+          <div className="mb-5 text-slate-300 font-medium">
+            {t('footer.support')}
+            <a href="mailto:kablejon@gmail.com" className="text-[#2DE1FC] hover:text-white transition-colors hover:underline ml-2">
+              kablejon@gmail.com
+            </a>
+          </div>
           <p>© 2025 CogniSeek · {t('footer.tagline')}</p>
-          <p className="mt-1 text-xs opacity-60">{t('footer.disclaimer')}</p>
+          <p className="mt-1.5 text-xs opacity-60">{t('footer.disclaimer')}</p>
         </div>
       </footer>
     </div>
