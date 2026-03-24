@@ -291,7 +291,7 @@ export default function HomePage() {
           </div>
           <div className="mb-5 text-slate-300 font-medium">
             {t('footer.support')}
-            <a href="mailto:kablejon@gmail.com" className="text-[#2DE1FC] hover:text-white transition-colors hover:underline ml-2">
+            <a href="mailto:kablejon@gmail.com" className="text-[#7DEEFF] hover:text-[#C9F8FF] transition-colors hover:underline ml-2">
               kablejon@gmail.com
             </a>
           </div>
