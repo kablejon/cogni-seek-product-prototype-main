@@ -653,7 +653,16 @@ export default function ReportPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-[1fr_auto] gap-2">
+              <div className="grid grid-cols-[auto_1fr_auto] gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleReturnHome}
+                  className="h-11 px-3 rounded-xl border-blue-900/50 bg-slate-900/50 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-2"
+                >
+                  <Home className="w-4 h-4" />
+                  {t('backHome')}
+                </Button>
                 <Button
                   onClick={handleUnlock}
                   size="lg"

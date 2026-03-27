@@ -6,11 +6,12 @@
 export const LOCALE_LANGUAGE_MAP: Record<string, string> = {
   'en': 'English',
   'zh-CN': 'Simplified Chinese (简体中文)',
+  'zh-TW': 'Traditional Chinese (繁體中文)',
 };
 
 export function getSystemPromptV19Fusion(locale: string = 'en'): string {
   const language = LOCALE_LANGUAGE_MAP[locale] || 'English';
-  const isZH = locale === 'zh-CN';
+  const isZH = locale === 'zh-CN' || locale === 'zh-TW';
   const L = isZH ? '[MUST OUTPUT IN CHINESE/必须用中文]' : '[MUST OUTPUT IN ENGLISH]';
 
   return `You are CogniSeek Core V19, an elite digital forensic detective combining Criminology, Cognitive Psychology, and Animal Behaviorism.
