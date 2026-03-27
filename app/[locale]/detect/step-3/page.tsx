@@ -274,7 +274,7 @@ export default function Step3Page() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-bold">
-                        {t('areaLabel').replace('{scene}', t(`scenes.${selectedScene}`))}
+                        {t('areaLabel', {scene: t(`scenes.${selectedScene}`)})}
                       </h3>
                       <p className="text-xs text-white/40 mt-0.5 flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyber-green)] shadow-[0_0_6px_rgba(45,225,252,0.8)]" />
@@ -302,7 +302,7 @@ export default function Step3Page() {
                     <div className="p-3 rounded-xl bg-[var(--cyber-green)]/5 border border-[var(--cyber-green)]/20">
                       <p className="text-sm text-center">
                         <span className="font-bold text-[var(--cyber-green)]">
-                          {t('selectedCount').replace('{count}', String(selectedSubAreas.length))}
+                          {t('selectedCount', {count: selectedSubAreas.length})}
                         </span>
                         <span className="text-white/50 ml-2">
                           {selectedSubAreas.slice(0, 3).map(a => getSubAreaLabel(a)).join(' · ')}

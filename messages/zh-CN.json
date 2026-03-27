@@ -118,10 +118,10 @@
     },
     "unsureMode": {
       "title": "轨迹回溯模式已激活",
-      "desc": "AI将启动「轨迹回溯模式」，分析你在不同地点之间的移动路径，逐一排查可能的丢失节点。"
+      "desc": "AI 将启动「轨迹回溯模式」，分析你在不同地点之间的移动路径，逐一排查可能的丢失节点。"
     },
     "confidence": {
-      "aiHint90": "🎯 AI将在此区域进行深度层次式搜索",
+      "aiHint90": "🎯 AI 将在此区域进行深度层次式搜索",
       "aiHint70": "🔍 AI将优先搜索此区域，同时排查周边过渡地带",
       "aiHintLow": "🌐 AI将扩大搜索半径，检查上一个地点及途中"
     },
@@ -232,9 +232,9 @@
   "step4": {
     "title": "潜意识还原",
     "subtitle": "我们需要分析你当时的「大脑带宽」占用情况",
-    "section1Title": "1. 大脑负载状态 (CPU Load)",
+    "section1Title": "1. 大脑负载状态（认知负载）",
     "section1Hint": "决定了你当时的「视野带宽」",
-    "section2Title": "2. 肢体行为惯性 (Physical Inertia)",
+    "section2Title": "2. 肢体行为惯性（身体惯性）",
     "section2Hint": "还原无意识的肌肉记忆（可多选）",
     "section3Title": "3. 注意力干扰源",
     "section3Hint": "是什么打断了你的记忆录入？",
@@ -308,7 +308,7 @@
       "tried_find_tablet": "已尝试云端定位服务",
       "tried_find_laptop": "已尝试「查找我的」功能",
       "tried_call_pet": "已尝试呼唤名字或敲击食盆",
-      "tried_find_smart": "已尝试配套App或定位功能"
+      "tried_find_smart": "已尝试配套 App或定位功能"
     },
     "duration": {
       "10min": "10分钟内",

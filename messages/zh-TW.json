@@ -97,7 +97,7 @@
   },
   "step0": {
     "title": "鎖定第一現場",
-    "subtitle": "Identify Environment Profile",
+    "subtitle": "識別環境特徵",
     "description": "閉上眼回憶一下，你**最後一次**確信它在身邊的位置是？",
     "selectPrompt": "👆 請選擇一個區域開始分析",
     "sectors": {
@@ -118,7 +118,7 @@
     },
     "unsureMode": {
       "title": "軌跡回溯模式已啟動",
-      "desc": "AI將啟動「軌跡回溯模式」，分析你在不同地點之間的移動路徑，逐一排查可能的遺失節點。"
+      "desc": "AI 將啟動「軌跡回溯模式」，分析你在不同地點之間的移動路徑，逐一排查可能的遺失節點。"
     },
     "confidence": {
       "aiHint90": "🎯 AI將在此區域進行深度層次式搜尋",
@@ -179,6 +179,16 @@
       "preciseDesc": "AI 僅分析選中的時段"
     },
     "aiAnalysis": "時空分析：",
+    "lightContext": {
+      "fullDay": "全天分析",
+      "locked": "時間鎖定",
+      "fullPeriod": "全時段分析",
+      "fresh": "記憶新鮮度：極高"
+    },
+    "timeDesc": {
+      "uncertain": "較早前（時間不確定）",
+      "macroUncertain": "{label}（時間不確定）"
+    },
     "missing": {
       "noTime": "請選擇時間範圍",
       "noLight": "請選擇光線時段或開啟「時間不確定」開關",
@@ -222,9 +232,9 @@
   "step4": {
     "title": "潛意識還原",
     "subtitle": "我們需要分析你當時的「大腦頻寬」佔用情況",
-    "section1Title": "1. 大腦負載狀態 (CPU Load)",
+    "section1Title": "1. 大腦負載狀態（認知負載）",
     "section1Hint": "決定了你當時的「視野頻寬」",
-    "section2Title": "2. 肢體行為慣性 (Physical Inertia)",
+    "section2Title": "2. 肢體行為慣性（身體慣性）",
     "section2Hint": "還原無意識的肌肉記憶（可多選）",
     "section3Title": "3. 注意力干擾源",
     "section3Hint": "是什麼打斷了你的記憶錄入？",
@@ -293,6 +303,13 @@
     "aiTipContent": "了解您已經排查過的區域，可以幫助我們避免重複建議，並聚焦於那些容易被忽視的「視覺和記憶盲區」",
     "toggleHint": "開關開啟表示「已嘗試過」，AI將不再建議；關閉表示「未嘗試」，AI將為您提供相關建議",
     "startAnalysis": "開始 AI 分析",
+    "smartFeature": {
+      "tried_find_phone": "已嘗試「尋找」或撥打手機",
+      "tried_find_tablet": "已嘗試雲端定位服務",
+      "tried_find_laptop": "已嘗試「尋找我的」功能",
+      "tried_call_pet": "已嘗試呼喚名字或敲擊食盆",
+      "tried_find_smart": "已嘗試配套 App 或定位功能"
+    },
     "duration": {
       "10min": "10分鐘內",
       "30min": "半小時左右",
@@ -317,7 +334,8 @@
       "prob": "CALCULATING_PROBABILITY_MATRIX...",
       "coords": "GENERATING_TACTICAL_COORDINATES...",
       "complete": "TARGET_LOCKED."
-    }
+    },
+    "matchingTarget": "目標鎖定："
   },
   "result": {
     "title": "排查引導評分：",
@@ -439,7 +457,46 @@
     "diagnosisTitle": "診斷報告",
     "envScanTitle": "環境物理掃描",
     "psychTitle": "行為心理學分析",
-    "precisionPin": "精準目標"
+    "precisionPin": "精準目標",
+    "completed": "已完成",
+    "complexity": "複雜度",
+    "camouflage": "偽裝度",
+    "levelHigh": "高",
+    "levelMedium": "中",
+    "levelLow": "低",
+    "deepScanEncrypted": "深度掃描已加密",
+    "deepScanDecrypted": "深度掃描已解密",
+    "basicSearchDesc": "基於常識，你可能已經搜尋過這些地方：",
+    "microTacticsLocked": "戰術指令已加密",
+    "analysisComplete": "分析完成",
+    "actionPrefix": "指令",
+    "aiDisclaimer": "* AI 僅提供基於機率的線索，不保證100%找到物品。",
+    "imageGenFailed": "圖片生成失敗，是否使用「列印」功能保存為 PDF？",
+    "sceneLabelVehicle": "車輛區域掃描",
+    "sceneLabelHome": "住宅區域掃描",
+    "sceneLabelDefault": "目標區域掃描",
+    "zoneLabel": "區域",
+    "vehicleZoneA": "A區：駕駛座表面",
+    "vehicleZoneB": "B區：後排地板",
+    "vehicleZoneC": "C區：扶手箱",
+    "homeZoneA": "A區：桌面",
+    "homeZoneB": "B區：沙發表面",
+    "homeZoneC": "C區：可見地板區域",
+    "defaultZoneA": "A區",
+    "defaultZoneB": "B區",
+    "defaultZoneC": "C區",
+    "priorityActionTitle": "立刻執行：首要緊急行動",
+    "priorityActionTarget": "目標：",
+    "priorityActionWhy": "原因：",
+    "predictionsTitle": "高風險微觀落點推演",
+    "predictionsLocked": "3 個精準微觀落點已鎖定",
+    "predictionsLockedDesc": "解鎖查看具體位置與專項搜尋手法",
+    "predictionsConfidence": "信賴度",
+    "predictionsReasoning": "推理依據：",
+    "predictionsMethod": "搜尋手法：",
+    "timelineTitle": "時間線演變分析",
+    "stopConditionTitle": "強制止損節點",
+    "cognitiveInsightLabel": "認知覆蓋命令"
   },
   "data": {
     "categories": {
