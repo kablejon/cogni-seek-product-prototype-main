@@ -94,9 +94,9 @@ export async function POST(request: NextRequest) {
     };
 
     const fullSession = session || null;
-    const sessionFingerprint = fullSession
-      ? JSON.stringify(fullSession)
-      : JSON.stringify({
+    const fingerprintBase = fullSession
+      ? fullSession
+      : {
           itemType,
           itemName,
           itemDescription,
@@ -111,13 +111,16 @@ export async function POST(request: NextRequest) {
           userMood,
           userActivity,
           searchedPlaces,
-        });
+        };
+
+    const sessionFingerprint = JSON.stringify({ locale, ...fingerprintBase });
 
     const dedupeCutoff = new Date(Date.now() - DEDUPE_WINDOW_MS).toISOString();
     const { data: recentReports } = await supabaseAdmin
       .from('analysis_reports')
       .select('id, free_result, created_at, session_data')
       .eq('user_id', user.id)
+      .eq('locale', locale)
       .gte('created_at', dedupeCutoff)
       .order('created_at', { ascending: false })
       .limit(20);
