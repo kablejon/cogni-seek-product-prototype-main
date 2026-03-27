@@ -95,7 +95,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-6 flex justify-center animate-fade-in-up delay-300">
-            <div className="inline-flex items-center px-5 py-2.5 rounded-full border border-[#2DE1FC]/30 bg-white/5 backdrop-blur-md shadow-[0_0_15px_rgba(45,225,252,0.05)] text-sm font-medium text-slate-200 tracking-wide">
+            <div className="inline-flex items-center px-5 py-2.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-md shadow-[0_0_15px_rgba(45,225,252,0.04)] text-sm font-medium text-slate-200/85 tracking-wide">
               {t('pricingHint')}
             </div>
           </div>
@@ -289,9 +289,9 @@ export default function HomePage() {
             <Link href="/refund" className="hover:text-foreground transition-colors">{t('footer.refund')}</Link>
             <Link href="/contact" className="hover:text-foreground transition-colors">{t('footer.contact')}</Link>
           </div>
-          <div className="mb-5 text-slate-300 font-medium">
+          <div className="mb-5 text-sm text-slate-300/85 font-medium">
             {t('footer.support')}
-            <a href="mailto:kablejon@gmail.com" className="text-[#7DEEFF] hover:text-[#C9F8FF] transition-colors hover:underline ml-2">
+            <a href="mailto:kablejon@gmail.com" className="text-slate-200 hover:text-white transition-colors hover:underline ml-2">
               kablejon@gmail.com
             </a>
           </div>
