@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     let query = supabase
       .from('analysis_reports')
-      .select('id, locale, free_result, created_at')
+      .select('id, locale, free_result, created_at, session_data')
       .eq('user_id', user.id)
 
     if (reportId) {
@@ -28,9 +28,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })
     }
 
+    const reportData = report
+      ? {
+          ...report,
+          premium_unlocked:
+            !!(report.session_data && typeof report.session_data === 'object' && (report.session_data as Record<string, unknown>).premiumUnlocked === true),
+        }
+      : null
+
     return NextResponse.json({
       success: true,
-      report: report || null,
+      report: reportData,
     })
   } catch (error) {
     return NextResponse.json({ success: false, error: String(error) }, { status: 500 })

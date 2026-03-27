@@ -40,6 +40,7 @@ export default function LoadingPage() {
   const [logIndex, setLogIndex] = useState(0)
   const [phase, setPhase] = useState(1)
   const [apiCallCompleted, setApiCallCompleted] = useState(false)
+  const [generatedReportId, setGeneratedReportId] = useState<string | null>(null)
 
   const itemName = useMemo(() => {
     if (session.itemName) return session.itemName.toUpperCase()
@@ -70,6 +71,7 @@ export default function LoadingPage() {
         if (isMounted) {
           setAnalysisResult(payload.result)
           setCurrentReportId(payload.reportId)
+          setGeneratedReportId(payload.reportId)
           setApiCallCompleted(true)
         }
       } catch (error) {
@@ -103,13 +105,14 @@ export default function LoadingPage() {
 
         if (newProgress >= 100 && apiCallCompleted) {
           clearInterval(timer)
-          setTimeout(() => router.push('/detect/report'), 600)
+          const reportIdParam = generatedReportId ? `?reportId=${encodeURIComponent(generatedReportId)}` : ''
+          setTimeout(() => router.push(`/detect/report${reportIdParam}`), 600)
         }
         return newProgress
       })
     }, interval)
     return () => clearInterval(timer)
-  }, [router, apiCallCompleted])
+  }, [router, apiCallCompleted, generatedReportId])
 
   return (
     <div className="min-h-screen bg-[#050A14] text-slate-300 font-mono flex flex-col items-center justify-center relative overflow-hidden">

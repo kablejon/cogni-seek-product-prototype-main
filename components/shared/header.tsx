@@ -210,6 +210,18 @@ export function Header({ currentStep, totalSteps = 6, showProgress = false }: He
                       </div>
                     </div>
 
+                    <div className="px-4 pb-3">
+                      <Link
+                        href="/history"
+                        onClick={() => setDropdownOpen(false)}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium
+                          bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 hover:border-cyan-500/40
+                          text-cyan-300 hover:text-cyan-200 transition-all duration-150"
+                      >
+                        检测记录
+                      </Link>
+                    </div>
+
                     {/* Sign out */}
                     <div className="px-4 pb-4">
                       <button

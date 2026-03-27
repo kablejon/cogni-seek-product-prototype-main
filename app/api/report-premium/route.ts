@@ -16,25 +16,24 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
     }
 
-    const [{ data: report, error: reportError }, { data: subscription, error: subError }] = await Promise.all([
-      supabase
-        .from('analysis_reports')
-        .select('id, user_id, premium_result')
-        .eq('id', reportId)
-        .eq('user_id', user.id)
-        .single(),
-      supabase
-        .from('user_subscriptions')
-        .select('subscription_active')
-        .eq('user_id', user.id)
-        .single(),
-    ])
+    const { data: report, error: reportError } = await supabase
+      .from('analysis_reports')
+      .select('id, user_id, premium_result, session_data')
+      .eq('id', reportId)
+      .eq('user_id', user.id)
+      .single()
 
     if (reportError || !report) {
       return NextResponse.json({ success: false, error: 'Report not found' }, { status: 404 })
     }
 
-    if (subError || !subscription?.subscription_active) {
+    const sessionData = (report.session_data && typeof report.session_data === 'object')
+      ? (report.session_data as Record<string, unknown>)
+      : {}
+
+    const premiumUnlocked = sessionData.premiumUnlocked === true
+
+    if (!premiumUnlocked) {
       return NextResponse.json({ success: false, error: 'Premium access required' }, { status: 403 })
     }
 

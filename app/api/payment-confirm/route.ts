@@ -55,17 +55,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid payment signature' }, { status: 401 })
     }
 
+    const bodyReportId = body.reportId
+    const urlReportId = request.nextUrl.searchParams.get('reportId')
+    const reportId = bodyReportId || urlReportId
+
+    if (!reportId) {
+      return NextResponse.json({ success: false, error: 'Missing reportId' }, { status: 400 })
+    }
+
+    const { data: report, error: reportError } = await supabaseAdmin
+      .from('analysis_reports')
+      .select('id, user_id, session_data')
+      .eq('id', reportId)
+      .eq('user_id', user.id)
+      .single()
+
+    if (reportError || !report) {
+      return NextResponse.json({ success: false, error: 'Report not found' }, { status: 404 })
+    }
+
+    const sessionData = report.session_data && typeof report.session_data === 'object'
+      ? (report.session_data as Record<string, unknown>)
+      : {}
+
+    const updatedSession = {
+      ...sessionData,
+      premiumUnlocked: true,
+      premiumUnlockedAt: new Date().toISOString(),
+    }
+
     const { error } = await supabaseAdmin
-      .from('user_subscriptions')
-      .upsert(
-        {
-          user_id: user.id,
-          creem_customer_id: params.customer_id,
-          subscription_active: true,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'user_id' }
-      )
+      .from('analysis_reports')
+      .update({ session_data: updatedSession })
+      .eq('id', report.id)
+      .eq('user_id', user.id)
 
     if (error) {
       return NextResponse.json({ success: false, error: error.message }, { status: 500 })

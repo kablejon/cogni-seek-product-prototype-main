@@ -69,26 +69,7 @@ export default function ReportPage() {
     }
   }, [urlReportId, currentReportId, setCurrentReportId])
 
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) return
-      supabase
-        .from('user_subscriptions')
-        .select('subscription_active')
-        .eq('user_id', user.id)
-        .single()
-        .then(({ data }) => {
-          if (data?.subscription_active) setIsPaid(true)
-        })
-    })
-  }, [])
 
-  useEffect(() => {
-    if (searchParams.get('paid') === '1') {
-      setIsPaid(true)
-    }
-  }, [searchParams])
 
   useEffect(() => {
     if (searchParams.get('paid') !== '1') return
@@ -100,14 +81,15 @@ export default function ReportPage() {
     const product_id = searchParams.get('product_id')
     const request_id = searchParams.get('request_id')
     const signature = searchParams.get('signature')
+    const reportIdFromUrl = searchParams.get('reportId') || currentReportId
 
-    if (!checkout_id || !product_id || !signature) return
+    if (!checkout_id || !product_id || !signature || !reportIdFromUrl) return
 
     let active = true
     async function confirmPayment() {
       setConfirmingPayment(true)
       try {
-        await fetch('/api/payment-confirm', {
+        const res = await fetch('/api/payment-confirm', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -118,10 +100,14 @@ export default function ReportPage() {
             product_id,
             request_id,
             signature,
+            reportId: reportIdFromUrl,
           }),
         })
+        if (res.ok && active) {
+          setIsPaid(true)
+        }
       } catch {
-        // ignore and rely on webhook / premium polling fallback
+        // ignore and rely on premium polling fallback
       } finally {
         if (active) setConfirmingPayment(false)
       }
@@ -129,7 +115,7 @@ export default function ReportPage() {
 
     confirmPayment()
     return () => { active = false }
-  }, [searchParams])
+  }, [searchParams, currentReportId])
 
   useEffect(() => {
     if (analysisResult) return
@@ -145,6 +131,7 @@ export default function ReportPage() {
         if (active) {
           setAnalysisResult(data.report.free_result as AIAnalysisResult)
           setCurrentReportId(data.report.id)
+          if (data.report?.premium_unlocked) setIsPaid(true)
         }
       } catch {
         // ignore restore failure for now
