@@ -57,6 +57,7 @@ export default function ReportPage() {
   const [loadingPremium, setLoadingPremium] = useState(false)
   const [confirmingPayment, setConfirmingPayment] = useState(false)
   const [showUnlockDetails, setShowUnlockDetails] = useState(false)
+  const [isRestoringReport, setIsRestoringReport] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
 
   const urlReportId = searchParams.get('reportId')
@@ -117,6 +118,7 @@ export default function ReportPage() {
 
     let active = true
     async function restoreReport() {
+      setIsRestoringReport(true)
       try {
         const response = await fetch(`/api/report-latest?reportId=${encodeURIComponent(urlReportId)}`)
         const data = await response.json().catch(() => ({}))
@@ -129,6 +131,8 @@ export default function ReportPage() {
         }
       } catch {
         // ignore restore failure for now
+      } finally {
+        if (active) setIsRestoringReport(false)
       }
     }
 
@@ -191,6 +195,9 @@ export default function ReportPage() {
       if (timer) clearTimeout(timer)
     }
   }, [isPaid, currentReportId, urlReportId])
+
+  const effectiveReportId = urlReportId || currentReportId
+  const isReportContentReady = !effectiveReportId || !isRestoringReport || currentReportId === effectiveReportId
 
   const aiResult = useMemo(() => analysisResult || getDefaultAnalysisResult(session, locale), [analysisResult, session, locale])
 
@@ -315,6 +322,17 @@ export default function ReportPage() {
   }
 
   const cjkFontStack = '"Inter", "Noto Sans SC", "Noto Sans TC", system-ui, sans-serif';
+
+  if (!isReportContentReady) {
+    return (
+      <div className="min-h-screen bg-[#020617] text-slate-200 flex items-center justify-center">
+        <div className="flex items-center gap-3 text-cyan-300 text-sm">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          Loading selected report...
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div

@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl"
 import { useRouter, Link } from "@/lib/navigation"
 import { Header } from "@/components/shared/header"
 import { Button } from "@/components/ui/button"
+import { useSearchStore } from "@/lib/store"
+import type { AIAnalysisResult } from "@/lib/ai-service"
 
 type ReportHistoryItem = {
   id: string
@@ -19,6 +21,7 @@ type ReportHistoryItem = {
 export default function HistoryPage() {
   const tCommon = useTranslations('common')
   const router = useRouter()
+  const { setAnalysisResult, setCurrentReportId } = useSearchStore()
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState<ReportHistoryItem[]>([])
   const [error, setError] = useState('')
@@ -78,42 +81,63 @@ export default function HistoryPage() {
                 历史报告仅保留 30 天，请及时保存或下载。
               </div>
               <div className="space-y-3">
-                {items.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={{ pathname: '/detect/report', query: { reportId: item.id } }}
-                    locale={(item.locale === 'en' || item.locale === 'zh-CN' || item.locale === 'zh-TW') ? item.locale : undefined}
-                    className="block rounded-xl border border-border/50 p-4 hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-colors"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <p className="font-semibold text-base">
-                            {item.item_name || '未命名物品'}
+                {items.map((item) => {
+                  const itemLocale = (item.locale === 'en' || item.locale === 'zh-CN' || item.locale === 'zh-TW')
+                    ? item.locale
+                    : undefined
+
+                  const prefetchReport = async () => {
+                    try {
+                      const res = await fetch(`/api/report-latest?reportId=${encodeURIComponent(item.id)}`)
+                      const data = await res.json().catch(() => ({}))
+                      if (res.ok && data?.report?.free_result && data?.report?.id) {
+                        setAnalysisResult(data.report.free_result as AIAnalysisResult)
+                        setCurrentReportId(data.report.id)
+                      }
+                    } catch {
+                      // ignore prefetch failure, normal page load will recover
+                    }
+                  }
+
+                  return (
+                    <Link
+                      key={item.id}
+                      href={{ pathname: '/detect/report', query: { reportId: item.id } }}
+                      locale={itemLocale}
+                      onMouseEnter={prefetchReport}
+                      onFocus={prefetchReport}
+                      className="block rounded-xl border border-border/50 p-4 hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1.5">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="font-semibold text-base">
+                              {item.item_name || '未命名物品'}
+                            </p>
+                            <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-[11px] text-cyan-200">
+                              报告 #{item.id.slice(-4).toUpperCase()}
+                            </span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            场景：{item.location_category || '未填写'}
                           </p>
-                          <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-[11px] text-cyan-200">
-                            报告 #{item.id.slice(-4).toUpperCase()}
-                          </span>
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                          场景：{item.location_category || '未填写'}
-                        </p>
-                      </div>
-                      <div className="text-right space-y-1">
-                        <div className="text-sm font-medium text-cyan-300">{item.probability ? `${item.probability.toFixed(1)}%` : '--'}</div>
-                        <div className={`text-xs ${item.premium_unlocked ? 'text-emerald-300' : 'text-amber-300'}`}>
-                          {item.premium_unlocked ? '高级内容已解锁' : '仅基础内容'}
-                        </div>
-                        <div className="text-[11px] text-slate-400">
-                          {new Date(item.created_at).toLocaleString()}
-                        </div>
-                        <div className="text-[11px] text-slate-500">
-                          {item.locale}
+                        <div className="text-right space-y-1">
+                          <div className="text-sm font-medium text-cyan-300">{item.probability ? `${item.probability.toFixed(1)}%` : '--'}</div>
+                          <div className={`text-xs ${item.premium_unlocked ? 'text-emerald-300' : 'text-amber-300'}`}>
+                            {item.premium_unlocked ? '高级内容已解锁' : '仅基础内容'}
+                          </div>
+                          <div className="text-[11px] text-slate-400">
+                            {new Date(item.created_at).toLocaleString()}
+                          </div>
+                          <div className="text-[11px] text-slate-500">
+                            {item.locale}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  )
+                })}
               </div>
             </>
           )}
