@@ -118,8 +118,8 @@ export default function ReportPage() {
   }, [searchParams, currentReportId])
 
   useEffect(() => {
-    if (analysisResult) return
     if (!urlReportId) return
+    if (analysisResult && currentReportId === urlReportId) return
 
     let active = true
     async function restoreReport() {
@@ -131,7 +131,7 @@ export default function ReportPage() {
         if (active) {
           setAnalysisResult(data.report.free_result as AIAnalysisResult)
           setCurrentReportId(data.report.id)
-          if (data.report?.premium_unlocked) setIsPaid(true)
+          setIsPaid(!!data.report?.premium_unlocked)
         }
       } catch {
         // ignore restore failure for now
@@ -140,7 +140,7 @@ export default function ReportPage() {
 
     restoreReport()
     return () => { active = false }
-  }, [analysisResult, urlReportId, setAnalysisResult, setCurrentReportId])
+  }, [analysisResult, currentReportId, urlReportId, setAnalysisResult, setCurrentReportId])
 
   useEffect(() => {
     const effectiveReportId = urlReportId || currentReportId
