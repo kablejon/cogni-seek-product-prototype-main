@@ -3,7 +3,10 @@ import createIntlMiddleware from 'next-intl/middleware'
 import { type NextRequest, NextResponse } from 'next/server'
 import { routing } from './i18n/routing'
 
-const intlMiddleware = createIntlMiddleware(routing)
+const intlMiddleware = createIntlMiddleware({
+  ...routing,
+  localeDetection: true,
+})
 
 export async function middleware(request: NextRequest) {
   // 1. Run next-intl middleware first to get locale-aware response
