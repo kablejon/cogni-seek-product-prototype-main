@@ -93,6 +93,51 @@ export async function POST(request: NextRequest) {
       session?: SearchSession;
     };
 
+    const fullSession = session || null;
+    const sessionFingerprint = fullSession
+      ? JSON.stringify(fullSession)
+      : JSON.stringify({
+          itemType,
+          itemName,
+          itemDescription,
+          itemColor,
+          itemSize,
+          lastSeenLocation,
+          lastSeenTime,
+          lossLocationCategory,
+          lossLocationSubCategory,
+          activity,
+          mood,
+          userMood,
+          userActivity,
+          searchedPlaces,
+        });
+
+    const dedupeCutoff = new Date(Date.now() - DEDUPE_WINDOW_MS).toISOString();
+    const { data: recentReports } = await supabaseAdmin
+      .from('analysis_reports')
+      .select('id, free_result, created_at, session_data')
+      .eq('user_id', user.id)
+      .gte('created_at', dedupeCutoff)
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    const matchedReport = (recentReports || []).find((report) => {
+      const reportSessionData = report.session_data && typeof report.session_data === 'object'
+        ? (report.session_data as Record<string, unknown>)
+        : {};
+      return reportSessionData.analysisFingerprint === sessionFingerprint;
+    });
+
+    if (matchedReport?.id && matchedReport.free_result) {
+      return NextResponse.json({
+        success: true,
+        reportId: matchedReport.id,
+        result: matchedReport.free_result as AIAnalysisResult,
+        reused: true,
+      });
+    }
+
     const isZH = locale === 'zh-CN';
 
     const classifyInput = [itemType, itemName, itemDescription].filter(Boolean).join(' ');
@@ -197,37 +242,23 @@ export async function POST(request: NextRequest) {
     const rawChecklist: string[] = Array.isArray(result.checklist) ? (result.checklist as string[]) : [];
     result.checklist = rawChecklist;
 
-    const fullSession = session || null;
-    const sessionFingerprint = fullSession
-      ? JSON.stringify(fullSession)
-      : JSON.stringify({
-          itemType,
-          itemName,
-          itemDescription,
-          itemColor,
-          itemSize,
-          lastSeenLocation,
-          lastSeenTime,
-          lossLocationCategory,
-          lossLocationSubCategory,
-          activity,
-          mood,
-          userMood,
-          userActivity,
-          searchedPlaces,
-        });
-
     const nowIso = new Date().toISOString();
 
     const freeResult = buildFreeResult(result);
     const premiumResult = buildPremiumResult(result);
+
+    const persistedSessionData = {
+      ...(fullSession && typeof fullSession === 'object' ? fullSession : {}),
+      analysisFingerprint: sessionFingerprint,
+      analysisFingerprintAt: nowIso,
+    };
 
     const { data: insertedReport, error: insertError } = await supabaseAdmin
       .from('analysis_reports')
       .insert({
         user_id: user.id,
         locale,
-        session_data: fullSession,
+        session_data: persistedSessionData,
         free_result: freeResult,
         premium_result: premiumResult,
       })
