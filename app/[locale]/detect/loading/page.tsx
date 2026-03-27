@@ -34,7 +34,7 @@ export default function LoadingPage() {
   const router = useRouter()
   const locale = useLocale()
   const t = useTranslations('loading')
-  const { session, setAnalysisResult, setAnalysisError, setCurrentReportId } = useSearchStore()
+  const { session, analysisResult, currentReportId, setAnalysisResult, setAnalysisError, setCurrentReportId } = useSearchStore()
 
   const [progress, setProgress] = useState(0)
   const [logIndex, setLogIndex] = useState(0)
@@ -64,9 +64,21 @@ export default function LoadingPage() {
   const SubIcon = currentScene.subIcon
 
   useEffect(() => {
+    if (currentReportId && analysisResult) {
+      router.replace(`/detect/report?reportId=${encodeURIComponent(currentReportId)}`)
+    }
+  }, [router, currentReportId, analysisResult])
+
+  useEffect(() => {
     let isMounted = true
     async function performAnalysis() {
       try {
+        if (currentReportId && analysisResult) {
+          setGeneratedReportId(currentReportId)
+          setApiCallCompleted(true)
+          return
+        }
+
         const payload = await analyzeWithAI(session, locale)
         if (isMounted) {
           setAnalysisResult(payload.result)
@@ -84,7 +96,7 @@ export default function LoadingPage() {
     }
     performAnalysis()
     return () => { isMounted = false }
-  }, [session, locale, setAnalysisResult, setAnalysisError, setCurrentReportId])
+  }, [session, locale, analysisResult, currentReportId, setAnalysisResult, setAnalysisError, setCurrentReportId])
 
   useEffect(() => {
     const interval = 50

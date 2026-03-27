@@ -7,6 +7,7 @@ import type { AIAnalysisResult, AIPremiumResult } from '@/lib/ai-service';
 import type { SearchSession } from '@/lib/types';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const DEDUPE_WINDOW_MS = 10 * 60 * 1000;
 
 function buildFreeResult(result: Record<string, unknown>): AIAnalysisResult {
   const rawChecklist = Array.isArray(result.checklist) ? (result.checklist as string[]) : [];
@@ -197,6 +198,27 @@ export async function POST(request: NextRequest) {
     result.checklist = rawChecklist;
 
     const fullSession = session || null;
+    const sessionFingerprint = fullSession
+      ? JSON.stringify(fullSession)
+      : JSON.stringify({
+          itemType,
+          itemName,
+          itemDescription,
+          itemColor,
+          itemSize,
+          lastSeenLocation,
+          lastSeenTime,
+          lossLocationCategory,
+          lossLocationSubCategory,
+          activity,
+          mood,
+          userMood,
+          userActivity,
+          searchedPlaces,
+        });
+
+    const nowIso = new Date().toISOString();
+
     const freeResult = buildFreeResult(result);
     const premiumResult = buildPremiumResult(result);
 
