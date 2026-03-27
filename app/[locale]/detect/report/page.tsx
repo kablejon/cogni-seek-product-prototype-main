@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react"
 import { useTranslations, useLocale } from "next-intl"
-import { useRouter } from "@/lib/navigation"
+import { usePathname, useRouter } from "@/lib/navigation"
 import { useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import {
@@ -62,12 +62,6 @@ export default function ReportPage() {
   const urlReportId = searchParams.get('reportId')
 
   useEffect(() => { setCaseId(Math.floor(Math.random() * 10000)) }, [])
-
-  useEffect(() => {
-    if (urlReportId && urlReportId !== currentReportId) {
-      setCurrentReportId(urlReportId)
-    }
-  }, [urlReportId, currentReportId, setCurrentReportId])
 
 
 
@@ -144,7 +138,10 @@ export default function ReportPage() {
 
   useEffect(() => {
     const effectiveReportId = urlReportId || currentReportId
-    if (!isPaid || !effectiveReportId) return
+    if (!isPaid || !effectiveReportId) {
+      setPremiumResult(null)
+      return
+    }
 
     let active = true
     let timer: ReturnType<typeof setTimeout> | null = null

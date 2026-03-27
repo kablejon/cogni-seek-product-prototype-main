@@ -81,7 +81,8 @@ export default function HistoryPage() {
                 {items.map((item) => (
                   <Link
                     key={item.id}
-                    href={`/detect/report?reportId=${encodeURIComponent(item.id)}`}
+                    href={{ pathname: '/detect/report', query: { reportId: item.id } }}
+                    locale={(item.locale === 'en' || item.locale === 'zh-CN' || item.locale === 'zh-TW') ? item.locale : undefined}
                     className="block rounded-xl border border-border/50 p-4 hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
@@ -105,6 +106,9 @@ export default function HistoryPage() {
                         </div>
                         <div className="text-[11px] text-slate-400">
                           {new Date(item.created_at).toLocaleString()}
+                        </div>
+                        <div className="text-[11px] text-slate-500">
+                          {item.locale}
                         </div>
                       </div>
                     </div>
