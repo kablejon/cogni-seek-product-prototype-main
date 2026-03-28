@@ -13,7 +13,7 @@
     "and": "and",
     "privacy": "Privacy Policy",
     "loginRequired": "Please sign in to start searching",
-    "loginRequiredDesc": "Create a free account to access the AI detection flow.",
+    "loginRequiredDesc": "Create a free account to access the guided detection flow."
     "authError": "Login failed, please try again",
     "userId": "User ID",
     "email": "Email",
@@ -49,7 +49,7 @@
     "description": "CogniSeek uses behavioral psychology, environmental probability, and temporal tracing to help you rediscover lost items in 3 minutes.",
     "cta": "Start Detective Program",
     "ctaMobile": "Start Now",
-    "tagline": "Powered by AI · Based on Cognitive Science",
+    "tagline": "Cognitive-science driven · Behavior-first reasoning"
     "nav": {
       "science": "The Science",
       "cases": "Success Stories"
@@ -80,7 +80,7 @@
       "contact": "Contact"
     },
     "trust": {
-      "recovery": "Probability-based AI guidance",
+      "recovery": "Probability-based intelligent guidance",
       "cases": "Behavior + environment + timeline reasoning",
       "guarantee": "Billing support for delivery issues"
     }
@@ -119,7 +119,7 @@
     },
     "unsureMode": {
       "title": "Trajectory Analysis Mode Activated",
-      "desc": "AI will activate Trajectory Analysis Mode, analyzing your movement path between different locations and identifying potential loss nodes one by one."
+      "desc": "The system will activate Trajectory Analysis Mode, analyzing your movement path between different locations and identifying potential loss nodes one by one."
     },
     "confidence": {
       "aiHint90": "🎯 AI will perform deep layered search in this zone",
@@ -175,9 +175,9 @@
     },
     "mode": {
       "broad": "Wide-Scan Mode",
-      "broadDesc": "AI will automatically scan adjacent time windows (±3 hours)",
+      "broadDesc": "The system will automatically scan adjacent time windows (±3 hours)",
       "precise": "Precision Lock Mode",
-      "preciseDesc": "AI analyzes only the selected time window"
+      "preciseDesc": "The system analyzes only the selected time window"
     },
     "aiAnalysis": "Temporal Analysis:",
     "lightContext": {
@@ -201,7 +201,7 @@
     "subtitle": "Where did you {accent}last see it{/accent}?",
     "sceneLabel": "Choose Scene",
     "areaLabel": "Specific area in {scene}?",
-    "areaHint": "Mark the areas you visited to help AI reconstruct your movement path and visual blind spots",
+    "areaHint": "Mark the areas you visited to help the system reconstruct your movement path and visual blind spots",
     "customAreaPlaceholder": "Enter area...",
     "otherAreaLabel": "Other special locations? (Optional)",
     "selectedCount": "{count} areas selected",
@@ -244,7 +244,7 @@
     "distractedOff": "Click to enable and record distraction factors",
     "distractedPrompt": "What specifically distracted you? (Multi-select)",
     "distractionRecorded": "⚠️ Distraction factors recorded",
-    "distractionAnalysis": "AI will focus on \"autopilot\" behavior patterns and unconscious placement zones",
+    "distractionAnalysis": "The system will focus on \"autopilot\" behavior patterns and unconscious placement zones",
     "otherMood": "Other State",
     "otherMoodCustom": "Custom input",
     "otherActivity": "Other Action",
@@ -302,8 +302,8 @@
     "askedOthers": "Asked relevant people (colleagues/family)",
     "aiTip": "💡 AI Tip:",
     "aiTipContent": "Knowing where you've already searched helps us avoid repeating suggestions and focus on commonly overlooked \"visual and memory blind spots\"",
-    "toggleHint": "Toggle {on}ON{/on} means \"already tried\" — AI won't suggest it again; {off}OFF{/off} means \"not tried yet\" — AI will provide relevant advice",
-    "startAnalysis": "Start AI Analysis",
+    "toggleHint": "Toggle {on}ON{/on} means \"already tried\" — the system won't suggest it again; {off}OFF{/off} means \"not tried yet\" — the system will provide relevant advice",
+    "startAnalysis": "Start Deep Analysis",
     "smartFeature": {
       "tried_find_phone": "Tried \"Find My\" or calling the phone",
       "tried_find_tablet": "Tried locating via cloud service",
@@ -362,7 +362,7 @@
     "price": "$1.99",
     "ctaButton": "Unlock Premium Search Guidance",
     "trust": {
-      "rate": "Probability-based AI guidance",
+      "rate": "Probability-based intelligent guidance",
       "cases": "Behavior + environment + timeline reasoning",
       "guarantee": "Billing support for delivery issues"
     },
@@ -370,7 +370,7 @@
       "title": "What you unlock for $1.99",
       "oneTime": "One-time payment only. This unlock is not a recurring subscription.",
       "instantDelivery": "Premium content unlocks digitally after successful payment confirmation.",
-      "digitalGoods": "Your purchase delivers AI-generated digital analysis content, including tactical guidance, focused search areas, and timeline support.",
+      "digitalGoods": "Your purchase delivers system-generated digital analysis content, including tactical guidance, focused search areas, and timeline support.",
       "accountBinding": "Premium access is tied to the signed-in account used during purchase.",
       "billingSupport": "For billing support, refund review, or delivery issues, contact us using your purchase email whenever possible.",
       "noGuarantee": "CogniSeek provides probability-based guidance and does not guarantee item recovery.",
@@ -417,7 +417,7 @@
   },
   "report": {
     "title": "Recovery Index",
-    "subtitle": "AI Tactical Analysis Report",
+    "subtitle": "Tactical Analysis Report",
     "probabilityLabel": "Recovery Potential Index",
     "holoMapTitle": "Holographic Scene Map",
     "basicSearchTitle": "3 Common Search Zones",
@@ -431,7 +431,7 @@
     "purchaseNote": {
       "oneTime": "One-time payment only. No recurring billing or auto-renewal.",
       "instantDelivery": "Premium report content is delivered digitally immediately after payment confirmation.",
-      "digitalGoods": "This purchase unlocks advanced AI analysis, tactical actions, premium report sections, and timeline guidance.",
+      "digitalGoods": "This purchase unlocks advanced analysis, tactical actions, premium report sections, and timeline guidance.",
       "accountBinding": "Premium access is tied to your current signed-in account.",
       "billingSupport": "For billing support or refund review, contact us using the same email used for purchase whenever possible.",
       "noGuarantee": "This is a probability-based digital service and does not guarantee recovery of the lost item.",
@@ -460,7 +460,7 @@
     "psychTitle": "Behavioral Psychology Analysis",
     "precisionPin": "PRECISION TARGET",
     "loadingSelectedReport": "Loading selected report...",
-    "headerAnalysis": "AI ANALYSIS",
+    "headerAnalysis": "ANALYSIS HUB",
     "headerCase": "CASE",
     "decrypting": "Decrypting...",
     "syncingPaymentResult": "Syncing payment result...",
@@ -478,7 +478,7 @@
     "microTacticsLocked": "MICRO TACTICS LOCKED",
     "analysisComplete": "Analysis Complete",
     "actionPrefix": "Action",
-    "aiDisclaimer": "* AI provides probability-based clues only and does not guarantee 100% recovery.",
+    "aiDisclaimer": "* This system provides probability-based clues only and does not guarantee 100% recovery.",
     "imageGenFailed": "Image generation failed. Use Print to save as PDF?",
     "sceneLabelVehicle": "VEHICLE AREA SCAN",
     "sceneLabelHome": "RESIDENTIAL SCAN",
@@ -604,10 +604,10 @@
       "night": "19:00–06:00"
     },
     "lightInsights": {
-      "dawn_morning": "☀️ AI Analysis: Morning light is clear and cool. If the item is in an open area, it should be relatively easy to spot.",
-      "noon_afternoon": "☀️ AI Analysis: Strong light can create shadows. Check the shaded sides of objects and areas in shadow.",
-      "dusk": "🌇 AI Analysis: Rapidly changing light reduces eye adaptation. Items easily slip into visual blind spots — focus on transition areas.",
-      "night": "🌑 AI Analysis: Low visibility. If lights were off, check floor-level gaps, under furniture, and low corners."
+      "dawn_morning": "☀️ System Analysis: Morning light is clear and cool. If the item is in an open area, it should be relatively easy to spot.",
+      "noon_afternoon": "☀️ System Analysis: Strong light can create shadows. Check the shaded sides of objects and areas in shadow.",
+      "dusk": "🌇 System Analysis: Rapidly changing light reduces eye adaptation. Items easily slip into visual blind spots — focus on transition areas.",
+      "night": "🌑 System Analysis: Low visibility. If lights were off, check floor-level gaps, under furniture, and low corners."
     },
     "locations": {
       "home": "Home",
@@ -663,10 +663,10 @@
     }
   },
   "home": {
-    "badge": "Powered by AI Cognitive Engine",
+    "badge": "Powered by Cognitive Engine",
     "heroTitle1": "Lost Something?",
-    "heroTitle2": "AI Will Find It.",
-    "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and AI cognition to help you narrow down your item's most likely location in minutes.",
+    "heroTitle2": "We Will Find It.",
+    "heroSubtitle": "CogniSeek uses behavioral psychology, space-time reconstruction, and cognitive reasoning to help you narrow down your item's most likely location in minutes.",
     "pricingHint": "Free basic analysis · Premium tactical report: $1.99 (one-time payment)",
     "ctaStart": "Start Finding",
     "ctaDemo": "See How It Works",
@@ -676,24 +676,24 @@
       "time": { "value": "Digital Delivery", "label": "Quickly generate an actionable search report" }
     },
     "featuresTitle": "How CogniSeek Works",
-    "featuresSubtitle": "Six-dimensional analysis combining psychology, physics, and AI to trace what your memory missed.",
+    "featuresSubtitle": "Six-dimensional analysis combining psychology, physics, and cognitive reasoning to trace what your memory missed.",
     "features": {
       "psychology": { "title": "Behavioral Psychology", "desc": "Analyzes your mental state and action habits to reconstruct unconscious behaviors during the loss event." },
       "spatial": { "title": "Spatial Probability", "desc": "Maps your movement path and calculates probability distributions for each area using spatial algorithms." },
       "temporal": { "title": "Time-Space Reconstruction", "desc": "Rebuilds the temporal window of the loss using memory entropy and multi-dimensional time cues." },
       "vision": { "title": "Visual Blind Spot Analysis", "desc": "Detects cognitive visual blind spots that cause people to look right at an object without seeing it." },
       "entropy": { "title": "Chaos Entropy Engine", "desc": "Quantifies the degree of disorder in your state and environment to prioritize search zones." },
-      "instant": { "title": "Instant AI Report", "desc": "Generates a personalized tactical search plan in seconds, with step-by-step micro-action guidance." }
+      "instant": { "title": "Instant Analysis Report", "desc": "Generates a personalized tactical search plan in seconds, with step-by-step micro-action guidance." }
     },
     "howTitle": "How It Works",
-    "howSubtitle": "Complete 6 steps in under 3 minutes for a precision AI analysis.",
+    "howSubtitle": "Complete 6 steps in under 3 minutes for a precision analysis.",
     "steps": {
       "1": { "title": "Describe the Item", "desc": "Tell us what you lost — type, color, and features." },
       "2": { "title": "Set the Timeline", "desc": "When did you last have it? Lock the time window." },
       "3": { "title": "Map the Location", "desc": "Pinpoint where you were and the areas you visited." },
       "4": { "title": "Recall Your State", "desc": "Describe your mood and activities at the time." },
       "5": { "title": "Report Prior Searches", "desc": "Tell us where you've already looked — and haven't." },
-      "6": { "title": "Get Your AI Report", "desc": "Receive a precision recovery plan with tactical actions." }
+      "6": { "title": "Get Your Analysis Report", "desc": "Receive a precision recovery plan with tactical actions." }
     },
     "testimonialsTitle": "Example Search Scenarios",
     "testimonialsSubtitle": "Illustrative scenarios showing how CogniSeek can help users organize likely search paths and priorities.",
@@ -703,9 +703,9 @@
       "3": { "label": "Scenario 03", "text": "For pets or movable items, checking enclosed corners, low-traffic hiding spots, and recently opened spaces can provide a structured starting point.", "item": "Example item: pet or household object" }
     },
     "ctaBannerTitle": "Stop Searching Blindly",
-    "ctaBannerSubtitle": "Let AI help you organize the moment, narrow likely search areas, and decide where to look first.",
+    "ctaBannerSubtitle": "Let the system help you organize the moment, narrow likely search areas, and decide where to look first.",
     "ctaPanel": {
-      "badge": "AI Search Console",
+      "badge": "Search Console",
       "insight1Title": "Behavior × Space",
       "insight1Desc": "Bring behavior clues, movement paths, and time markers together into a search entry point with clearer priority.",
       "insight2Title": "Guided Search",
@@ -721,7 +721,7 @@
       "refund": "Refund Policy",
       "contact": "Contact",
       "support": "✉️ Questions or support? Email us at:",
-      "tagline": "AI-powered item recovery assistant",
+      "tagline": "Cognitive-driven item recovery assistant",
       "disclaimer": "CogniSeek provides probability-based digital guidance and does not guarantee recovery. For informational and decision-support purposes."
     }
   },
@@ -732,16 +732,16 @@
       "backToReport": "Back to report",
       "backToResult": "Back to free analysis",
       "title": "Privacy Policy",
-      "intro": "This policy explains what information CogniSeek collects, how it is used, and how we protect it when you use our AI-powered item recovery service.",
+      "intro": "This policy explains what information CogniSeek collects, how it is used, and how we protect it when you use our intelligent item recovery service.",
       "contactLabel": "Privacy questions:",
       "contactEmail": "kablejon@gmail.com",
       "sections": {
-        "overview": { "heading": "1. Overview", "body": ["CogniSeek provides AI-assisted probability analysis to help users locate lost items or pets.", "By using the service, you acknowledge that the platform processes the information you submit in order to generate analysis reports, manage your account, and deliver paid features."] },
+        "overview": { "heading": "1. Overview", "body": ["CogniSeek provides model-assisted probability analysis to help users locate lost items or pets.", "By using the service, you acknowledge that the platform processes the information you submit in order to generate analysis reports, manage your account, and deliver paid features."] },
         "dataWeCollect": { "heading": "2. Information We Collect", "body": ["We collect account data such as your email address and authentication provider when you sign in.", "We also collect the search information you submit, including item details, locations, time clues, behavioral context, and report history necessary to generate and restore your analysis results."] },
-        "howWeUseData": { "heading": "3. How We Use Information", "body": ["We use your information to generate AI reports, restore your historical reports, improve service reliability, prevent abuse, and provide support.", "We do not sell your personal information. Data is used only for service delivery, internal operations, analytics, fraud prevention, and legal compliance."] },
+        "howWeUseData": { "heading": "3. How We Use Information", "body": ["We use your information to generate system reports, restore your historical reports, improve service reliability, prevent abuse, and provide support.", "We do not sell your personal information. Data is used only for service delivery, internal operations, analytics, fraud prevention, and legal compliance."] },
         "payments": { "heading": "4. Payments", "body": ["Payments are processed by third-party payment providers and Merchant of Record partners. CogniSeek does not store your full card number or full payment instrument details on its own servers.", "Payment-related identifiers, order status, one-time purchase entitlement, and access status may be stored to provide purchased features and resolve billing issues."] },
         "storage": { "heading": "5. Data Storage and Security", "body": ["Your account and report data are stored using our infrastructure providers and database services with access controls designed to protect user information.", "While we apply reasonable technical and organizational safeguards, no online service can guarantee absolute security."] },
-        "sharing": { "heading": "6. When We Share Data", "body": ["We may share limited information with infrastructure, authentication, analytics, AI inference, and payment providers only where necessary to operate the service.", "We may also disclose information when required by law, to protect rights and safety, or in connection with a business transfer."] },
+        "sharing": { "heading": "6. When We Share Data", "body": ["We may share limited information with infrastructure, authentication, analytics, model inference, and payment providers only where necessary to operate the service.", "We may also disclose information when required by law, to protect rights and safety, or in connection with a business transfer."] },
         "yourRights": { "heading": "7. Your Rights and Choices", "body": ["You may request access, correction, or deletion of your account-related personal data, subject to legal and operational limitations.", "You may also contact us if you want your stored reports removed or if you have questions about how your data is handled."] },
         "children": { "heading": "8. Children", "body": ["CogniSeek is not intended for children under the age required by applicable law to consent to digital services in their region.", "If you believe a child has submitted personal data without proper authorization, please contact us so we can review and remove the information where appropriate."] },
         "changes": { "heading": "9. Changes to This Policy", "body": ["We may update this Privacy Policy from time to time to reflect product, legal, or operational changes.", "When material changes are made, we will update this page and revise the policy content accordingly."] }
@@ -757,16 +757,16 @@
       "contactLabel": "Terms questions:",
       "contactEmail": "kablejon@gmail.com",
       "sections": {
-        "serviceDescription": { "heading": "1. Service Description", "body": ["CogniSeek provides AI-generated, probability-based guidance intended to assist users in searching for lost items or pets.", "The service is informational in nature and does not guarantee recovery, accuracy, or any specific real-world outcome."] },
+        "serviceDescription": { "heading": "1. Service Description", "body": ["CogniSeek provides model-generated, probability-based guidance intended to assist users in searching for lost items or pets.", "The service is informational in nature and does not guarantee recovery, accuracy, or any specific real-world outcome."] },
         "eligibility": { "heading": "2. Eligibility", "body": ["You must use CogniSeek in compliance with applicable laws and provide truthful information when creating an account or purchasing premium features.", "If you are using the service on behalf of a business or organization, you represent that you have authority to bind that entity."] },
         "accounts": { "heading": "3. Accounts", "body": ["Some parts of the service require sign-in through supported authentication providers.", "You are responsible for maintaining the security of your account and for activities that occur under your account."] },
         "acceptableUse": { "heading": "4. Acceptable Use", "body": ["You may not use the service for unlawful, harmful, deceptive, abusive, or fraudulent purposes.", "You may not attempt to interfere with the platform, reverse engineer protected parts of the service, bypass access controls, or exploit payment logic."] },
-        "aiOutputs": { "heading": "5. AI Outputs and Disclaimers", "body": ["AI outputs are generated from user-provided context and model inference. They may be incomplete, inaccurate, or unsuitable for your situation.", "You should not rely on CogniSeek output as the sole factual basis or sole decision-making basis for important actions.", "CogniSeek is not a replacement for law enforcement, emergency response, veterinary care, insurance advice, or professional investigation services."] },
+        "aiOutputs": { "heading": "5. System Outputs and Disclaimers", "body": ["System outputs are generated from user-provided context and model inference. They may be incomplete, inaccurate, or unsuitable for your situation.", "You should not rely on CogniSeek output as the sole factual basis or sole decision-making basis for important actions.", "CogniSeek is not a replacement for law enforcement, emergency response, veterinary care, insurance advice, or professional investigation services."] },
         "billing": { "heading": "6. Billing", "body": ["Certain premium features require payment before access is granted. The current premium unlock is sold as a one-time digital purchase and the final price is shown at checkout.", "By completing a purchase, you authorize the applicable charge and agree that access to paid digital features may begin immediately after payment confirmation."] },
         "subscriptions": { "heading": "7. Access After Purchase", "body": ["The current premium unlock is not sold as a recurring subscription and does not auto-renew.", "Access may be suspended or revoked if payment is reversed, refunded, disputed, or determined to be fraudulent."] },
         "intellectualProperty": { "heading": "8. Intellectual Property", "body": ["The CogniSeek brand, interface, prompts, software, and service design are protected by applicable intellectual property laws.", "You may use your purchased reports for personal or internal use, but you may not resell or reproduce the platform as a competing service."] },
         "termination": { "heading": "9. Suspension or Termination", "body": ["We may suspend or terminate access if you violate these Terms, abuse the service, create platform risk, or if continued access is not commercially or legally feasible.", "You may stop using the service at any time."] },
-        "liability": { "heading": "10. Limitation of Liability", "body": ["To the maximum extent permitted by law, CogniSeek is provided on an as-is and as-available basis without warranties of any kind.", "We are not liable for indirect, incidental, consequential, special, or punitive damages arising from your use of the service or reliance on AI-generated outputs."] },
+        "liability": { "heading": "10. Limitation of Liability", "body": ["To the maximum extent permitted by law, CogniSeek is provided on an as-is and as-available basis without warranties of any kind.", "We are not liable for indirect, incidental, consequential, special, or punitive damages arising from your use of the service or reliance on system-generated outputs."] },
         "changes": { "heading": "11. Changes to These Terms", "body": ["We may update these Terms as the product, pricing model, legal requirements, or operational practices evolve.", "Your continued use of the service after updates take effect constitutes acceptance of the revised Terms."] }
       }
     },
@@ -782,7 +782,7 @@
       "sections": {
         "digitalService": { "heading": "1. Digital Service Nature", "body": ["CogniSeek sells digital analysis and premium access delivered electronically after payment confirmation.", "Because delivery can begin immediately, refund eligibility may be limited once premium content has been unlocked or consumed."] },
         "eligibility": { "heading": "2. When Refunds May Be Considered", "body": ["We may review refund requests in cases such as duplicate charges, clear billing errors, technical failures that prevented delivery of the purchased feature, or successful payment where premium access was not properly delivered.", "Requests must include the purchase email, order details, and a description of the issue."] },
-        "nonRefundable": { "heading": "3. Non-Refundable Situations", "body": ["Refunds are generally not provided for dissatisfaction with probability-based AI results, successful delivery of unlocked premium content, or failure to recover the item after using the report.", "Refunds may also be denied where misuse, abuse, chargeback manipulation, or policy violations are involved."] },
+        "nonRefundable": { "heading": "3. Non-Refundable Situations", "body": ["Refunds are generally not provided for dissatisfaction with probability-based system results, successful delivery of unlocked premium content, or failure to recover the item after using the report.", "Refunds may also be denied where misuse, abuse, chargeback manipulation, or policy violations are involved."] },
         "duplicateCharges": { "heading": "4. Duplicate or Incorrect Charges", "body": ["If you believe you were charged more than once or billed incorrectly, contact us promptly so we can investigate.", "If confirmed, the duplicate or incorrect portion will be refunded through the original payment method where available."] },
         "subscriptionCancellation": { "heading": "5. No Recurring Subscription", "body": ["The current premium unlock is sold as a one-time digital purchase and does not renew automatically.", "If CogniSeek introduces recurring plans in the future, their renewal and cancellation terms will be disclosed separately before purchase."] },
         "howToRequest": { "heading": "6. How to Request a Refund", "body": ["Send your refund or billing support request to our contact email using the same email address associated with your purchase whenever possible.", "We may ask for additional information to verify the transaction and assess eligibility."] },
@@ -804,7 +804,7 @@
         "sellerLabel": "Service name",
         "sellerValue": "CogniSeek",
         "typeLabel": "Service type",
-        "typeValue": "AI-powered digital analysis service",
+        "typeValue": "Model-powered digital analysis service",
         "billingLabel": "Billing model",
         "billingValue": "One-time digital purchase · no auto-renewal",
         "deliveryLabel": "Access delivery",
@@ -815,7 +815,7 @@
         "regionValue": "Online digital service available to supported regions based on checkout availability"
       },
       "sections": {
-        "merchantInfo": { "heading": "1. Merchant and Service Information", "body": ["Service name: CogniSeek. Service type: AI-powered digital analysis service designed to help users organize clues and generate lost-item search reports.", "The current premium unlock is a one-time digital purchase, not an auto-renewing subscription. After payment confirmation, premium content is delivered to the account currently signed in during purchase."] },
+        "merchantInfo": { "heading": "1. Merchant and Service Information", "body": ["Service name: CogniSeek. Service type: model-powered digital analysis service designed to help users organize clues and generate lost-item search reports.", "The current premium unlock is a one-time digital purchase, not an auto-renewing subscription. After payment confirmation, premium content is delivered to the account currently signed in during purchase."] },
         "support": { "heading": "2. Product and Account Support", "body": ["Contact us if you have issues signing in, restoring reports, accessing premium content, or using the service.", "Please include the email address associated with your account and a clear description of the problem so we can assist faster."] },
         "billing": { "heading": "3. Billing Questions", "body": ["For payment, refund, duplicate charge, or checkout-related questions, contact support with your purchase details.", "Include the payment email, approximate purchase time, and any relevant order information if available."] },
         "privacy": { "heading": "4. Privacy Requests", "body": ["If you want to request access to or deletion of your stored account data or reports, contact us by email.", "We may need to verify your identity before processing privacy-related requests."] },
