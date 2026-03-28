@@ -66,7 +66,7 @@ export default function HistoryPage() {
             <h1 className="text-2xl md:text-3xl font-bold">检测记录</h1>
             <Link href="/">
               <Button
-                className="h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 text-[#062014] font-semibold border border-emerald-300/40 shadow-[0_0_18px_rgba(16,185,129,0.45)] hover:shadow-[0_0_24px_rgba(16,185,129,0.6)] transition-all hover:scale-[1.02]"
+                className="h-10 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold border border-cyan-400/30 shadow-[0_0_18px_rgba(8,145,178,0.4)] hover:shadow-[0_0_24px_rgba(8,145,178,0.55)] transition-all hover:scale-[1.02]"
               >
                 {tCommon('backHome')}
               </Button>
