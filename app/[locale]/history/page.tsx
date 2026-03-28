@@ -65,7 +65,11 @@ export default function HistoryPage() {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl md:text-3xl font-bold">检测记录</h1>
             <Link href="/">
-              <Button variant="outline">{tCommon('backHome')}</Button>
+              <Button
+                className="h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-400 hover:to-green-400 text-[#062014] font-semibold border border-emerald-300/40 shadow-[0_0_18px_rgba(16,185,129,0.45)] hover:shadow-[0_0_24px_rgba(16,185,129,0.6)] transition-all hover:scale-[1.02]"
+              >
+                {tCommon('backHome')}
+              </Button>
             </Link>
           </div>
 
@@ -102,7 +106,7 @@ export default function HistoryPage() {
                   return (
                     <Link
                       key={item.id}
-                      href={{ pathname: '/detect/report', query: { reportId: item.id } }}
+                      href={{ pathname: '/detect/report', query: { reportId: item.id, from: 'history' } }}
                       locale={itemLocale}
                       onMouseEnter={prefetchReport}
                       onFocus={prefetchReport}

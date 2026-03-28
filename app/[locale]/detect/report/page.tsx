@@ -61,6 +61,7 @@ export default function ReportPage() {
   const reportRef = useRef<HTMLDivElement>(null)
 
   const urlReportId = searchParams.get('reportId')
+  const fromHistory = searchParams.get('from') === 'history'
 
   useEffect(() => { setCaseId(Math.floor(Math.random() * 10000)) }, [])
 
@@ -672,11 +673,11 @@ export default function ReportPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={handleReturnHome}
+                  onClick={fromHistory ? () => router.push('/history') : handleReturnHome}
                   className="h-11 px-3 rounded-xl border-blue-900/50 bg-slate-900/50 text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-2"
                 >
                   <Home className="w-4 h-4" />
-                  {t('backHome')}
+                  {fromHistory ? t('backHistory') : t('backHome')}
                 </Button>
                 <Button
                   onClick={handleUnlock}
@@ -744,9 +745,9 @@ export default function ReportPage() {
                 <Download className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
                 {isGenerating ? t('unlocking') : t('downloadReport')}
               </Button>
-              <Button variant="outline" onClick={handleReturnHome}
+              <Button variant="outline" onClick={fromHistory ? () => router.push('/history') : handleReturnHome}
                 className="h-11 border-blue-900/50 text-slate-400 bg-slate-900/50 hover:bg-slate-800 hover:text-slate-200 flex items-center justify-center gap-2">
-                <Home className="w-4 h-4" /> {t('backHome')}
+                <Home className="w-4 h-4" /> {fromHistory ? t('backHistory') : t('backHome')}
               </Button>
             </div>
           </div>
