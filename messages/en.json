@@ -13,7 +13,7 @@
     "and": "and",
     "privacy": "Privacy Policy",
     "loginRequired": "Please sign in to start searching",
-    "loginRequiredDesc": "Create a free account to access the guided detection flow."
+    "loginRequiredDesc": "Create a free account to access the guided detection flow.",
     "authError": "Login failed, please try again",
     "userId": "User ID",
     "email": "Email",
