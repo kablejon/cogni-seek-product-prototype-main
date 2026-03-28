@@ -43,7 +43,9 @@
     "enterHint": "回车确认",
     "inputPlaceholder": "请输入...",
     "selected": "已选择",
-    "missingField": "请完成所有必填项"
+    "missingField": "请完成所有必填项",
+    "history": "寻找记录",
+    "historyRetention": "历史报告仅保留 30 天，请及时保存或下载。"
   },
   "home": {
     "title": "找不到东西，不是你的记忆出了问题……",

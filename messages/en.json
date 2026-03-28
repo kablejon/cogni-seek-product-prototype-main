@@ -42,7 +42,9 @@
     "enterHint": "Press Enter to confirm",
     "inputPlaceholder": "Type here...",
     "selected": "selected",
-    "missingField": "Please complete all required fields"
+    "missingField": "Please complete all required fields",
+    "history": "Search History",
+    "historyRetention": "History reports are retained for 30 days. Please save or download in time."
   },
   "home": {
     "title": "The \"Lost Item\" Is Not Your Memory Failing...",
