@@ -63,7 +63,7 @@ export default function HistoryPage() {
       <main className="container mx-auto px-4 py-8 md:py-10 flex-1">
         <div className="max-w-4xl mx-auto space-y-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-3xl font-bold">检测记录</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">寻找记录</h1>
             <Link href="/">
               <Button
                 className="h-10 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold border border-cyan-400/30 shadow-[0_0_18px_rgba(8,145,178,0.4)] hover:shadow-[0_0_24px_rgba(8,145,178,0.55)] transition-all hover:scale-[1.02]"
