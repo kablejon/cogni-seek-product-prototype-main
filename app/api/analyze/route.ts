@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const isZH = locale === 'zh-CN';
+    const isZH = locale === 'zh-CN' || locale === 'zh-TW';
 
     const classifyInput = [itemType, itemName, itemDescription].filter(Boolean).join(' ');
     const params = classifySearchTarget(classifyInput);

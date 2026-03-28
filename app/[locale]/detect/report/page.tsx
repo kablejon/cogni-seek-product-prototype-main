@@ -328,7 +328,7 @@ export default function ReportPage() {
       <div className="min-h-screen bg-[#020617] text-slate-200 flex items-center justify-center">
         <div className="flex items-center gap-3 text-cyan-300 text-sm">
           <Loader2 className="w-4 h-4 animate-spin" />
-          Loading selected report...
+          {t('loadingSelectedReport')}
         </div>
       </div>
     )
@@ -350,12 +350,12 @@ export default function ReportPage() {
             <Activity className="w-3 h-3" />
           </div>
           <span className="font-bold tracking-tight text-sm text-cyan-100">
-            CogniSeek <span className="text-cyan-700">///</span> AI ANALYSIS
+            CogniSeek <span className="text-cyan-700">///</span> {t('headerAnalysis')}
           </span>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
-          <div className="text-[10px] font-mono text-cyan-700 bg-blue-950/30 border border-blue-900 px-2 py-1 rounded">CASE #{caseId}</div>
+          <div className="text-[10px] font-mono text-cyan-700 bg-blue-950/30 border border-blue-900 px-2 py-1 rounded">{t('headerCase')} #{caseId}</div>
           <button onClick={handleGeneratePoster} disabled={isGenerating}
             className="p-2 rounded bg-cyan-950/50 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-950 hover:border-cyan-400 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
             title={isGenerating ? t('unlocking') : t('downloadReport')}>
@@ -438,7 +438,7 @@ export default function ReportPage() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_20px_#06b6d4]"></span>
                 <div className="absolute left-10 top-[-20px] bg-cyan-950/90 border border-cyan-500/50 px-2 py-1 rounded">
                   <div className="text-[10px] text-cyan-400 font-bold whitespace-nowrap flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {loadingPremium || confirmingPayment ? 'Decrypting...' : t('precisionPin')}
+                    <MapPin className="w-3 h-3" /> {loadingPremium || confirmingPayment ? t('decrypting') : t('precisionPin')}
                   </div>
                 </div>
               </div>
@@ -524,7 +524,7 @@ export default function ReportPage() {
             </div>
           ) : (loadingPremium || confirmingPayment) && !(premiumResult?.predictions?.length) ? (
             <div className="rounded-xl border border-cyan-900/30 bg-[#0f172a]/30 p-5 flex items-center justify-center gap-2 text-sm text-cyan-300">
-              <Loader2 className="w-4 h-4 animate-spin" /> {confirmingPayment ? '正在同步支付结果...' : '正在解密高级推演...'}
+              <Loader2 className="w-4 h-4 animate-spin" /> {confirmingPayment ? t('syncingPaymentResult') : t('decryptingPremiumAnalysis')}
             </div>
           ) : (
             <div className="space-y-3 animate-in fade-in duration-700">
@@ -696,7 +696,7 @@ export default function ReportPage() {
                   onClick={() => setShowUnlockDetails((prev) => !prev)}
                   className="h-11 px-3 rounded-xl border-blue-900/50 bg-slate-900/50 text-slate-300 hover:bg-slate-800 hover:text-white"
                 >
-                  <span className="sr-only">toggle unlock details</span>
+                  <span className="sr-only">{t('toggleUnlockDetails')}</span>
                   {showUnlockDetails ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
                 </Button>
               </div>
