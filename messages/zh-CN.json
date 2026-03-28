@@ -244,7 +244,7 @@
     "distractedOff": "点击开启以记录干扰因素",
     "distractedPrompt": "具体是什么干扰了你？（可多选）",
     "distractionRecorded": "⚠️ 干扰因素已记录",
-    "distractionAnalysis": "系统将重点分析「自动驾驶」行为模式和无意识放置区域"
+    "distractionAnalysis": "系统将重点分析「自动驾驶」行为模式和无意识放置区域",
     "otherMood": "其他状态",
     "otherMoodCustom": "自定义输入",
     "otherActivity": "其他动作",
