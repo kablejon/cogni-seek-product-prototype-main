@@ -576,7 +576,7 @@ export default function ReportPage() {
                 </ul>
                 {content.macroReview && (
                   <div className="p-2 bg-amber-900/20 rounded text-[10px] text-amber-400/80 leading-relaxed border-l-2 border-amber-500/50">
-                    <strong>💡 AI: </strong>{content.macroReview}
+                    <strong>💡 {t('systemTipLabel')}: </strong>{content.macroReview}
                   </div>
                 )}
               </div>

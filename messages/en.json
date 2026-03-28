@@ -122,9 +122,9 @@
       "desc": "The system will activate Trajectory Analysis Mode, analyzing your movement path between different locations and identifying potential loss nodes one by one."
     },
     "confidence": {
-      "aiHint90": "🎯 AI will perform deep layered search in this zone",
-      "aiHint70": "🔍 AI will prioritize this zone while scanning surrounding transition areas",
-      "aiHintLow": "🌐 AI will expand search radius, checking previous location and transit path"
+      "aiHint90": "🎯 The system will perform deep layered search in this zone",
+      "aiHint70": "🔍 The system will prioritize this zone while scanning surrounding transition areas",
+      "aiHintLow": "🌐 The system will expand search radius, checking previous location and transit path"
     },
     "button": {
       "lock": "Lock Zone",
@@ -478,6 +478,7 @@
     "microTacticsLocked": "MICRO TACTICS LOCKED",
     "analysisComplete": "Analysis Complete",
     "actionPrefix": "Action",
+    "systemTipLabel": "System Tip",
     "aiDisclaimer": "* This system provides probability-based clues only and does not guarantee 100% recovery.",
     "imageGenFailed": "Image generation failed. Use Print to save as PDF?",
     "sceneLabelVehicle": "VEHICLE AREA SCAN",

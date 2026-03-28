@@ -122,9 +122,9 @@
       "desc": "系统将启动「轨迹回溯模式」，分析你在不同地点之间的移动路径，逐一排查可能的丢失节点。"
     },
     "confidence": {
-      "aiHint90": "🎯 AI 将在此区域进行深度层次式搜索",
-      "aiHint70": "🔍 AI将优先搜索此区域，同时排查周边过渡地带",
-      "aiHintLow": "🌐 AI将扩大搜索半径，检查上一个地点及途中"
+      "aiHint90": "🎯 系统将在此区域进行深度层次式搜索",
+      "aiHint70": "🔍 系统将优先搜索此区域，同时排查周边过渡地带",
+      "aiHintLow": "🌐 系统将扩大搜索半径，检查上一个地点及途中"
     },
     "button": {
       "lock": "锁定区域",
@@ -300,7 +300,7 @@
     "locationsHint": "（可多选，代表「已确认找过这里，没有」）",
     "othersLabel": "其他尝试",
     "askedOthers": "已询问相关人员（同事/家人）",
-    "aiTip": "💡 AI 提示：",
+    "aiTip": "💡 系统提示：",
     "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的「视觉和记忆盲区」",
     "toggleHint": "开关开启表示「已尝试过」，系统将不再建议；关闭表示「未尝试」，系统将为您提供相关建议",
     "startAnalysis": "开始深度分析",
@@ -478,6 +478,7 @@
     "microTacticsLocked": "战术指令已加密",
     "analysisComplete": "分析完成",
     "actionPrefix": "指令",
+    "systemTipLabel": "系统提示",
     "aiDisclaimer": "* 本系统仅提供基于概率的线索，不保证100%找到物品。",
     "imageGenFailed": "图片生成失败，是否使用「打印」功能保存为PDF？",
     "sceneLabelVehicle": "车辆区域扫描",
