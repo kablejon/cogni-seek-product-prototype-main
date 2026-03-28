@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useRouter, Link } from "@/lib/navigation"
 import { Header } from "@/components/shared/header"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,7 @@ type ReportHistoryItem = {
 }
 
 export default function HistoryPage() {
+  const locale = useLocale()
   const tCommon = useTranslations('common')
   const router = useRouter()
   const { setAnalysisResult, setCurrentReportId } = useSearchStore()
@@ -63,7 +64,7 @@ export default function HistoryPage() {
       <main className="container mx-auto px-4 py-8 md:py-10 flex-1">
         <div className="max-w-4xl mx-auto space-y-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-3xl font-bold">寻找记录</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">{tCommon('history')}</h1>
             <Link href="/">
               <Button
                 className="h-10 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold border border-cyan-400/30 shadow-[0_0_18px_rgba(8,145,178,0.4)] hover:shadow-[0_0_24px_rgba(8,145,178,0.55)] transition-all hover:scale-[1.02]"
@@ -82,7 +83,11 @@ export default function HistoryPage() {
           ) : (
             <>
               <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-xs text-muted-foreground">
-                历史报告仅保留 30 天，请及时保存或下载。
+                {locale === 'en'
+                  ? 'Reports are retained for 30 days. Please download or save in time.'
+                  : locale === 'zh-TW'
+                    ? '歷史報告僅保留 30 天，請及時保存或下載。'
+                    : '历史报告仅保留 30 天，请及时保存或下载。'}
               </div>
               <div className="space-y-3">
                 {items.map((item) => {
