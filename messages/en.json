@@ -93,7 +93,8 @@
     "scene3": "Where were you?",
     "scene3Sub": "What was the environment like?",
     "scene4": "Who and what was around you?",
-    "skip": "Skip →"
+    "skip": "Skip intro",
+    "skipSub": "Start searching now"
   },
   "step0": {
     "title": "Lock the First Scene",

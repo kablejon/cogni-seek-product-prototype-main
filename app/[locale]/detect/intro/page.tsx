@@ -51,7 +51,8 @@ export default function IntroPage() {
         onClick={() => router.push('/detect/step-0')}
         className="skip-button"
       >
-        <span>{t('skip')}</span>
+        <span className="skip-button-main">{t('skip')}</span>
+        <span className="skip-button-sub">{t('skipSub')}</span>
       </button>
     </div>
   )

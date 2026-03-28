@@ -37,7 +37,7 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="fixed top-[20px] right-[20px] md:top-[24px] md:right-[24px] z-[60]" ref={wrapperRef}>
+    <div className="relative" ref={wrapperRef}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-cyan-300 border border-cyan-500/30 rounded-full bg-cyan-950/20 hover:bg-cyan-900/40 transition-colors"
@@ -47,7 +47,7 @@ export function LanguageSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-28 rounded-xl border border-cyan-500/25 bg-[#0d1526]/95 backdrop-blur-xl shadow-xl overflow-hidden z-[70]">
+        <div className="absolute right-0 mt-2 w-28 rounded-xl border border-cyan-500/25 bg-[#0d1526]/95 backdrop-blur-xl shadow-xl overflow-hidden z-50">
           {LOCALES.map((item) => {
             const isActive = item.id === locale
             return (
