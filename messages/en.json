@@ -171,7 +171,7 @@
     "fuzzyToggle": {
       "label": "I'm not sure of the exact time",
       "on": "💭 No worries, we'll analyze the full day's lighting and behavior patterns",
-      "off": "🎯 Time locked — AI will analyze the 3-hour window after this point"
+      "off": "🎯 Time locked — the system will analyze the 3-hour window after this point"
     },
     "mode": {
       "broad": "Wide-Scan Mode",
@@ -179,7 +179,7 @@
       "precise": "Precision Lock Mode",
       "preciseDesc": "The system analyzes only the selected time window"
     },
-    "aiAnalysis": "Temporal Analysis:",
+    "aiAnalysis": "System Analysis:",
     "lightContext": {
       "fullDay": "full-day analysis",
       "locked": "locked time point",
@@ -300,7 +300,7 @@
     "locationsHint": "(Multi-select — means \"I've confirmed looking here, it's not there\")",
     "othersLabel": "Other attempts",
     "askedOthers": "Asked relevant people (colleagues/family)",
-    "aiTip": "💡 AI Tip:",
+    "aiTip": "💡 System Tip:",
     "aiTipContent": "Knowing where you've already searched helps us avoid repeating suggestions and focus on commonly overlooked \"visual and memory blind spots\"",
     "toggleHint": "Toggle {on}ON{/on} means \"already tried\" — the system won't suggest it again; {off}OFF{/off} means \"not tried yet\" — the system will provide relevant advice",
     "startAnalysis": "Start Deep Analysis",
