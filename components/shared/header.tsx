@@ -218,7 +218,7 @@ export function Header({ currentStep, totalSteps = 6, showProgress = false }: He
                           bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 hover:border-cyan-500/40
                           text-cyan-300 hover:text-cyan-200 transition-all duration-150"
                       >
-                        寻找记录
+                        {t('history')}
                       </Link>
                     </div>
 

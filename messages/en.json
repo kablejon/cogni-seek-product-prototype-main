@@ -19,6 +19,7 @@
     "email": "Email",
     "loginMethod": "Login Method",
     "emailVerified": "Email Verified",
+    "history": "Search History",
     "verified": "Verified",
     "unverified": "Unverified",
     "account": "Account"

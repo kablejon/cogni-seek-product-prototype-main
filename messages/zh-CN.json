@@ -19,6 +19,7 @@
     "email": "邮箱",
     "loginMethod": "登录方式",
     "emailVerified": "邮箱验证",
+    "history": "寻找记录",
     "verified": "已验证",
     "unverified": "未验证",
     "account": "账户"
