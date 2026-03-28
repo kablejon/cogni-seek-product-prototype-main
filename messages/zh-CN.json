@@ -302,8 +302,8 @@
     "askedOthers": "已询问相关人员（同事/家人）",
     "aiTip": "💡 AI 提示：",
     "aiTipContent": "了解您已经排查过的区域，可以帮助我们避免重复建议，并聚焦于那些容易被忽视的「视觉和记忆盲区」",
-    "toggleHint": "开关开启表示「已尝试过」，系统将不再建议；关闭表示「未尝试」，系统将为您提供相关建议"
-    "startAnalysis": "开始深度分析"
+    "toggleHint": "开关开启表示「已尝试过」，系统将不再建议；关闭表示「未尝试」，系统将为您提供相关建议",
+    "startAnalysis": "开始深度分析",
     "smartFeature": {
       "tried_find_phone": "已尝试「查找」或拨打手机",
       "tried_find_tablet": "已尝试云端定位服务",
@@ -362,7 +362,7 @@
     "price": "$1.99",
     "ctaButton": "解锁高级排查指引",
     "trust": {
-      "rate": "基于概率的智能辅助分析"
+      "rate": "基于概率的智能辅助分析",
       "cases": "行为 + 环境 + 时间线综合推演",
       "guarantee": "交付或账单问题可获支持"
     },
@@ -370,7 +370,7 @@
       "title": "支付 $1.99 后你将获得",
       "oneTime": "本次为一次性付款，不是自动续费订阅。",
       "instantDelivery": "支付确认成功后，将以数字内容形式解锁高级内容。",
-      "digitalGoods": "你购买的是系统生成的数字分析内容，包括战术指引、重点排查区域与时间线分析支持。"
+      "digitalGoods": "你购买的是系统生成的数字分析内容，包括战术指引、重点排查区域与时间线分析支持。",
       "accountBinding": "高级权益将绑定到你付款时当前登录的账户。",
       "billingSupport": "如遇账单、退款审核或交付问题，请尽量使用购买邮箱联系我们。",
       "noGuarantee": "CogniSeek 提供的是基于概率的辅助建议，不保证一定找回失物。",
@@ -417,7 +417,7 @@
   },
   "report": {
     "title": "寻回指数",
-    "subtitle": "战术分析报告"
+    "subtitle": "战术分析报告",
     "probabilityLabel": "寻回潜力指数",
     "holoMapTitle": "全息场景地图",
     "basicSearchTitle": "3 个常规排查区",
@@ -431,7 +431,7 @@
     "purchaseNote": {
       "oneTime": "本次为一次性付款，不会自动续费。",
       "instantDelivery": "付款确认后将立即以数字内容形式交付高级报告。",
-      "digitalGoods": "本次购买解锁高级推演、战术行动、时间线分析和完整报告中的付费模块。"
+      "digitalGoods": "本次购买解锁高级推演、战术行动、时间线分析和完整报告中的付费模块。",
       "accountBinding": "高级权益会绑定到你当前登录的账户。",
       "billingSupport": "如需账单支持或退款审核，请尽量使用购买邮箱联系我们。",
       "noGuarantee": "这是基于概率的数字服务，不承诺一定找回失物。",
@@ -460,7 +460,7 @@
     "psychTitle": "行为心理学分析",
     "precisionPin": "精准目标",
     "loadingSelectedReport": "正在加载指定报告...",
-    "headerAnalysis": "分析中枢"
+    "headerAnalysis": "分析中枢",
     "headerCase": "案例",
     "decrypting": "解密中...",
     "syncingPaymentResult": "正在同步支付结果...",
@@ -478,7 +478,7 @@
     "microTacticsLocked": "战术指令已加密",
     "analysisComplete": "分析完成",
     "actionPrefix": "指令",
-    "aiDisclaimer": "* 本系统仅提供基于概率的线索，不保证100%找到物品。"
+    "aiDisclaimer": "* 本系统仅提供基于概率的线索，不保证100%找到物品。",
     "imageGenFailed": "图片生成失败，是否使用「打印」功能保存为PDF？",
     "sceneLabelVehicle": "车辆区域扫描",
     "sceneLabelHome": "住宅区域扫描",
@@ -604,9 +604,9 @@
       "night": "19:00–06:00"
     },
     "lightInsights": {
-      "dawn_morning": "☀️ 系统分析：晨间光线清冷明亮，视野清晰，物品若在开阔区域应较易发现。"
-      "noon_afternoon": "☀️ 系统分析：强光环境下，物品容易被阴影遮挡，建议检查物体背光面及阴影区域。"
-      "dusk": "🌇 系统分析：光线快速变化期，人眼适应度下降，物品极易滑入视觉盲区，重点排查过渡区域。"
+      "dawn_morning": "☀️ 系统分析：晨间光线清冷明亮，视野清晰，物品若在开阔区域应较易发现。",
+      "noon_afternoon": "☀️ 系统分析：强光环境下，物品容易被阴影遮挡，建议检查物体背光面及阴影区域。",
+      "dusk": "🌇 系统分析：光线快速变化期，人眼适应度下降，物品极易滑入视觉盲区，重点排查过渡区域。",
       "night": "🌑 系统分析：可见度低，若当时未开灯，请重点排查脚下及低处缝隙、家具下方等区域。"
     },
     "locations": {
@@ -663,10 +663,10 @@
     }
   },
   "home": {
-    "badge": "由认知引擎驱动"
+    "badge": "由认知引擎驱动",
     "heroTitle1": "丢东西了？",
-    "heroTitle2": "帮你找回来。"
-    "heroSubtitle": "CogniSeek 运用行为心理学、时空还原和认知推演，在几分钟内帮助你锁定物品最可能所在的区域。"
+    "heroTitle2": "帮你更快找回来。",
+    "heroSubtitle": "CogniSeek 运用行为心理学、环境物理概率论与时空回溯，帮你在 3 分钟内锁定失物最可能所在区域。",
     "pricingHint": "基础排查免费 · 高级战术报告 $1.99（一次性付款）",
     "ctaStart": "开始寻找",
     "ctaDemo": "了解工作原理",
@@ -676,7 +676,7 @@
       "time": { "value": "数字交付", "label": "快速生成可执行搜索报告" }
     },
     "featuresTitle": "CogniSeek 的工作原理",
-    "featuresSubtitle": "融合心理学、物理学与行为推理的六维分析，追踪记忆遗漏的细节。"
+    "featuresSubtitle": "融合心理学、物理学与行为推理的六维分析，追踪记忆遗漏的细节。",
     "features": {
       "psychology": { "title": "行为心理学", "desc": "分析你的心理状态和行动习惯，重建丢失事件中的无意识行为。" },
       "spatial": { "title": "空间概率", "desc": "绘制移动路径图，使用空间算法计算各区域的概率分布。" },
@@ -686,7 +686,7 @@
       "instant": { "title": "即时战术报告", "desc": "秒级生成个性化战术搜索方案，含逐步微观行动指引。" }
     },
     "howTitle": "使用步骤",
-    "howSubtitle": "不到 3 分钟完成 6 个步骤，获得精准推演结果。"
+    "howSubtitle": "不到 3 分钟完成 6 个步骤，获得精准推演结果。",
     "steps": {
       "1": { "title": "描述物品", "desc": "告诉我们丢失的是什么——类型、颜色和特征。" },
       "2": { "title": "确定时间线", "desc": "你最后一次看见它是什么时候？锁定时间窗口。" },

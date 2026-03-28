@@ -244,7 +244,7 @@
     "distractedOff": "點擊開啟以記錄干擾因素",
     "distractedPrompt": "具體是什麼干擾了你？（可多選）",
     "distractionRecorded": "⚠️ 干擾因素已記錄",
-    "distractionAnalysis": "系統將重點分析「自動駕駛」行為模式和無意識放置區域"
+    "distractionAnalysis": "系統將重點分析「自動駕駛」行為模式和無意識放置區域",
     "otherMood": "其他狀態",
     "otherMoodCustom": "自訂輸入",
     "otherActivity": "其他動作",
@@ -302,8 +302,8 @@
     "askedOthers": "已詢問相關人員（同事/家人）",
     "aiTip": "💡 AI 提示：",
     "aiTipContent": "了解您已經排查過的區域，可以幫助我們避免重複建議，並聚焦於那些容易被忽視的「視覺和記憶盲區」",
-    "toggleHint": "開關開啟表示「已嘗試過」，系統將不再建議；關閉表示「未嘗試」，系統將為您提供相關建議"
-    "startAnalysis": "開始深度分析"
+    "toggleHint": "開關開啟表示「已嘗試過」，系統將不再建議；關閉表示「未嘗試」，系統將為您提供相關建議",
+    "startAnalysis": "開始深度分析",
     "smartFeature": {
       "tried_find_phone": "已嘗試「尋找」或撥打手機",
       "tried_find_tablet": "已嘗試雲端定位服務",
@@ -362,7 +362,7 @@
     "price": "$1.99",
     "ctaButton": "解鎖高級排查指引",
     "trust": {
-      "rate": "基於機率的智慧輔助分析"
+      "rate": "基於機率的智慧輔助分析",
       "cases": "行為 + 環境 + 時間線綜合推演",
       "guarantee": "交付或帳單問題可獲支援"
     },
@@ -370,7 +370,7 @@
       "title": "支付 $1.99 後你將獲得",
       "oneTime": "本次為一次性付款，不是自動續費訂閱。",
       "instantDelivery": "付款確認成功後，將以數位內容形式解鎖高級內容。",
-      "digitalGoods": "你購買的是系統生成的數位分析內容，包括戰術指引、重點排查區域與時間線分析支援。"
+      "digitalGoods": "你購買的是系統生成的數位分析內容，包括戰術指引、重點排查區域與時間線分析支援。",
       "accountBinding": "高級權益將綁定到你付款時目前登入的帳戶。",
       "billingSupport": "如遇帳單、退款審核或交付問題，請盡量使用購買電子郵件聯絡我們。",
       "noGuarantee": "CogniSeek 提供的是基於機率的輔助建議，不保證一定找回失物。",
@@ -417,7 +417,7 @@
   },
   "report": {
     "title": "找回指數",
-    "subtitle": "戰術分析報告"
+    "subtitle": "戰術分析報告",
     "probabilityLabel": "尋回潛力指數",
     "holoMapTitle": "全息場景地圖",
     "basicSearchTitle": "3 個常規排查區",
@@ -431,7 +431,7 @@
     "purchaseNote": {
       "oneTime": "本次為一次性付款，不會自動續費。",
       "instantDelivery": "付款確認後將立即以數位內容形式交付高級報告。",
-      "digitalGoods": "本次購買解鎖高級推演、戰術行動、時間線分析和完整報告中的付費模組。"
+      "digitalGoods": "本次購買解鎖高級推演、戰術行動、時間線分析和完整報告中的付費模組。",
       "accountBinding": "高級權益會綁定到你目前登入的帳戶。",
       "billingSupport": "如需帳單支援或退款審核，請盡量使用購買電子郵件聯絡我們。",
       "noGuarantee": "這是基於機率的數位服務，不承諾一定找回失物。",
@@ -460,7 +460,7 @@
     "psychTitle": "行為心理學分析",
     "precisionPin": "精準目標",
     "loadingSelectedReport": "正在載入指定報告...",
-    "headerAnalysis": "分析中樞"
+    "headerAnalysis": "分析中樞",
     "headerCase": "案例",
     "decrypting": "解密中...",
     "syncingPaymentResult": "正在同步支付結果...",
@@ -478,7 +478,7 @@
     "microTacticsLocked": "戰術指令已加密",
     "analysisComplete": "分析完成",
     "actionPrefix": "指令",
-    "aiDisclaimer": "* 本系統僅提供基於機率的線索，不保證100%找到物品。"
+    "aiDisclaimer": "* 本系統僅提供基於機率的線索，不保證100%找到物品。",
     "imageGenFailed": "圖片生成失敗，是否使用「列印」功能保存為 PDF？",
     "sceneLabelVehicle": "車輛區域掃描",
     "sceneLabelHome": "住宅區域掃描",
@@ -604,8 +604,8 @@
       "night": "19:00–06:00"
     },
     "lightInsights": {
-      "dawn_morning": "☀️ 系統分析：晨間光線清冷明亮，視野清晰，物品若在開闊區域應較易發現。"
-      "noon_afternoon": "☀️ 系統分析：強光環境下，物品容易被陰影遮擋，建議檢查物體背光面及陰影區域。"
+      "dawn_morning": "☀️ 系統分析：晨間光線清冷明亮，視野清晰，物品若在開闊區域應較易發現。",
+      "noon_afternoon": "☀️ 系統分析：強光環境下，物品容易被陰影遮擋，建議檢查物體背光面及陰影區域。",
       "dusk": "🌇 系統分析：光線快速變化期，人眼適應度下降，物品極易滑入視覺盲區，重點排查過渡區域。",
       "night": "🌑 系統分析：可見度低，若當時未開燈，請重點排查腳下及低處縫隙、傢俱下方等區域。"
     },
